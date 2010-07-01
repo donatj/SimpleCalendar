@@ -11,6 +11,7 @@
 class SimpleCalendar {
 
 	private $now = false;
+	private $daily_html = array();
 
 	/**
 	* Array of Week Day Names
@@ -42,6 +43,30 @@ class SimpleCalendar {
 			$this->now = getdate();
 		}
 	}
+	
+	public function addDailyHtml( $html, $start_date_string, $end_date_string = false ) {
+		static $htmlCount = 0;
+		$start_date = strtotime( $start_date_string );
+		if( $end_date_string ) { 
+			$end_date = strtotime( $end_date_string ); 
+		}else{
+			$end_date = $start_date;	
+		}
+		
+		$working_date = $start_date;
+		do{
+			$tDate = getdate( $working_date );
+			print_r($tDate);
+			$working_date += 86400;
+			$this->daily_html[ $tDate['year'] ][ $tDate['mon'] ][ $tDate['mday'] ][ $htmlCount ] = $html;
+		}while( $working_date < $end_date + 1 );
+		
+		echo ($end_date - $start_date) / 86400;
+		$htmlCount++;
+		
+	}
+	
+	public function clearDailyHtml() { $this->daily_html = array(); }
 
 	/**
 	* Show the Calendars current date
@@ -64,6 +89,15 @@ class SimpleCalendar {
 		for($i=1;$i<=$no_days;$i++) {
 			$out .= "<td>";
 			if( $show_today && $i == $this->now['mday'] ) { $out .= "<strong>$i</strong>"; } else { $out .= $i; }
+			
+			$dHtml_arr = $this->daily_html[ $this->now['year'] ][ $this->now['mon'] ][ $i ];
+			
+			if( is_array( $dHtml_arr ) ) {
+				foreach( $dHtml_arr as $eid => $dHtml ) {
+					$out .= '<div>' . $dHtml . '</div>';
+				}
+			}
+			
 			$out .= "</td>";
 
 			if( $count > 6 ) {
