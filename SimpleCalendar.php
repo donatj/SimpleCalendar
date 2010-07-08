@@ -82,7 +82,14 @@ class SimpleCalendar {
 		$out = '';
 		$out .= "\n<table cellpadding=\"0\" cellspacing=\"0\" class=\"SimpleCalendar\"><thead><tr>";
 		for( $i = 0; $i < 7; $i++ ) { $out .= '<th>'. $this->wday_names[$i]. '</th>'; }
-		$out .= "</tr></thead>\n<tbody>\n<tr>" . str_repeat( '<td>&nbsp;</td>', $wday );
+		
+		$out .= "</tr></thead>\n<tbody>\n<tr>";
+		
+		if( $wday == 7 ) {
+			$wday = 0;
+		}else{
+			$out .= str_repeat( '<td>&nbsp;</td>', $wday );
+		}
 
 		$count = $wday + 1;
 		for($i=1;$i<=$no_days;$i++) {
@@ -105,7 +112,7 @@ class SimpleCalendar {
 			}
 			$count++;
 		}
-		$out .= str_repeat( '<td>&nbsp;</td>', 8 - $count ) . "</tr>\n</tbody></table>\n";		
+		$out .= ( $count != 1 ? str_repeat( '<td>&nbsp;</td>', 8 - $count ) : '' ) . "</tr>\n</tbody></table>\n";		
 		if( $echo ) { echo $out; }
 		return $out;
 	}
