@@ -80,7 +80,7 @@ class SimpleCalendar {
 		$no_days = cal_days_in_month( CAL_GREGORIAN, $this->now['mon'], $this->now['year'] );
 
 		$out = '';
-		$out .= "\n<table class=\"SimpleCalendar\"><thead><tr>";
+		$out .= "\n<table cellpadding=\"0\" cellspacing=\"0\" class=\"SimpleCalendar\"><thead><tr>";
 		for( $i = 0; $i < 7; $i++ ) { $out .= '<th>'. $this->wday_names[$i]. '</th>'; }
 		$out .= "</tr></thead>\n<tbody>\n<tr>" . str_repeat( '<td>&nbsp;</td>', $wday );
 
