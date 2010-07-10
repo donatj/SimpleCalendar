@@ -44,6 +44,14 @@ class SimpleCalendar {
 		}
 	}
 	
+	/**
+	 * Add a daily event to the calendar
+	 *
+	 * @param string $html The raw HTML to place on the calendar for this event
+	 * @param string $start_date_string Date string for when the event starts
+	 * @param bool|string $end_date_string Date string for when the event ends. Defaults to start date
+	 * @return void
+	 */
 	public function addDailyHtml( $html, $start_date_string, $end_date_string = false ) {
 		static $htmlCount = 0;
 		$start_date = strtotime( $start_date_string );
@@ -65,6 +73,11 @@ class SimpleCalendar {
 		
 	}
 	
+	/**
+	 * Clear all daily events for the calendar
+	 *
+	 * @return void
+	 */
 	public function clearDailyHtml() { $this->daily_html = array(); }
 
 	/**
