@@ -60,7 +60,6 @@ class SimpleCalendar {
 			$this->daily_html[ $tDate['year'] ][ $tDate['mon'] ][ $tDate['mday'] ][ $htmlCount ] = $html;
 		}while( $working_date < $end_date + 1 );
 		
-		echo ($end_date - $start_date) / 86400;
 		$htmlCount++;
 		
 	}
