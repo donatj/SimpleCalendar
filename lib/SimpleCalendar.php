@@ -3,7 +3,7 @@
 /**
  * Simple Calendar
  *
- * @author Jesse G. Donat
+ * @author Jesse G. Donat <donatj@gmail.com>
  * @link http://donatstudios.com
  * @license http://opensource.org/licenses/mit-license.php
  *
