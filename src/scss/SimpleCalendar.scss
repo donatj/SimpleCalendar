@@ -1,0 +1,29 @@
+table.SimpleCalendar {
+	border-collapse: collapse;
+
+	td {
+		vertical-align: top;	
+		width: 70px;
+		height: 70px;
+		border: 1px solid #bbb;	
+		background: #CCC8C8;
+
+		div a, div {
+			color: #355;
+			font-size: .8em;
+			line-height: 1em;
+		}
+
+		div div {
+			padding: 3px;
+			margin: 1px -1px;
+			font-size: 10px;
+		}
+	}
+
+	th {
+		background: #C9E9F0;
+		color: #0092B4;
+	}
+
+}
