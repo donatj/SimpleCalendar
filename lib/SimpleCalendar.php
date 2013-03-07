@@ -18,7 +18,7 @@ class SimpleCalendar {
 	* 
 	* @var array
 	*/
-	public $wday_names = array("Sun","Mon","Tue","Wed","Thu","Fri","Sat");
+	public $wday_names = false;
 
 	/**
 	* Constructor - Calls the setDate function
@@ -87,13 +87,21 @@ class SimpleCalendar {
 	* @return string
 	*/
 	public function show( $show_today = false, $echo = true ) {
+		if( $this->wday_names ) {
+			$wdays = $this->wday_names;
+		}else{
+			$today = ( 86400 * (date("N")) );
+			for( $i = 0; $i < 7; $i++ ) {
+				$wdays[] = strftime('%a', time() - $today + ($i*86400));
+			}
+		}
 
 		$wday    = date( 'N' , mktime( 0,0,1, $this->now['mon'], 1, $this->now['year'] ));
 		$no_days = cal_days_in_month( CAL_GREGORIAN, $this->now['mon'], $this->now['year'] );
 
 		$out = '';
 		$out .= "\n<table cellpadding=\"0\" cellspacing=\"0\" class=\"SimpleCalendar\"><thead><tr>";
-		for( $i = 0; $i < 7; $i++ ) { $out .= '<th>'. $this->wday_names[$i]. '</th>'; }
+		for( $i = 0; $i < 7; $i++ ) { $out .= '<th>'. $wdays[$i]. '</th>'; }
 		
 		$out .= "</tr></thead>\n<tbody>\n<tr>";
 		
