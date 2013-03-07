@@ -10,8 +10,9 @@ Sample Usage
 ---------------
 ```php
 <?php
-include( 'SimpleCalendar.php' );  
-$Calendar = new SimpleCalendar( 'June 2010' );  
+require('SimpleCalendar.php');  
+
+$Calendar = new SimpleCalendar('June 2010');  
 $Calendar->show();
 ```
 
@@ -19,8 +20,9 @@ or
 
 ```php
 <?php
-include( 'SimpleCalendar.php' );  
+require('SimpleCalendar.php');  
+
 $Calendar = new SimpleCalendar();  
-$Calendar->setDate( 'June 5 2010' );  
+$Calendar->setDate('June 5 2010');  
 $Calendar->show();
 ```
