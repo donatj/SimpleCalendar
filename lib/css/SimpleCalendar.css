@@ -9,6 +9,8 @@ table.SimpleCalendar {
     height: 70px;
     border: 1px solid #bbb;
     background: #CCC8C8; }
+    table.SimpleCalendar tbody td.SCsuffix, table.SimpleCalendar tbody td.SCprefix {
+      background: #c4c2c2; }
     table.SimpleCalendar tbody td div {
       color: #355;
       font-size: .8em;

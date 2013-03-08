@@ -16,6 +16,10 @@ table.SimpleCalendar {
 			border: 1px solid #bbb;	
 			background: #CCC8C8;
 
+			&.SCsuffix, &.SCprefix {
+				background: #c4c2c2;
+			}
+
 			div {
 
 				color: #355;

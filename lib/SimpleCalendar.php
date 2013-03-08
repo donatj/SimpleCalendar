@@ -110,7 +110,7 @@ class SimpleCalendar {
 		if( $wday == 7 ) {
 			$wday = 0;
 		} else {
-			$out .= str_repeat('<td>&nbsp;</td>', $wday);
+			$out .= str_repeat('<td class="SCprefix">&nbsp;</td>', $wday);
 		}
 
 		$count = $wday + 1;
@@ -138,7 +138,7 @@ class SimpleCalendar {
 			}
 			$count++;
 		}
-		$out .= ($count != 1 ? str_repeat('<td>&nbsp;</td>', 8 - $count) : '') . "</tr>\n</tbody></table>\n";
+		$out .= ($count != 1 ? str_repeat('<td class="SCsuffix">&nbsp;</td>', 8 - $count) : '') . "</tr>\n</tbody></table>\n";
 		if( $echo ) {
 			echo $out;
 		}
