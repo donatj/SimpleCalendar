@@ -6,7 +6,7 @@
 	"homepage": "http://donatstudios.com/SimpleCalendar",
 	"license": "MIT",
 	"require": {
-		"php": ">=5.1.0"
+		"php": ">=5.3.0"
 	},
 	"authors": [
 		{
