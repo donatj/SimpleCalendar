@@ -1,18 +1,26 @@
-Simple Calendar
-===============
+# Simple Calendar
 
-Requirements
----------------
+## Requirements
 
-  - PHP 5.1.0+
+  - PHP 5.3.0+
 
-Sample Usage
----------------
+## Installing
+
+SimpleCalendar is available through Packagist.
+
+```
+  "require": {
+  	"donatj/simplecalendar": "*"
+	}
+```
+
+## Sample Usage
+
 ```php
 <?php
 require('SimpleCalendar.php');  
 
-$Calendar = new SimpleCalendar('June 2010');  
+$Calendar = new donatj\SimpleCalendar('June 2010');  
 $Calendar->show();
 ```
 
@@ -22,7 +30,7 @@ or
 <?php
 require('SimpleCalendar.php');  
 
-$Calendar = new SimpleCalendar();  
+$Calendar = new donatj\SimpleCalendar();  
 $Calendar->setDate('June 5 2010');  
 $Calendar->show();
 ```
