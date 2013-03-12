@@ -1,0 +1,22 @@
+{
+	"name": "donatj/simplecalendar",
+	"type": "library",
+	"description": "A very simple calendar library",
+	"keywords": ["calendar"],
+	"homepage": "http://donatstudios.com/SimpleCalendar",
+	"license": "MIT",
+	"require": {
+		"php": ">=5.1.0"
+	},
+	"authors": [
+		{
+			"name": "Jesse G. Donat",
+			"email": "donatj@gmail.com",
+			"homepage": "http://donatstudios.com",
+			"role": "Developer"
+		}
+	],
+	"autoload": {
+		"psr-0": { "donatj": "lib/" }
+	}
+}
