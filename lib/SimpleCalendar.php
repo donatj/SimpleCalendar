@@ -1,5 +1,7 @@
 <?php
 
+namespace donatj;
+
 /**
  * Simple Calendar
  *
