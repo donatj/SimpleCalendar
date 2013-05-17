@@ -100,8 +100,7 @@ class SimpleCalendar {
 		$wday    = date('N', mktime(0, 0, 1, $this->now['mon'], 1, $this->now['year']));
 		$no_days = cal_days_in_month(CAL_GREGORIAN, $this->now['mon'], $this->now['year']);
 
-		$out = '';
-		$out .= "\n<table cellpadding=\"0\" cellspacing=\"0\" class=\"SimpleCalendar\"><thead><tr>";
+		$out .= '<table cellpadding="0" cellspacing="0" class="SimpleCalendar"><thead><tr>';
 		for( $i = 0; $i < 7; $i++ ) {
 			$out .= '<th>' . $wdays[$i] . '</th>';
 		}
