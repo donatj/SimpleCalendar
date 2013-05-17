@@ -1,36 +1,49 @@
 
 table.SimpleCalendar {
+	font-family: Arial;
 	border-collapse: collapse;
 
 	th {
 		background: #C9E9F0;
 		color: #0092B4;
+		font-size: 11px;
+		padding: 3px;
+		border: 1px solid #bbb;
+		border-top: none;
 	}
 
 	tbody {
 
 		td {
-			vertical-align: top;	
-			width: 70px;
-			height: 70px;;
-			border: 1px solid #bbb;	
-			background: #CCC8C8;
 
-			&.SCsuffix, &.SCprefix {
-				background: #c4c2c2;
+			time {
+				font-size: .7em;
+				display: block;
+				background: white;
+				padding: 2px;
+				text-align: right;
+				font-weight: bold;
 			}
 
-			div {
+			vertical-align: top;	
+			width: 90px;
+			height: 90px;;
+			border: 1px solid #bbb;	
+			background: rgb(230, 230, 230);
+
+			&.SCsuffix, &.SCprefix {
+				background: white;
+			}
+
+			div.event {
 
 				color: #355;
-				font-size: .8em;
+				font-size: .65em;
+				padding: 5px;
 				line-height: 1em;
-
-				div {
-					padding: 3px;
-					margin: 1px -1px;
-					font-size: 10px;
-				}
+				border-bottom: 1px solid #bbb;
+				background: rgb(133, 133, 133);
+				color: white;
 
 			}
 

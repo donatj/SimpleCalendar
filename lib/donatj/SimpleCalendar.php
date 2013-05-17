@@ -118,17 +118,21 @@ class SimpleCalendar {
 		$count = $wday + 1;
 		for( $i = 1; $i <= $no_days; $i++ ) {
 			$out .= "<td>";
-			if( $show_today && $i == $this->now['mday'] ) {
-				$out .= "<strong>$i</strong>";
-			} else {
-				$out .= $i;
-			}
+			// if( $show_today && $i == $this->now['mday'] ) {
+			// 	$out .= "<strong>$i</strong>";
+			// } else {
+			// 	$out .= $i;
+			// }
+			
+			$datetime = mktime ( 0, 0, 1, $this->now['mon'], $i, $this->now['year'] );
+
+			$out .= '<time datetime="' . date('Y-m-d', $datetime) . '">'.$i.'</time>';
 
 			$dHtml_arr = $this->daily_html[$this->now['year']][$this->now['mon']][$i];
 
 			if( is_array($dHtml_arr) ) {
 				foreach( $dHtml_arr as $eid => $dHtml ) {
-					$out .= '<div>' . $dHtml . '</div>';
+					$out .= '<div class="event">' . $dHtml . '</div>';
 				}
 			}
 
