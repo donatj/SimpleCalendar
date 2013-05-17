@@ -84,11 +84,10 @@ class SimpleCalendar {
 	/**
 	 * Show the Calendars current date
 	 *
-	 * @param bool $show_today Whether to highlight the current day
 	 * @param bool $echo Whether to echo resulting calendar
 	 * @return string
 	 */
-	public function show( $show_today = false, $echo = true ) {
+	public function show( $echo = true ) {
 		if( $this->wday_names ) {
 			$wdays = $this->wday_names;
 		} else {
@@ -117,12 +116,7 @@ class SimpleCalendar {
 
 		$count = $wday + 1;
 		for( $i = 1; $i <= $no_days; $i++ ) {
-			$out .= "<td>";
-			// if( $show_today && $i == $this->now['mday'] ) {
-			// 	$out .= "<strong>$i</strong>";
-			// } else {
-			// 	$out .= $i;
-			// }
+			$out .= '<td'. ($i == $this->now['mday'] ? ' class="today"' : '').'>';
 			
 			$datetime = mktime ( 0, 0, 1, $this->now['mon'], $i, $this->now['year'] );
 

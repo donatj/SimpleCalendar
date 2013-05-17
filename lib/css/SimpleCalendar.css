@@ -31,3 +31,5 @@ table.SimpleCalendar {
       border-bottom: 1px solid #bbb;
       background: #858585;
       color: white; }
+  table.SimpleCalendar tbody td.today {
+    background: #d2d2d2; }
