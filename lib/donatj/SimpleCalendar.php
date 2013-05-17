@@ -14,6 +14,7 @@ class SimpleCalendar {
 
 	private $now = false;
 	private $daily_html = array();
+	private $offset = 0;
 
 	/**
 	 * Array of Week Day Names
@@ -81,6 +82,30 @@ class SimpleCalendar {
 	 */
 	public function clearDailyHtml() { $this->daily_html = array(); }
 
+	private function array_rotate(&$data, $steps) {
+		$count = count($data);
+		if($steps < 0) {
+			$steps = $count + $steps;
+		}
+		$steps = $steps % $count;
+		for( $i = 0; $i < $steps; $i++ ) {
+			array_push($data, array_shift($data));
+		}
+	}
+
+	/**
+	 * Sets the first day of Week
+	 * 
+	 * @param int|string $offet Day to start on, ex: "Monday" or 0-6 where 0 is Sunday
+	 */
+	public function setStartOfWeek($offet) {
+		if(is_int($offet)) {
+			$this->offset = $offet % 7;
+		}else{
+			$this->offset = date('N', strtotime($offet)) % 7;
+		}
+	}
+
 	/**
 	 * Show the Calendars current date
 	 *
@@ -97,7 +122,8 @@ class SimpleCalendar {
 			}
 		}
 
-		$wday    = date('N', mktime(0, 0, 1, $this->now['mon'], 1, $this->now['year']));
+		$this->array_rotate($wdays, $this->offset);
+		$wday    = date('N', mktime(0, 0, 1, $this->now['mon'], 1, $this->now['year'])) - $this->offset;
 		$no_days = cal_days_in_month(CAL_GREGORIAN, $this->now['mon'], $this->now['year']);
 
 		$out .= '<table cellpadding="0" cellspacing="0" class="SimpleCalendar"><thead><tr>';
@@ -115,7 +141,7 @@ class SimpleCalendar {
 
 		$count = $wday + 1;
 		for( $i = 1; $i <= $no_days; $i++ ) {
-			$out .= '<td'. ($i == $this->now['mday'] ? ' class="today"' : '').'>';
+			$out .= '<td'. ($i == $this->now['mday'] && $this->now['mon'] == date('n') ? ' class="today"' : '').'>';
 			
 			$datetime = mktime ( 0, 0, 1, $this->now['mon'], $i, $this->now['year'] );
 

@@ -7,6 +7,8 @@
 
 	$calendar = new donatj\SimpleCalendar();
 
+	$calendar->setStartOfWeek('Sunday');
+
 	$calendar->addDailyHtml( 'Sample Event', 'today', 'tomorrow' );
 	$calendar->show(true);
 	?>
