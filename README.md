@@ -8,10 +8,10 @@
 
 SimpleCalendar is available through Packagist via Composer.
 
-```
-  "require": {
-  	"donatj/simplecalendar": "*"
-	}
+```json
+"require": {
+	"donatj/simplecalendar": "*"
+}
 ```
 
 ## Sample Usage
