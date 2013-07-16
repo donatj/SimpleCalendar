@@ -6,7 +6,7 @@
 
 ## Installing
 
-SimpleCalendar is available through Packagist.
+SimpleCalendar is available through Packagist via Composer.
 
 ```
   "require": {
