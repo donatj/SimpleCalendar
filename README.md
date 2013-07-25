@@ -1,36 +1,41 @@
-# Simple Calendar
+# Pushover PHP
 
-## Requirements
-
-  - PHP 5.3.0+
+Pushover PHP is a very light, simple API wrapper for the Pushover API written in PHP.
 
 ## Installing
 
-SimpleCalendar is available through Packagist via Composer.
+Pushover PHP is available through Packagist via Composer.
 
 ```json
 "require": {
-	"donatj/simplecalendar": "*"
+	"donatj/pushover": "*"
 }
 ```
 
-## Sample Usage
+## Usage
 
 ```php
-<?php
-require('SimpleCalendar.php');  
+$po = new donatj\Pushover('myapikey', 'myuserkey');
 
-$Calendar = new donatj\SimpleCalendar('June 2010');  
-$Calendar->show();
+$po->send('Hello World!');
+$po->send('Goodbye Cruel World...', array('priority' => 1));
 ```
 
-or
+## Documentation
+
+On *success* `Pushover->send` returns a **truth-y** array like:
 
 ```php
-<?php
-require('SimpleCalendar.php');  
+array(
+    'status'  => 1
+    'request' => 2f4e9c7140df52d7d8b16ffb8adf1c2a
+)
+```
+	
+On *failure* `Pushover->send` returns **false** which allows simple
 
-$Calendar = new donatj\SimpleCalendar();  
-$Calendar->setDate('June 5 2010');  
-$Calendar->show();
+```php
+if( !$po->send('Hello World!') ) { 
+	die('oh no!');
+}
 ```
