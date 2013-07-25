@@ -1,4 +1,10 @@
-# Simple Calendar
+# PHP User Agent Parser
+
+A Super Simple User Agent Parser
+
+More information available at [Donat Studios](http://donatstudios.com/PHP-Parser-HTTP_USER_AGENT).
+
+Licensed under the MIT license: http://www.opensource.org/licenses/mit-license.php
 
 ## Requirements
 
@@ -10,27 +16,63 @@ SimpleCalendar is available through Packagist via Composer.
 
 ```json
 "require": {
-	"donatj/simplecalendar": "*"
+	"donatj/phpuseragentparser": "*"
 }
 ```
 
 ## Sample Usage
 
 ```php
-<?php
-require('SimpleCalendar.php');  
-
-$Calendar = new donatj\SimpleCalendar('June 2010');  
-$Calendar->show();
+$ua_info = parse_user_agent();
+/*
+array(
+	'platform' => '[Detected Platform]',
+	'browser'  => '[Detected Browser]',
+	'version'  => '[Detected Browser Version]',
+);
+*/
 ```
 
-or
+## Currently Detected Platforms
 
-```php
-<?php
-require('SimpleCalendar.php');  
+- Desktop
+	- Windows
+	- Linux
+	- Macintosh
+	- Chrome OS
+- Mobile
+	- Android
+	- iPhone
+	- iPad
+	- Windows Phone OS
+	- Kindle
+	- Kindle Fire
+	- BlackBerry
+	- Playbook
+- Console
+	- Nintendo 3DS
+	- Nintendo Wii
+	- Nintendo WiiU
+	- PlayStation 3
+	- PlayStation Vita
+	- Xbox 360
 
-$Calendar = new donatj\SimpleCalendar();  
-$Calendar->setDate('June 5 2010');  
-$Calendar->show();
-```
+## Currently Detected Browsers
+
+- BlackBerry Browser
+- Camino
+- Kindle / Silk
+- Firefox
+- Safari
+- Internet Explorer
+- IEMobile
+- Chrome
+- Opera
+- Silk
+- Lynx
+- Wget
+- Curl
+
+## Build Status
+
+[![Build Status](https://travis-ci.org/donatj/PhpUserAgent.png?branch=master)](https://travis-ci.org/donatj/PhpUserAgent)
