@@ -1,5 +1,9 @@
 # Simple Calendar
 
+[![Latest Stable Version](https://poser.pugx.org/donatj/simplecalendar/v/stable.png)](https://packagist.org/packages/donatj/simplecalendar)
+
+A very simple, easy to use PHP calendar rendering class.
+
 ## Requirements
 
   - PHP 5.3.0+
