@@ -1,7 +1,7 @@
 {
 	"name": "donatj/simplecalendar",
 	"type": "library",
-	"description": "A very simple calendar library",
+	"description": "A light, easy to use calendar rendering library",
 	"keywords": ["calendar"],
 	"homepage": "http://donatstudios.com/SimpleCalendar",
 	"license": "MIT",
