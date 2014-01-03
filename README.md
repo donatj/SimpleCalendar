@@ -18,7 +18,7 @@ You can download and install this package manually or use Composer to install it
 SimpleCalendar is available through Packagist via Composer, you can add the following to your composer.json file
 ```json
 "require": {
-	"trialog/simplecalendar": "*"
+	"trialog/simplecalendar": "v0.5.*"
 }
 ```
 
