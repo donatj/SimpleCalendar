@@ -3,6 +3,7 @@
 [![Latest Stable Version](https://poser.pugx.org/trialog/simplecalendar/v/stable.png)](https://packagist.org/packages/trialog/simplecalendar)
 
 A very simple & easy to use PHP calendar rendering class.
+
 Forked from ![donatj/SimpleCalendar](https://github.com/donatj/SimpleCalendar).
 
 ## Requirements
@@ -22,24 +23,26 @@ SimpleCalendar is available through Packagist via Composer, you can add the foll
 }
 
 Then, launch the installation via Composer:
+
 ```bash
 php composer.phar install
 ```
 
 To get Composer
 ```bash
-wget http://getcomposer.org/composer.phar # To download Composer
+wget http://getcomposer.org/composer.phar
 ```
 
 ## Sample Usage
 
 A quick example without Composer:
+
 ```php
 <?php
 require_once('vendor/trialog/src/trialog/SimpleCalendar.php');
 
-$Calendar = new trialog\SimpleCalendar();  
-$Calendar->show();
+$calendar = new trialog\SimpleCalendar();  
+$calendar->show();
 ```
 
 Another one using Composer:
@@ -49,9 +52,9 @@ Another one using Composer:
 require_once('vendor/autoload.php');
 use trialog\SimpleCalendar;
 
-$Calendar = new SimpleCalendar();  
-$Calendar->setDate('June 5 2010');  
-$Calendar->show();
+$calendar = new SimpleCalendar();  
+$calendar->setDate('June 5 2010');  
+$calendar->show();
 ```
 
 A more complex examples with translation to French and three events:
@@ -76,6 +79,10 @@ $calendar->addDailyHtml( 'An other event', '2014/01/11', '2014/01/15');
 // Display
 $calendar->show(true);
 ```
+
+## Contribute
+
+SimpleCalendar can be greatly improved. All comments or pull requests are welcome!
 
 ## License
 
