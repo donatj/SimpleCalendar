@@ -17,6 +17,7 @@ class SimpleCalendar
 	private $now = false;
 
 	private $daily_html = array();
+	private $daily_htmldetails = array();
 
 	private $offset = 0;
 
@@ -95,7 +96,7 @@ class SimpleCalendar
 	 *        	Date string for when the event ends. Defaults to start date
 	 * @return void
 	 */
-	public function addDailyHtml($html, $start_date_string, $end_date_string = false)
+	public function addDailyHtml($html, $start_date_string, $end_date_string = false, $htmlDetails='')
 	{
 		static $htmlCount = 0;
 		$start_date = strtotime($start_date_string);
@@ -107,10 +108,17 @@ class SimpleCalendar
 		}
 		
 		$working_date = $start_date;
+		$hasPrevious = false;
+		$hasNext = false;
 		do {
 			$tDate = getdate($working_date);
 			$working_date += 86400;
-			$this->daily_html[$tDate['year']][$tDate['mon']][$tDate['mday']][$htmlCount] = $html;
+			$hasNext = false;
+			if ($working_date < $end_date + 1) {
+				$hasNext = true;
+			}
+			$this->daily_html[$tDate['year']][$tDate['mon']][$tDate['mday']][$htmlCount] = array($html, $htmlDetails, $hasPrevious, $hasNext);
+			$hasPrevious = true;
 		} while ($working_date < $end_date + 1);
 		
 		$htmlCount ++;
@@ -171,7 +179,7 @@ class SimpleCalendar
 		$wday = date('N', mktime(0, 0, 1, $this->now['mon'], 1, $this->now['year'])) - $this->offset;
 		$no_days = cal_days_in_month(CAL_GREGORIAN, $this->now['mon'], $this->now['year']);
 		
-		$out = '<table cellpadding="0" cellspacing="0" class="SimpleCalendar"><caption>'. $wmonths[$this->now['mon']].'</caption><thead><tr>';
+		$out = '<table cellpadding="0" cellspacing="0" class="SimpleCalendar"><caption>'. $wmonths[$this->now['mon']-1].($this->now['year'] != date('Y') ? ' '.$this->now['year'] : '').'</caption><thead><tr>';
 		
 		for ($i = 0; $i < 7; $i ++) {
 			$out .= '<th>' . $wdays[$i] . '</th>';
@@ -188,7 +196,7 @@ class SimpleCalendar
 		
 		$count = $wday + 1;
 		for ($i = 1; $i <= $no_days; $i ++) {
-			$out .= '<td' . ($i == $this->now['mday'] && $this->now['mon'] == date('n') && $this->now['year'] == date('Y') ? ' class="today"' : '') . '>';
+			$out .= '<td' . ($i == date('d') && $this->now['mon'] == date('n') && $this->now['year'] == date('Y') ? ' class="today"' : '') . '>';
 			
 			$datetime = mktime(0, 0, 1, $this->now['mon'], $i, $this->now['year']);
 			
@@ -201,7 +209,9 @@ class SimpleCalendar
 			
 			if (is_array($dHtml_arr)) {
 				foreach ($dHtml_arr as $eid => $dHtml) {
-					$out .= '<div class="event">' . $dHtml . '</div>';
+					$out .= '<div class="event'.($dHtml[2] ? ' hasPrevious' : '').($dHtml[3] ? ' hasNext' : '').(!empty($dHtml[1]) ? ' hasDetails' : '').'">
+						'.$dHtml[0] . (!empty($dHtml[1]) ? '<span class="eventdetails">'.$dHtml[1].'</span>' : '').
+						'</div>';
 				}
 			}
 			

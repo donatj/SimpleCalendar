@@ -9,7 +9,6 @@ table.SimpleCalendar {
 		font-size: 11px;
 		padding: 3px;
 		border: 1px solid #bbb;
-		border-top: none;
 	}
 
 	tbody {
@@ -36,21 +35,47 @@ table.SimpleCalendar {
 			}
 
 			div.event {
-
 				color: #355;
 				font-size: .65em;
+				margin: 2px;
 				padding: 5px;
 				line-height: 1em;
 				border-bottom: 1px solid #bbb;
 				background: rgb(133, 133, 133);
 				color: white;
-
+				border-radius: 3px;
+				
+				.eventdetails {
+					display: none;
+				}
+			}
+			
+			div.event:hover .eventdetails {
+				display: inline-block;
+				font-style: italic;
+			}
+			
+			div.event.hasDetails {
+				cursor: pointer;
 			}
 
+			div.event.hasPrevious {
+				margin-left: 0;
+				border-radius: 0 3px 3px 0;
+			}
+			
+			div.event.hasNext {
+				margin-right: 0;
+				border-radius: 3px 0 0 3px;
+			}
+			
+			div.event.hasPrevious.hasNext {
+				border-radius: 0;
+			}
 		}
 
 		td.today {
-			background: rgb(210, 210, 210);
+			background: #D1D1D1;
 		}
 
 	}
