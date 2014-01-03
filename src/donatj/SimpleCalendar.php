@@ -25,7 +25,8 @@ class SimpleCalendar
 	 *
 	 * @var array
 	 */
-	public $wday_names = false;
+	private $wday_names = false;
+	private $wmonth_names = false;
 
 	/**
 	 * Constructor - Calls the setDate function
@@ -52,6 +53,34 @@ class SimpleCalendar
 		}
 		else {
 			$this->now = getdate();
+		}
+	}
+	
+	/**
+	 * Sets the date day names for the calendar
+	 *
+	 * @param bool|array $day_names
+	 *        	String array of the name of the days. If null or false, the english version is used.
+	 */
+	public function setDayNames($day_names)
+	{
+		$this->wday_names = false;
+		if (!empty($day_names) && $day_names) {
+			$this->wday_names = $day_names;
+		}
+	}
+	
+	/**
+	 * Sets the date month names for the calendar
+	 *
+	 * @param bool|array $month_names
+	 *        	String array of the name of the months. If null or false, the english version is used.
+	 */
+	public function setMonthNames($month_names)
+	{
+		$this->wmonth_names = false;
+		if (!empty($month_names) && $month_names) {
+			$this->wmonth_names = $month_names;
 		}
 	}
 
@@ -97,18 +126,6 @@ class SimpleCalendar
 		$this->daily_html = array();
 	}
 
-	private function array_rotate(&$data, $steps)
-	{
-		$count = count($data);
-		if ($steps < 0) {
-			$steps = $count + $steps;
-		}
-		$steps = $steps % $count;
-		for ($i = 0; $i < $steps; $i ++) {
-			array_push($data, array_shift($data));
-		}
-	}
-
 	/**
 	 * Sets the first day of Week
 	 *
@@ -143,12 +160,18 @@ class SimpleCalendar
 				$wdays[] = strftime('%a', time() - $today + ($i * 86400));
 			}
 		}
+		if ($this->wmonth_names) {
+			$wmonths = $this->wmonth_names;
+		}
+		else {
+			$wmonths = array('January', 'February', 'March', 'April', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
+		}
 		
 		$this->array_rotate($wdays, $this->offset);
 		$wday = date('N', mktime(0, 0, 1, $this->now['mon'], 1, $this->now['year'])) - $this->offset;
 		$no_days = cal_days_in_month(CAL_GREGORIAN, $this->now['mon'], $this->now['year']);
 		
-		$out = '<table cellpadding="0" cellspacing="0" class="SimpleCalendar"><thead><tr>';
+		$out = '<table cellpadding="0" cellspacing="0" class="SimpleCalendar"><caption>'. $wmonths[$this->now['mon']].'</caption><thead><tr>';
 		
 		for ($i = 0; $i < 7; $i ++) {
 			$out .= '<th>' . $wdays[$i] . '</th>';
@@ -196,5 +219,17 @@ class SimpleCalendar
 		}
 		
 		return $out;
+	}
+	
+	private function array_rotate(&$data, $steps)
+	{
+		$count = count($data);
+		if ($steps < 0) {
+			$steps = $count + $steps;
+		}
+		$steps = $steps % $count;
+		for ($i = 0; $i < $steps; $i ++) {
+			array_push($data, array_shift($data));
+		}
 	}
 }
