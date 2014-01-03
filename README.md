@@ -15,15 +15,14 @@ Forked from ![donatj/SimpleCalendar](https://github.com/donatj/SimpleCalendar).
 
 You can download and install this package manually or use Composer to install it.
 
-SimpleCalendar is available through Packagist via Composer, you can add the following to your composer.json file:
-
+SimpleCalendar is available through Packagist via Composer, you can add the following to your composer.json file
 ```json
 "require": {
 	"trialog/simplecalendar": "*"
 }
+```
 
-Then, launch the installation via Composer:
-
+Then, launch the installation via Composer
 ```bash
 php composer.phar install
 ```
@@ -35,8 +34,7 @@ wget http://getcomposer.org/composer.phar
 
 ## Sample Usage
 
-A quick example without Composer:
-
+A quick example without Composer
 ```php
 <?php
 require_once('vendor/trialog/src/trialog/SimpleCalendar.php');
@@ -45,8 +43,7 @@ $calendar = new trialog\SimpleCalendar();
 $calendar->show();
 ```
 
-Another one using Composer:
-
+Another one using Composer
 ```php
 <?php
 require_once('vendor/autoload.php');
@@ -57,8 +54,7 @@ $calendar->setDate('June 5 2010');
 $calendar->show();
 ```
 
-A more complex examples with translation to French and three events:
-
+A more complex example with translation to French and three events
 ```php
 <?php
 require_once('vendor/autoload.php');
@@ -79,6 +75,9 @@ $calendar->addDailyHtml( 'An other event', '2014/01/11', '2014/01/15');
 // Display
 $calendar->show(true);
 ```
+
+![Screenshot of the last example](https://raw.github.com/trialog/SimpleCalendar/master/example/screenshot.png)
+
 
 ## Contribute
 
