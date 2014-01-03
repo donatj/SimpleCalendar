@@ -1,7 +1,7 @@
 {
 	"name" : "trialog/simplecalendar",
 	"description" : "A light easy to use calendar rendering library",
-	"version" : "0.5.0",
+	"version" : "v0.5.0",
 	"type" : "library",
 	"authors" : [{
 			"name" : "Jesse G. Donat",
