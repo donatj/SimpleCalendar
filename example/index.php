@@ -10,8 +10,8 @@
 <?php
 // error_reporting(E_ALL ^ E_WARNING);
 require_once(__DIR__.'/../vendor/autoload.php');
-use donatj\SimpleCalendar;
-use donatj\SimpleCalendarConst;
+use trialog\SimpleCalendar;
+use trialog\SimpleCalendarConst;
 
 $calendar = new SimpleCalendar('2014/1/4');
 $calendar->setStartOfWeek(SimpleCalendarConst::Monday);

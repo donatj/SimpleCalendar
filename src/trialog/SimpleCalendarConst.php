@@ -1,5 +1,5 @@
 <?php
-namespace donatj;
+namespace trialog;
 
 /**
  * Calendar helper: constants

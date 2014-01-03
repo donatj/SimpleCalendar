@@ -1,18 +1,23 @@
 {
-	"name" : "donatj/simplecalendar",
-	"description" : "A light, easy to use calendar rendering library",
+	"name" : "trialog/simplecalendar",
+	"description" : "A light easy to use calendar rendering library",
+	"version" : "0.5.0",
 	"type" : "library",
 	"authors" : [{
 			"name" : "Jesse G. Donat",
 			"email" : "donatj@gmail.com",
 			"homepage" : "http://donatstudios.com",
 			"role" : "Developer"
+		}, {
+			"name" : "Olivier Maridat",
+			"homepage" : "http://www.trialog.com",
+			"role" : "Developer"
 		}
 	],
 	"keywords" : [
 		"calendar"
 	],
-	"homepage" : "http://donatstudios.com/SimpleCalendar",
+	"homepage" : "https://github.com/trialog/SimpleCalendar",
 	"license" : [
 		"MIT"
 	],
@@ -21,7 +26,7 @@
 	},
 	"autoload" : {
 		"psr-0" : {
-			"donatj" : "src/"
+			"trialog" : "src/"
 		}
 	}
 }

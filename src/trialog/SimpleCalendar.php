@@ -1,5 +1,5 @@
 <?php
-namespace donatj;
+namespace trialog;
 
 /**
  * Simple Calendar

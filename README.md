@@ -1,40 +1,82 @@
 # Simple Calendar
 
-[![Latest Stable Version](https://poser.pugx.org/donatj/simplecalendar/v/stable.png)](https://packagist.org/packages/donatj/simplecalendar)
+[![Latest Stable Version](https://poser.pugx.org/trialog/simplecalendar/v/stable.png)](https://packagist.org/packages/trialog/simplecalendar)
 
-A very simple, easy to use PHP calendar rendering class.
+A very simple & easy to use PHP calendar rendering class.
+Forked from ![donatj/SimpleCalendar](https://github.com/donatj/SimpleCalendar).
 
 ## Requirements
 
   - PHP 5.3.0+
-
+  - Easier to use with Composer
+  
 ## Installing
 
-SimpleCalendar is available through Packagist via Composer.
+You can download and install this package manually or use Composer to install it.
+
+SimpleCalendar is available through Packagist via Composer, you can add the following to your composer.json file:
 
 ```json
 "require": {
-	"donatj/simplecalendar": "*"
+	"trialog/simplecalendar": "*"
 }
+
+Then, launch the installation via Composer:
+```bash
+php composer.phar install
+```
+
+To get Composer
+```bash
+wget http://getcomposer.org/composer.phar # To download Composer
 ```
 
 ## Sample Usage
 
+A quick example without Composer:
 ```php
 <?php
-require('SimpleCalendar.php');  
+require_once('vendor/trialog/src/trialog/SimpleCalendar.php');
 
-$Calendar = new donatj\SimpleCalendar('June 2010');  
+$Calendar = new trialog\SimpleCalendar();  
 $Calendar->show();
 ```
 
-or
+Another one using Composer:
 
 ```php
 <?php
-require('SimpleCalendar.php');  
+require_once('vendor/autoload.php');
+use trialog\SimpleCalendar;
 
-$Calendar = new donatj\SimpleCalendar();  
+$Calendar = new SimpleCalendar();  
 $Calendar->setDate('June 5 2010');  
 $Calendar->show();
 ```
+
+A more complex examples with translation to French and three events:
+
+```php
+<?php
+require_once('vendor/autoload.php');
+use trialog\SimpleCalendar;
+use trialog\SimpleCalendarConsts;
+
+// Config
+$calendar = new SimpleCalendar('2014/1/4');
+$calendar->setStartOfWeek(SimpleCalendarConst::Monday);
+$calendar->setDayNames(array('Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'));
+$calendar->setMonthNames(array('Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'));
+
+// Add events
+$calendar->addDailyHtml( 'Example d\'<strong>événement</strong>', SimpleCalendarConst::Yesterday, SimpleCalendarConst::Tomorrow, 'D\'autres petits détails...');
+$calendar->addDailyHtml( 'Sample event', SimpleCalendarConst::Yesterday);
+$calendar->addDailyHtml( 'An other event', '2014/01/11', '2014/01/15');
+
+// Display
+$calendar->show(true);
+```
+
+## License
+
+SimpleCalendar is licensed under the MIT License - see the LICENSE file for details
