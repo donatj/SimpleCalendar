@@ -14,7 +14,7 @@ SimpleCalendar is available through Packagist via Composer.
 
 ```json
 "require": {
-	"donatj/simplecalendar": "*"
+	"donatj/simplecalendar": "0.*"
 }
 ```
 
