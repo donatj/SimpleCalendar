@@ -1,12 +1,13 @@
 table.SimpleCalendar {
-	font-family: Arial;
 	border-collapse: collapse;
+	width: 99%;
+	margin: 0 auto;
 }
 
 table.SimpleCalendar th {
+	text-align:center;
 	background: #C9E9F0;
 	color: #0092B4;
-	font-size: 11px;
 	padding: 9px 2px 7px 2px;
 	border: 1px solid #bbb;
 	border-bottom: 2px solid #bbb;
@@ -21,7 +22,7 @@ table.SimpleCalendar tbody td {
 }
 
 table.SimpleCalendar tbody td time {
-	font-size: .7em;
+	font-size: .8em;
 	display: block;
 	background: white;
 	padding: 2px;
@@ -36,10 +37,10 @@ table.SimpleCalendar tbody td.SCsuffix,table.SimpleCalendar tbody td.SCprefix
 
 table.SimpleCalendar tbody td div.event {
 	color: #355;
-	font-size: .65em;
+	font-size: .9em;
 	margin: 2px;
-	padding: 5px;
-	line-height: 1em;
+	padding: 3px;
+	line-height: 1.2em;
 	border-bottom: 1px solid #bbb;
 	background: #858585;
 	color: white;
@@ -66,11 +67,16 @@ table.SimpleCalendar tbody td div.event.hasPrevious.hasNext {
 
 table.SimpleCalendar tbody td div.event .eventdetails {
 	display: none;
+	line-height: 1em;
+	font-size: .8em;
+	font-style: italic;
+	border-top: 1px dashed lightgrey;
+	margin-top: 10px;
+	padding-top: 5px;
 }
 
 table.SimpleCalendar tbody td div.event:hover .eventdetails {
 	display: inline-block;
-	font-style: italic;
 }
 
 table.SimpleCalendar tbody td.today {

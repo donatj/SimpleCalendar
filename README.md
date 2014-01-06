@@ -18,7 +18,7 @@ You can download and install this package manually or use Composer to install it
 SimpleCalendar is available through Packagist via Composer, you can add the following to your composer.json file
 ```json
 "require": {
-	"trialog/simplecalendar": "v0.5.*"
+	"trialog/simplecalendar": "0.5.*"
 }
 ```
 
@@ -59,7 +59,7 @@ A more complex example with translation to French and three events
 <?php
 require_once('vendor/autoload.php');
 use trialog\SimpleCalendar;
-use trialog\SimpleCalendarConsts;
+use trialog\SimpleCalendarConst;
 
 // Config
 $calendar = new SimpleCalendar('2014/1/4');

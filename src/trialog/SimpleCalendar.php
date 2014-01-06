@@ -28,6 +28,8 @@ class SimpleCalendar
 	 */
 	private $wday_names = false;
 	private $wmonth_names = false;
+	private $command_names;
+	private $url_pattern;
 
 	/**
 	 * Constructor - Calls the setDate function
@@ -39,6 +41,8 @@ class SimpleCalendar
 	function __construct($date_string = null)
 	{
 		$this->setDate($date_string);
+		$this->setCommandNames(false);
+		$this->setUrlPattern(false);
 	}
 
 	/**
@@ -82,6 +86,34 @@ class SimpleCalendar
 		$this->wmonth_names = false;
 		if (!empty($month_names) && $month_names) {
 			$this->wmonth_names = $month_names;
+		}
+	}
+	
+	/**
+	 * Sets the command names for the calendar
+	 *
+	 * @param bool|array $command_names
+	 *        	String array of the name of the commands (previous, next). If null or false, the english version is used.
+	 */
+	public function setCommandNames($command_names)
+	{
+		$this->command_names = array('Previous', 'Next');
+		if (!empty($command_names) && $command_names) {
+			$this->command_names = $command_names;
+		}
+	}
+	
+	/**
+	 * Sets the command names for the calendar
+	 *
+	 * @param bool|array $command_names
+	 *        	String array of the name of the commands (previous, next). If null or false, the english version is used.
+	 */
+	public function setUrlPattern($url_pattern)
+	{
+		$this->url_pattern = '?month=';
+		if (!empty($url_pattern) && $url_pattern) {
+			$this->url_pattern = $url_pattern;
 		}
 	}
 
@@ -154,10 +186,10 @@ class SimpleCalendar
 	 * Show the Calendars current date
 	 *
 	 * @param bool $echo
-	 *        	Whether to echo resulting calendar
+	 *        	Whether to echo resulting calendar. False by default.
 	 * @return string
 	 */
-	public function show($echo = true)
+	public function show($echo = false)
 	{
 		if ($this->wday_names) {
 			$wdays = $this->wday_names;
@@ -179,7 +211,22 @@ class SimpleCalendar
 		$wday = date('N', mktime(0, 0, 1, $this->now['mon'], 1, $this->now['year'])) - $this->offset;
 		$no_days = cal_days_in_month(CAL_GREGORIAN, $this->now['mon'], $this->now['year']);
 		
-		$out = '<table cellpadding="0" cellspacing="0" class="SimpleCalendar"><caption>'. $wmonths[$this->now['mon']-1].($this->now['year'] != date('Y') ? ' '.$this->now['year'] : '').'</caption><thead><tr>';
+		$previousMonth = $this->now['year'].'/'.($this->now['mon']-1).'/01';
+		$nextMonth = $this->now['year'].'/'.($this->now['mon']+1).'/01';
+		if (1 == $this->now['mon']) {
+			$previousMonth = ($this->now['year']-1).'/12/01';
+			$nextMonth = $this->now['year'].'/02/01';
+		}
+		elseif (12 == $this->now['mon']) {
+			$previousMonth = $this->now['year'].'/11/01';
+			$nextMonth = ($this->now['year']+1).'/01/01';
+		}
+		$out = '<table cellpadding="0" cellspacing="0" class="SimpleCalendar">
+			<caption>
+				<a href="'.$this->url_pattern.$previousMonth.'">&#60; '.$this->command_names[0].'</a>&#160;&#160;&#160;
+				'. $wmonths[$this->now['mon']-1].($this->now['year'] != date('Y') ? ' '.$this->now['year'] : '').'
+				&#160;&#160;&#160;<a href="'.$this->url_pattern.$nextMonth.'">'.$this->command_names[1].' &#62;</a>
+			</caption><thead><tr>';
 		
 		for ($i = 0; $i < 7; $i ++) {
 			$out .= '<th>' . $wdays[$i] . '</th>';
