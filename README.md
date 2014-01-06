@@ -4,7 +4,7 @@
 
 A very simple & easy to use PHP calendar rendering class.
 
-Forked from ![donatj/SimpleCalendar](https://github.com/donatj/SimpleCalendar).
+Forked from [donatj/SimpleCalendar](https://github.com/donatj/SimpleCalendar).
 
 ## Requirements
 
