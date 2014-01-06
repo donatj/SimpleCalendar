@@ -104,15 +104,15 @@ class SimpleCalendar
 	}
 	
 	/**
-	 * Sets the command names for the calendar
+	 * Sets the URL pattern to select an previous/next month on thee calendar
 	 *
-	 * @param bool|array $command_names
-	 *        	String array of the name of the commands (previous, next). If null or false, the english version is used.
+	 * @param bool|string $url_pattern
+	 *        	String url pattern to select previous / next month. If false, the default pattern is used : ?month=.
 	 */
 	public function setUrlPattern($url_pattern)
 	{
 		$this->url_pattern = '?month=';
-		if (!empty($url_pattern) && $url_pattern) {
+		if (false !== $url_pattern) {
 			$this->url_pattern = $url_pattern;
 		}
 	}
