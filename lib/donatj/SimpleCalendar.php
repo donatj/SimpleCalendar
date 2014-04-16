@@ -134,22 +134,13 @@ class SimpleCalendar {
 
 		$out .= "</tr></thead>\n<tbody>\n<tr>";
 
-		
-		
+		$wday = ($wday + 7) % 7;
+
 		if( $wday == 7 ) {
-	            $wday = 0;
-	        } else if($wday<0){
-	            for($i=0; $i<7+$wday; $i++){
-	                $out .='<td class="SCprefix">&nbsp;</td>';
-	            }
-	
-	            $wday = (7+$wday);
-	
-	        }else{
-	            $out .= str_repeat('<td class="SCprefix">&nbsp;</td>', $wday );
-	        }
-			
-		
+			$wday = 0;
+		} else {
+			$out .= str_repeat('<td class="SCprefix">&nbsp;</td>', $wday);
+		}
 
 		$count = $wday + 1;
 		for( $i = 1; $i <= $no_days; $i++ ) {
