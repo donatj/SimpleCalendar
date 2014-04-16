@@ -57,10 +57,6 @@ Constructor - Calls the setDate function
 - ***null*** | ***string*** `$date_string`
 
 
-##### Returns:
-
-- ***\donatj\SimpleCalendar***
-
 
 ---
 
@@ -131,6 +127,4 @@ Returns/Outputs the Calendar
 ##### Returns:
 
 - ***string*** - HTML of the Calendar
-
-Different Level
 

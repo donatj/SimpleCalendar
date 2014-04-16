@@ -50,6 +50,5 @@ $Calendar->show();
                 <recursivedirectory name="lib"/>
             </section>
         </section>
-		<text>Different Level</text>
 	</docpage>
 </mddoc>

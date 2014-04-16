@@ -28,7 +28,6 @@ class SimpleCalendar {
 	 *
 	 * @see setDate
 	 * @param null|string $date_string
-	 * @return SimpleCalendar
 	 */
 	function __construct( $date_string = null ) {
 		$this->setDate($date_string);
@@ -142,7 +141,7 @@ class SimpleCalendar {
 			}
 
 			if( is_array($dHtml_arr) ) {
-				foreach( $dHtml_arr as $eid => $dHtml ) {
+				foreach( $dHtml_arr as $dHtml ) {
 					$out .= '<div class="event">' . $dHtml . '</div>';
 				}
 			}
