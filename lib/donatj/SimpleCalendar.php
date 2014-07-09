@@ -102,6 +102,7 @@ class SimpleCalendar {
 			$wdays = $this->wday_names;
 		} else {
 			$today = (86400 * (date("N")));
+			$wdays = array();
 			for( $i = 0; $i < 7; $i++ ) {
 				$wdays[] = strftime('%a', time() - $today + ($i * 86400));
 			}
