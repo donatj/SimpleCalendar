@@ -19,7 +19,7 @@ class SimpleCalendar {
 	 */
 	public $wday_names = false;
 
-	private $now = false;
+	private $now;
 	private $daily_html = array();
 	private $offset = 0;
 
