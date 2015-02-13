@@ -20,7 +20,7 @@ class SimpleCalendar {
 	public $wday_names = false;
 
 	private $now;
-	private $daily_html = array();
+	private $dailyHtml = array();
 	private $offset = 0;
 
 	/**
@@ -66,17 +66,16 @@ class SimpleCalendar {
 		do {
 			$tDate = getdate($working_date);
 			$working_date += 86400;
-			$this->daily_html[$tDate['year']][$tDate['mon']][$tDate['mday']][$htmlCount] = $html;
+			$this->dailyHtml[$tDate['year']][$tDate['mon']][$tDate['mday']][$htmlCount] = $html;
 		} while( $working_date < $end_date + 1 );
 
 		$htmlCount++;
-
 	}
 
 	/**
 	 * Clear all daily events for the calendar
 	 */
-	public function clearDailyHtml() { $this->daily_html = array(); }
+	public function clearDailyHtml() { $this->dailyHtml = array(); }
 
 	/**
 	 * Sets the first day of the week
@@ -108,7 +107,7 @@ class SimpleCalendar {
 			}
 		}
 
-		$this->array_rotate($wdays, $this->offset);
+		$this->arrayRotate($wdays, $this->offset);
 		$wday    = date('N', mktime(0, 0, 1, $this->now['mon'], 1, $this->now['year'])) - $this->offset;
 		$no_days = cal_days_in_month(CAL_GREGORIAN, $this->now['mon'], $this->now['year']);
 
@@ -137,8 +136,8 @@ class SimpleCalendar {
 			$out .= '<time datetime="' . date('Y-m-d', $datetime) . '">' . $i . '</time>';
 
 			$dHtml_arr = false;
-			if( isset($this->daily_html[$this->now['year']][$this->now['mon']][$i]) ) {
-				$dHtml_arr = $this->daily_html[$this->now['year']][$this->now['mon']][$i];
+			if( isset($this->dailyHtml[$this->now['year']][$this->now['mon']][$i]) ) {
+				$dHtml_arr = $this->dailyHtml[$this->now['year']][$this->now['mon']][$i];
 			}
 
 			if( is_array($dHtml_arr) ) {
@@ -163,7 +162,7 @@ class SimpleCalendar {
 		return $out;
 	}
 
-	private function array_rotate( &$data, $steps ) {
+	private function arrayRotate( &$data, $steps ) {
 		$count = count($data);
 		if( $steps < 0 ) {
 			$steps = $count + $steps;
@@ -173,5 +172,4 @@ class SimpleCalendar {
 			array_push($data, array_shift($data));
 		}
 	}
-
 }
