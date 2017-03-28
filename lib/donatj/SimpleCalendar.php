@@ -148,8 +148,8 @@ class SimpleCalendar {
 
 			$out .= "</td>";
 
-			if( $count > 6 ) {
-				$out .= "</tr>\n" . ($i != $count ? '<tr>' : '');
+			if( $count > 6 && $i < $no_days ) {
+				$out   .= "</tr>\n" . ($i != $count ? '<tr>' : '');
 				$count = 0;
 			}
 			$count++;
