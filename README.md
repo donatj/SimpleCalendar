@@ -3,6 +3,7 @@
 [![Latest Stable Version](https://poser.pugx.org/donatj/simplecalendar/v/stable.png)](https://packagist.org/packages/donatj/simplecalendar)
 [![License](https://poser.pugx.org/donatj/simplecalendar/license.svg)](https://packagist.org/packages/donatj/simplecalendar)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/donatj/SimpleCalendar/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/donatj/SimpleCalendar/?branch=master)
+[![Build Status](https://travis-ci.org/donatj/SimpleCalendar.svg?branch=master)](https://travis-ci.org/donatj/SimpleCalendar)
 
 A very simple, easy to use PHP calendar rendering class.
 
