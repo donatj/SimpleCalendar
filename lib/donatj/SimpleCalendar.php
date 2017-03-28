@@ -29,7 +29,7 @@ class SimpleCalendar {
 	 * @see setDate
 	 * @param null|string $date_string
 	 */
-	function __construct( $date_string = null ) {
+	public function __construct( $date_string = null ) {
 		$this->setDate($date_string);
 	}
 
@@ -163,7 +163,11 @@ class SimpleCalendar {
 		return $out;
 	}
 
-	private function arrayRotate( &$data, $steps ) {
+	/**
+	 * @param array $data
+	 * @param int $steps
+	 */
+	private function arrayRotate( array &$data, $steps ) {
 		$count = count($data);
 		if( $steps < 0 ) {
 			$steps = $count + $steps;
