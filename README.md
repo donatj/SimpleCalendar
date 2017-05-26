@@ -10,26 +10,25 @@ A very simple, easy to use PHP calendar rendering class.
 
 ## Requirements
 
-- PHP 5.3.0+
-- ext-calendar
+- **php**: >=5.3.0
+- **ext-calendar**: *
 
 ## Installing
 
-SimpleCalendar is available through Packagist via Composer.
+Install the latest version with:
 
-```json
-"require": {
-	"donatj/simplecalendar": "0.*"
-}
+```bash
+composer require 'donatj/simplecalendar'
 ```
 
 ## Sample Usage
 
+					
 ```php
 <?php
-require('SimpleCalendar.php');  
+require('SimpleCalendar.php');
 
-$Calendar = new donatj\SimpleCalendar('June 2010');  
+$Calendar = new donatj\SimpleCalendar('June 2010');
 $Calendar->show();
 ```
 
@@ -37,14 +36,12 @@ or
 
 ```php
 <?php
-require('SimpleCalendar.php');  
+require('SimpleCalendar.php');
 
-$Calendar = new donatj\SimpleCalendar();  
-$Calendar->setDate('June 5 2010');  
+$Calendar = new donatj\SimpleCalendar();
+$Calendar->setDate('June 5 2010');
 $Calendar->show();
 ```
-
-
 
 ## Documentation
 
@@ -65,7 +62,7 @@ class SimpleCalendar {
 }
 ```
 
-#### Method: `SimpleCalendar->__construct`
+#### Method: SimpleCalendar->__construct
 
 ```php
 function __construct([ $date_string = null])
@@ -79,7 +76,7 @@ Constructor - Calls the setDate function
 
 ---
 
-#### Method: `SimpleCalendar->setDate`
+#### Method: SimpleCalendar->setDate
 
 ```php
 function setDate([ $date_string = null])
@@ -93,7 +90,7 @@ Sets the date for the calendar
 
 ---
 
-#### Method: `SimpleCalendar->addDailyHtml`
+#### Method: SimpleCalendar->addDailyHtml
 
 ```php
 function addDailyHtml($html, $start_date_string [, $end_date_string = null])
@@ -109,7 +106,7 @@ Add a daily event to the calendar
 
 ---
 
-#### Method: `SimpleCalendar->clearDailyHtml`
+#### Method: SimpleCalendar->clearDailyHtml
 
 ```php
 function clearDailyHtml()
@@ -119,7 +116,7 @@ Clear all daily events for the calendar
 
 ---
 
-#### Method: `SimpleCalendar->setStartOfWeek`
+#### Method: SimpleCalendar->setStartOfWeek
 
 ```php
 function setStartOfWeek($offset)
@@ -133,7 +130,7 @@ Sets the first day of the week
 
 ---
 
-#### Method: `SimpleCalendar->show`
+#### Method: SimpleCalendar->show
 
 ```php
 function show([ $echo = true])
