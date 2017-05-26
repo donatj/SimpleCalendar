@@ -10,8 +10,8 @@ A very simple, easy to use PHP calendar rendering class.
 
 ## Requirements
 
-  - PHP 5.3.0+
-  - ext-calendar
+- PHP 5.3.0+
+- ext-calendar
 
 ## Installing
 
@@ -48,11 +48,28 @@ $Calendar->show();
 
 ## Documentation
 
-### Class: SimpleCalendar \[ `\donatj` \]
+### Class: \donatj\SimpleCalendar
 
 Simple Calendar
 
-#### Method: `SimpleCalendar->__construct([ $date_string = null])`
+```php
+<?php
+namespace donatj;
+
+class SimpleCalendar {
+	/**
+	 * Array of Week Day Names
+	 * @var array|false
+	 */
+	public $wday_names = false;
+}
+```
+
+#### Method: `SimpleCalendar->__construct`
+
+```php
+function __construct([ $date_string = null])
+```
 
 Constructor - Calls the setDate function
 
@@ -62,7 +79,11 @@ Constructor - Calls the setDate function
 
 ---
 
-#### Method: `SimpleCalendar->setDate([ $date_string = null])`
+#### Method: `SimpleCalendar->setDate`
+
+```php
+function setDate([ $date_string = null])
+```
 
 Sets the date for the calendar
 
@@ -72,7 +93,11 @@ Sets the date for the calendar
 
 ---
 
-#### Method: `SimpleCalendar->addDailyHtml($html, $start_date_string [, $end_date_string = null])`
+#### Method: `SimpleCalendar->addDailyHtml`
+
+```php
+function addDailyHtml($html, $start_date_string [, $end_date_string = null])
+```
 
 Add a daily event to the calendar
 
@@ -84,13 +109,21 @@ Add a daily event to the calendar
 
 ---
 
-#### Method: `SimpleCalendar->clearDailyHtml()`
+#### Method: `SimpleCalendar->clearDailyHtml`
+
+```php
+function clearDailyHtml()
+```
 
 Clear all daily events for the calendar
 
 ---
 
-#### Method: `SimpleCalendar->setStartOfWeek($offset)`
+#### Method: `SimpleCalendar->setStartOfWeek`
+
+```php
+function setStartOfWeek($offset)
+```
 
 Sets the first day of the week
 
@@ -100,7 +133,11 @@ Sets the first day of the week
 
 ---
 
-#### Method: `SimpleCalendar->show([ $echo = true])`
+#### Method: `SimpleCalendar->show`
+
+```php
+function show([ $echo = true])
+```
 
 Returns/Outputs the Calendar
 

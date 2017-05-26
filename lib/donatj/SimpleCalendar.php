@@ -15,7 +15,7 @@ class SimpleCalendar {
 	/**
 	 * Array of Week Day Names
 	 *
-	 * @var array
+	 * @var array|false
 	 */
 	public $wday_names = false;
 
