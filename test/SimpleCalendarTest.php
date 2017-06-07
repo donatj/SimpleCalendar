@@ -23,6 +23,15 @@ class SimpleCalendarTest extends PHPUnit_Framework_TestCase {
 		$this->assertSame(substr_count($html, '<td'), substr_count($html, '</td'));
 	}
 
+	public function testTagOpenCloseMismatch_regression2() {
+		$cal = new \donatj\SimpleCalendar();
+		$cal->setDate('January 2017');
+		$html = $cal->show(false);
+
+		$this->assertSame(substr_count($html, '<tr'), substr_count($html, '</tr'));
+		$this->assertSame(substr_count($html, '<td'), substr_count($html, '</td'));
+	}
+
 	public function testGenericGeneration() {
 		$cal = new \donatj\SimpleCalendar("June 5 2016");
 
