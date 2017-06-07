@@ -149,13 +149,14 @@ class SimpleCalendar {
 
 			$out .= "</td>";
 
-			if( $count > 6 && $i < $no_days ) {
-				$out   .= "</tr>\n" . ($i != $count ? '<tr>' : '');
+			if( $count > 6 ) {
+				$out .= "</tr>\n" . ($i < $no_days ? '<tr>' : '');
 				$count = 0;
 			}
 			$count++;
 		}
-		$out .= ($count != 1 ? str_repeat('<td class="SCsuffix">&nbsp;</td>', 8 - $count) : '') . "</tr>\n</tbody></table>\n";
+		$out .= ( $count != 1 ) ? str_repeat('<td class="SCsuffix">&nbsp;</td>', 8 - $count) . '</tr>' : '';
+		$out .= "\n</tbody></table>\n";
 		if( $echo ) {
 			echo $out;
 		}
