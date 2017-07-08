@@ -20,17 +20,19 @@ class SimpleCalendar {
 	public $wday_names = false;
 
 	private $now;
+	private $classes;
 	private $dailyHtml = array();
 	private $offset = 0;
 
 	/**
-	 * Constructor - Calls the setDate function
+	 * Constructor - Calls the setDate and setCalendarClasses functions
 	 *
 	 * @see setDate
 	 * @param null|string $date_string
 	 */
 	public function __construct( $date_string = null ) {
 		$this->setDate($date_string);
+		$this->setCalendarClasses();
 	}
 
 	/**
@@ -44,6 +46,28 @@ class SimpleCalendar {
 		} else {
 			$this->now = getdate();
 		}
+	}
+
+	/**
+	 * Sets the class names used by the calendar
+	 *
+	 * @param array $classes Array with classnames used by the calendar
+	 */
+	public function setCalendarClasses( $classes = null ) {
+		$defaults = array(
+			'calendar' => 'SimpleCalendar',
+			'prefix'   => 'SCprefix',
+			'suffix'   => 'SCsuffix',
+			'today'    => 'today',
+			'event'    => 'event',
+			'events'   => 'events',
+		);
+
+		if( ! $classes || ! is_array( $classes ) ) {
+			$classes = $defaults;
+		}
+
+		$this->classes = array_merge( $defaults, $classes );
 	}
 
 	/**
@@ -112,7 +136,7 @@ class SimpleCalendar {
 		$wday    = date('N', mktime(0, 0, 1, $this->now['mon'], 1, $this->now['year'])) - $this->offset;
 		$no_days = cal_days_in_month(CAL_GREGORIAN, $this->now['mon'], $this->now['year']);
 
-		$out = '<table cellpadding="0" cellspacing="0" class="SimpleCalendar"><thead><tr>';
+		$out = '<table cellpadding="0" cellspacing="0" class="' . $this->classes['calendar'] . '"><thead><tr>';
 
 		for( $i = 0; $i < 7; $i++ ) {
 			$out .= '<th>' . $wdays[$i] . '</th>';
@@ -125,12 +149,12 @@ class SimpleCalendar {
 		if( $wday == 7 ) {
 			$wday = 0;
 		} else {
-			$out .= str_repeat('<td class="SCprefix">&nbsp;</td>', $wday);
+			$out .= str_repeat('<td class="' . $this->classes['prefix'] . '">&nbsp;</td>', $wday);
 		}
 
 		$count = $wday + 1;
 		for( $i = 1; $i <= $no_days; $i++ ) {
-			$out .= '<td' . ($i == $this->now['mday'] && $this->now['mon'] == date('n') && $this->now['year'] == date('Y') ? ' class="today"' : '') . '>';
+			$out .= '<td' . ($i == $this->now['mday'] && $this->now['mon'] == date('n') && $this->now['year'] == date('Y') ? ' class="' . $this->classes['today'] .'"' : '') . '>';
 
 			$datetime = mktime(0, 0, 1, $this->now['mon'], $i, $this->now['year']);
 
@@ -142,9 +166,11 @@ class SimpleCalendar {
 			}
 
 			if( is_array($dHtml_arr) ) {
+				$out .= '<div class="' . $this->classes['events'] . '">';
 				foreach( $dHtml_arr as $dHtml ) {
-					$out .= '<div class="event">' . $dHtml . '</div>';
+					$out .= '<div class="' . $this->classes['event'] . '">' . $dHtml . '</div>';
 				}
+				$out .= '</div>';
 			}
 
 			$out .= "</td>";
@@ -155,7 +181,7 @@ class SimpleCalendar {
 			}
 			$count++;
 		}
-		$out .= ( $count != 1 ) ? str_repeat('<td class="SCsuffix">&nbsp;</td>', 8 - $count) . '</tr>' : '';
+		$out .= ( $count != 1 ) ? str_repeat('<td class="' . $this->classes['suffix'] . '">&nbsp;</td>', 8 - $count) . '</tr>' : '';
 		$out .= "\n</tbody></table>\n";
 		if( $echo ) {
 			echo $out;
