@@ -145,3 +145,29 @@ Returns/Outputs the Calendar
 ##### Returns:
 
 - ***string*** - HTML of the Calendar
+
+---
+
+#### Method: SimpleCalendar->setCalendarClasses
+
+```php
+function setCalendarClasses([ $classes = null ])
+```
+
+Sets the class names used in the calendar
+
+##### Parameters:
+
+- ***array*** `$classes` - Array with classes used in the calendar
+
+The default classes uses in the calendar are
+```php
+$classes = array(
+	'calendar'      => 'SimpleCalendar',
+	'leading_day'   => 'SCprefix',
+	'trailing_day'  => 'SCsuffix',
+	'today'         => 'today',
+	'event'         => 'event',
+	'events'        => 'events',
+);
+```
