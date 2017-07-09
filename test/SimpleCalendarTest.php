@@ -29,12 +29,12 @@ class SimpleCalendarTest extends PHPUnit_Framework_TestCase {
 	public function testCustomCallendarClasses() {
 		$cal = new \donatj\SimpleCalendar();
 		$classes = array(
-			'calendar' => 'TestCalendar',
-			'prefix'   => 'TestPrefix',
-			'suffix'   => 'TestSuffix',
-			'today'    => 'TestToday',
-			'event'    => 'TestEvent',
-			'events'   => 'TestEvents',
+			'calendar'     => 'TestCalendar',
+			'leading_day'  => 'TestPrefix',
+			'trailing_day' => 'TestSuffix',
+			'today'        => 'TestToday',
+			'event'        => 'TestEvent',
+			'events'       => 'TestEvents',
 		);
 
 		$cal->setCalendarClasses( $classes );

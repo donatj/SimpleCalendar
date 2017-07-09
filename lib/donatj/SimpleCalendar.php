@@ -49,18 +49,18 @@ class SimpleCalendar {
 	}
 
 	/**
-	 * Sets the class names used by the calendar
+	 * Sets the class names used in the calendar
 	 *
 	 * @param array $classes Array with classnames used by the calendar
 	 */
 	public function setCalendarClasses( $classes = null ) {
 		$defaults = array(
-			'calendar' => 'SimpleCalendar',
-			'prefix'   => 'SCprefix',
-			'suffix'   => 'SCsuffix',
-			'today'    => 'today',
-			'event'    => 'event',
-			'events'   => 'events',
+			'calendar'      => 'SimpleCalendar',
+			'leading_day'   => 'SCprefix',
+			'trailing_day'  => 'SCsuffix',
+			'today'         => 'today',
+			'event'         => 'event',
+			'events'        => 'events',
 		);
 
 		if( ! $classes || ! is_array( $classes ) ) {
@@ -149,7 +149,7 @@ class SimpleCalendar {
 		if( $wday == 7 ) {
 			$wday = 0;
 		} else {
-			$out .= str_repeat('<td class="' . $this->classes['prefix'] . '">&nbsp;</td>', $wday);
+			$out .= str_repeat('<td class="' . $this->classes['leading_day'] . '">&nbsp;</td>', $wday);
 		}
 
 		$count = $wday + 1;
@@ -181,7 +181,7 @@ class SimpleCalendar {
 			}
 			$count++;
 		}
-		$out .= ( $count != 1 ) ? str_repeat('<td class="' . $this->classes['suffix'] . '">&nbsp;</td>', 8 - $count) . '</tr>' : '';
+		$out .= ( $count != 1 ) ? str_repeat('<td class="' . $this->classes['trailing_day'] . '">&nbsp;</td>', 8 - $count) . '</tr>' : '';
 		$out .= "\n</tbody></table>\n";
 		if( $echo ) {
 			echo $out;
