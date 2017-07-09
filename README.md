@@ -158,9 +158,9 @@ Sets the class names used in the calendar
 
 ##### Parameters:
 
-- ***array*** `$classes` - Array with classes used in the calendar
+- ***null*** | ***array*** `$classes` - Array with classes used in the calendar
 
-The default classes uses in the calendar are
+The default classes used in the calendar are
 ```php
 $classes = array(
 	'calendar'      => 'SimpleCalendar',
