@@ -3,6 +3,7 @@
 [![Latest Stable Version](https://poser.pugx.org/donatj/simplecalendar/version)](https://packagist.org/packages/donatj/simplecalendar)
 [![License](https://poser.pugx.org/donatj/simplecalendar/license)](https://packagist.org/packages/donatj/simplecalendar)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/donatj/SimpleCalendar/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/donatj/SimpleCalendar)
+[![Code Coverage](https://scrutinizer-ci.com/g/donatj/SimpleCalendar/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/donatj/SimpleCalendar)
 [![Build Status](https://travis-ci.org/donatj/SimpleCalendar.svg?branch=master)](https://travis-ci.org/donatj/SimpleCalendar)
 
 
