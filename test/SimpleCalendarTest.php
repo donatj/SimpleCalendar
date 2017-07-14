@@ -1,6 +1,5 @@
 <?php
 
-
 class SimpleCalendarTest extends PHPUnit_Framework_TestCase {
 
 	public function testCurrentMonth() {
@@ -10,17 +9,17 @@ class SimpleCalendarTest extends PHPUnit_Framework_TestCase {
 
 	public function testCallendarClasses() {
 		$cal = new \donatj\SimpleCalendar();
-		$defaults = array(
+		$defaults = [
 			'SimpleCalendar',
 			'SCprefix',
 			'SCsuffix',
 			'today',
 			'event',
 			'events',
-		);
+		];
 
 		$cal->addDailyHtml( 'Sample Event', 'today' );
-        $cal_html = $cal->show(false);
+		$cal_html = $cal->show(false);
 		foreach( $defaults as $class ) {
 			$this->assertContains('class="' . $class . '"', $cal_html);
 		}
@@ -28,14 +27,14 @@ class SimpleCalendarTest extends PHPUnit_Framework_TestCase {
 
 	public function testCustomCallendarClasses() {
 		$cal = new \donatj\SimpleCalendar();
-		$classes = array(
+		$classes = [
 			'calendar'     => 'TestCalendar',
 			'leading_day'  => 'TestPrefix',
 			'trailing_day' => 'TestSuffix',
 			'today'        => 'TestToday',
 			'event'        => 'TestEvent',
 			'events'       => 'TestEvents',
-		);
+		];
 
 		$cal->setCalendarClasses( $classes );
 		$cal->addDailyHtml( 'Sample Event', 'today' );
@@ -75,71 +74,70 @@ class SimpleCalendarTest extends PHPUnit_Framework_TestCase {
 
 		$tableArray = $this->parseCalendarHtml($cal);
 
-		$expected = array(
-			array(
-				array( 'class' => '', 'text' => 'Sun', ),
-				array( 'class' => '', 'text' => 'Mon', ),
-				array( 'class' => '', 'text' => 'Tue', ),
-				array( 'class' => '', 'text' => 'Wed', ),
-				array( 'class' => '', 'text' => 'Thu', ),
-				array( 'class' => '', 'text' => 'Fri', ),
-				array( 'class' => '', 'text' => 'Sat', ),
-			),
+		$expected = [
+			[
+				[ 'class' => '', 'text' => 'Sun', ],
+				[ 'class' => '', 'text' => 'Mon', ],
+				[ 'class' => '', 'text' => 'Tue', ],
+				[ 'class' => '', 'text' => 'Wed', ],
+				[ 'class' => '', 'text' => 'Thu', ],
+				[ 'class' => '', 'text' => 'Fri', ],
+				[ 'class' => '', 'text' => 'Sat', ],
+			],
 
-			array(
-				array( 'class' => 'SCprefix', 'text' => ' ', ),
-				array( 'class' => 'SCprefix', 'text' => ' ', ),
-				array( 'class' => 'SCprefix', 'text' => ' ', ),
-				array( 'class' => '', 'text' => '1', 'date' => '2016-06-01', ),
-				array( 'class' => '', 'text' => '2', 'date' => '2016-06-02', ),
-				array( 'class' => '', 'text' => '3', 'date' => '2016-06-03', ),
-				array( 'class' => '', 'text' => '4', 'date' => '2016-06-04', ),
-			),
+			[
+				[ 'class' => 'SCprefix', 'text' => ' ', ],
+				[ 'class' => 'SCprefix', 'text' => ' ', ],
+				[ 'class' => 'SCprefix', 'text' => ' ', ],
+				[ 'class' => '', 'text' => '1', 'date' => '2016-06-01', ],
+				[ 'class' => '', 'text' => '2', 'date' => '2016-06-02', ],
+				[ 'class' => '', 'text' => '3', 'date' => '2016-06-03', ],
+				[ 'class' => '', 'text' => '4', 'date' => '2016-06-04', ],
+			],
 
-			array(
-				array( 'class' => '', 'text' => '5', 'date' => '2016-06-05', ),
-				array( 'class' => '', 'text' => '6', 'date' => '2016-06-06', ),
-				array( 'class' => '', 'text' => '7', 'date' => '2016-06-07', ),
-				array( 'class' => '', 'text' => '8', 'date' => '2016-06-08', ),
-				array( 'class' => '', 'text' => '9', 'date' => '2016-06-09', ),
-				array( 'class' => '', 'text' => '10', 'date' => '2016-06-10', ),
-				array( 'class' => '', 'text' => '11', 'date' => '2016-06-11', ),
-			),
+			[
+				[ 'class' => '', 'text' => '5', 'date' => '2016-06-05', ],
+				[ 'class' => '', 'text' => '6', 'date' => '2016-06-06', ],
+				[ 'class' => '', 'text' => '7', 'date' => '2016-06-07', ],
+				[ 'class' => '', 'text' => '8', 'date' => '2016-06-08', ],
+				[ 'class' => '', 'text' => '9', 'date' => '2016-06-09', ],
+				[ 'class' => '', 'text' => '10', 'date' => '2016-06-10', ],
+				[ 'class' => '', 'text' => '11', 'date' => '2016-06-11', ],
+			],
 
-			array(
-				array( 'class' => '', 'text' => '12', 'date' => '2016-06-12', ),
-				array( 'class' => '', 'text' => '13', 'date' => '2016-06-13', ),
-				array( 'class' => '', 'text' => '14', 'date' => '2016-06-14', ),
-				array( 'class' => '', 'text' => '15', 'date' => '2016-06-15', ),
-				array( 'class' => '', 'text' => '16', 'date' => '2016-06-16', ),
-				array( 'class' => '', 'text' => '17', 'date' => '2016-06-17', ),
-				array( 'class' => '', 'text' => '18', 'date' => '2016-06-18', ),
-			),
+			[
+				[ 'class' => '', 'text' => '12', 'date' => '2016-06-12', ],
+				[ 'class' => '', 'text' => '13', 'date' => '2016-06-13', ],
+				[ 'class' => '', 'text' => '14', 'date' => '2016-06-14', ],
+				[ 'class' => '', 'text' => '15', 'date' => '2016-06-15', ],
+				[ 'class' => '', 'text' => '16', 'date' => '2016-06-16', ],
+				[ 'class' => '', 'text' => '17', 'date' => '2016-06-17', ],
+				[ 'class' => '', 'text' => '18', 'date' => '2016-06-18', ],
+			],
 
-			array(
-				array( 'class' => '', 'text' => '19', 'date' => '2016-06-19', ),
-				array( 'class' => '', 'text' => '20', 'date' => '2016-06-20', ),
-				array( 'class' => '', 'text' => '21', 'date' => '2016-06-21', ),
-				array( 'class' => '', 'text' => '22', 'date' => '2016-06-22', ),
-				array( 'class' => '', 'text' => '23', 'date' => '2016-06-23', ),
-				array( 'class' => '', 'text' => '24', 'date' => '2016-06-24', ),
-				array( 'class' => '', 'text' => '25', 'date' => '2016-06-25', ),
-			),
+			[
+				[ 'class' => '', 'text' => '19', 'date' => '2016-06-19', ],
+				[ 'class' => '', 'text' => '20', 'date' => '2016-06-20', ],
+				[ 'class' => '', 'text' => '21', 'date' => '2016-06-21', ],
+				[ 'class' => '', 'text' => '22', 'date' => '2016-06-22', ],
+				[ 'class' => '', 'text' => '23', 'date' => '2016-06-23', ],
+				[ 'class' => '', 'text' => '24', 'date' => '2016-06-24', ],
+				[ 'class' => '', 'text' => '25', 'date' => '2016-06-25', ],
+			],
 
-			array(
-				array( 'class' => '', 'text' => '26', 'date' => '2016-06-26', ),
-				array( 'class' => '', 'text' => '27', 'date' => '2016-06-27', ),
-				array( 'class' => '', 'text' => '28', 'date' => '2016-06-28', ),
-				array( 'class' => '', 'text' => '29', 'date' => '2016-06-29', ),
-				array( 'class' => '', 'text' => '30', 'date' => '2016-06-30', ),
-				array( 'class' => 'SCsuffix', 'text' => ' ', ),
-				array( 'class' => 'SCsuffix', 'text' => ' ', ),
-			),
-		);
+			[
+				[ 'class' => '', 'text' => '26', 'date' => '2016-06-26', ],
+				[ 'class' => '', 'text' => '27', 'date' => '2016-06-27', ],
+				[ 'class' => '', 'text' => '28', 'date' => '2016-06-28', ],
+				[ 'class' => '', 'text' => '29', 'date' => '2016-06-29', ],
+				[ 'class' => '', 'text' => '30', 'date' => '2016-06-30', ],
+				[ 'class' => 'SCsuffix', 'text' => ' ', ],
+				[ 'class' => 'SCsuffix', 'text' => ' ', ],
+			],
+		];
 
 		$this->assertSame($expected, $tableArray);
 	}
-
 
 	public function testGenericGeneration_mTs() {
 		$cal = new \donatj\SimpleCalendar("June 5 2016");
@@ -147,68 +145,67 @@ class SimpleCalendarTest extends PHPUnit_Framework_TestCase {
 
 		$tableArray = $this->parseCalendarHtml($cal);
 
-		$expected = array(
-			array(
-				array( 'class' => '', 'text' => 'Fri', ),
-				array( 'class' => '', 'text' => 'Sat', ),
-				array( 'class' => '', 'text' => 'Sun', ),
-				array( 'class' => '', 'text' => 'Mon', ),
-				array( 'class' => '', 'text' => 'Tue', ),
-				array( 'class' => '', 'text' => 'Wed', ),
-				array( 'class' => '', 'text' => 'Thu', ),
-			),
-			array(
-				array( 'class' => 'SCprefix', 'text' => ' ', ),
-				array( 'class' => 'SCprefix', 'text' => ' ', ),
-				array( 'class' => 'SCprefix', 'text' => ' ', ),
-				array( 'class' => 'SCprefix', 'text' => ' ', ),
-				array( 'class' => 'SCprefix', 'text' => ' ', ),
-				array( 'class' => '', 'text' => '1', 'date' => '2016-06-01', ),
-				array( 'class' => '', 'text' => '2', 'date' => '2016-06-02', ),
-			),
-			array(
-				array( 'class' => '', 'text' => '3', 'date' => '2016-06-03', ),
-				array( 'class' => '', 'text' => '4', 'date' => '2016-06-04', ),
-				array( 'class' => '', 'text' => '5', 'date' => '2016-06-05', ),
-				array( 'class' => '', 'text' => '6', 'date' => '2016-06-06', ),
-				array( 'class' => '', 'text' => '7', 'date' => '2016-06-07', ),
-				array( 'class' => '', 'text' => '8', 'date' => '2016-06-08', ),
-				array( 'class' => '', 'text' => '9', 'date' => '2016-06-09', ),
-			),
-			array(
-				array( 'class' => '', 'text' => '10', 'date' => '2016-06-10', ),
-				array( 'class' => '', 'text' => '11', 'date' => '2016-06-11', ),
-				array( 'class' => '', 'text' => '12', 'date' => '2016-06-12', ),
-				array( 'class' => '', 'text' => '13', 'date' => '2016-06-13', ),
-				array( 'class' => '', 'text' => '14', 'date' => '2016-06-14', ),
-				array( 'class' => '', 'text' => '15', 'date' => '2016-06-15', ),
-				array( 'class' => '', 'text' => '16', 'date' => '2016-06-16', ),
-			),
-			array(
-				array( 'class' => '', 'text' => '17', 'date' => '2016-06-17', ),
-				array( 'class' => '', 'text' => '18', 'date' => '2016-06-18', ),
-				array( 'class' => '', 'text' => '19', 'date' => '2016-06-19', ),
-				array( 'class' => '', 'text' => '20', 'date' => '2016-06-20', ),
-				array( 'class' => '', 'text' => '21', 'date' => '2016-06-21', ),
-				array( 'class' => '', 'text' => '22', 'date' => '2016-06-22', ),
-				array( 'class' => '', 'text' => '23', 'date' => '2016-06-23', ),
-			),
-			array(
-				array( 'class' => '', 'text' => '24', 'date' => '2016-06-24', ),
-				array( 'class' => '', 'text' => '25', 'date' => '2016-06-25', ),
-				array( 'class' => '', 'text' => '26', 'date' => '2016-06-26', ),
-				array( 'class' => '', 'text' => '27', 'date' => '2016-06-27', ),
-				array( 'class' => '', 'text' => '28', 'date' => '2016-06-28', ),
-				array( 'class' => '', 'text' => '29', 'date' => '2016-06-29', ),
-				array( 'class' => '', 'text' => '30', 'date' => '2016-06-30', ),
-			),
-		);
+		$expected = [
+			[
+				[ 'class' => '', 'text' => 'Fri', ],
+				[ 'class' => '', 'text' => 'Sat', ],
+				[ 'class' => '', 'text' => 'Sun', ],
+				[ 'class' => '', 'text' => 'Mon', ],
+				[ 'class' => '', 'text' => 'Tue', ],
+				[ 'class' => '', 'text' => 'Wed', ],
+				[ 'class' => '', 'text' => 'Thu', ],
+			],
+			[
+				[ 'class' => 'SCprefix', 'text' => ' ', ],
+				[ 'class' => 'SCprefix', 'text' => ' ', ],
+				[ 'class' => 'SCprefix', 'text' => ' ', ],
+				[ 'class' => 'SCprefix', 'text' => ' ', ],
+				[ 'class' => 'SCprefix', 'text' => ' ', ],
+				[ 'class' => '', 'text' => '1', 'date' => '2016-06-01', ],
+				[ 'class' => '', 'text' => '2', 'date' => '2016-06-02', ],
+			],
+			[
+				[ 'class' => '', 'text' => '3', 'date' => '2016-06-03', ],
+				[ 'class' => '', 'text' => '4', 'date' => '2016-06-04', ],
+				[ 'class' => '', 'text' => '5', 'date' => '2016-06-05', ],
+				[ 'class' => '', 'text' => '6', 'date' => '2016-06-06', ],
+				[ 'class' => '', 'text' => '7', 'date' => '2016-06-07', ],
+				[ 'class' => '', 'text' => '8', 'date' => '2016-06-08', ],
+				[ 'class' => '', 'text' => '9', 'date' => '2016-06-09', ],
+			],
+			[
+				[ 'class' => '', 'text' => '10', 'date' => '2016-06-10', ],
+				[ 'class' => '', 'text' => '11', 'date' => '2016-06-11', ],
+				[ 'class' => '', 'text' => '12', 'date' => '2016-06-12', ],
+				[ 'class' => '', 'text' => '13', 'date' => '2016-06-13', ],
+				[ 'class' => '', 'text' => '14', 'date' => '2016-06-14', ],
+				[ 'class' => '', 'text' => '15', 'date' => '2016-06-15', ],
+				[ 'class' => '', 'text' => '16', 'date' => '2016-06-16', ],
+			],
+			[
+				[ 'class' => '', 'text' => '17', 'date' => '2016-06-17', ],
+				[ 'class' => '', 'text' => '18', 'date' => '2016-06-18', ],
+				[ 'class' => '', 'text' => '19', 'date' => '2016-06-19', ],
+				[ 'class' => '', 'text' => '20', 'date' => '2016-06-20', ],
+				[ 'class' => '', 'text' => '21', 'date' => '2016-06-21', ],
+				[ 'class' => '', 'text' => '22', 'date' => '2016-06-22', ],
+				[ 'class' => '', 'text' => '23', 'date' => '2016-06-23', ],
+			],
+			[
+				[ 'class' => '', 'text' => '24', 'date' => '2016-06-24', ],
+				[ 'class' => '', 'text' => '25', 'date' => '2016-06-25', ],
+				[ 'class' => '', 'text' => '26', 'date' => '2016-06-26', ],
+				[ 'class' => '', 'text' => '27', 'date' => '2016-06-27', ],
+				[ 'class' => '', 'text' => '28', 'date' => '2016-06-28', ],
+				[ 'class' => '', 'text' => '29', 'date' => '2016-06-29', ],
+				[ 'class' => '', 'text' => '30', 'date' => '2016-06-30', ],
+			],
+		];
 
 		$this->assertSame($expected, $tableArray);
 	}
 
 	/**
-	 * @param \donatj\SimpleCalendar $cal
 	 * @return array
 	 */
 	private function parseCalendarHtml( \donatj\SimpleCalendar $cal ) {
@@ -216,7 +213,7 @@ class SimpleCalendarTest extends PHPUnit_Framework_TestCase {
 		@$x->loadHTML($cal->show(false));
 
 		$trs        = $x->getElementsByTagName('tr');
-		$tableArray = array();
+		$tableArray = [];
 		$rowi       = 0;
 		foreach( $trs as $tr ) {
 			/**
@@ -224,17 +221,16 @@ class SimpleCalendarTest extends PHPUnit_Framework_TestCase {
 			 */
 			$this->assertEquals(7, $tr->childNodes->length);
 
-			$rowArray = array();
+			$rowArray = [];
 			foreach( $tr->childNodes as $childNode ) {
 				/**
 				 * @var $childNode \DOMElement
 				 */
-
 				$class   = $childNode->getAttribute("class");
-				$rowItem = array(
+				$rowItem = [
 					'class' => $class,
 					'text'  => $childNode->textContent,
-				);
+				];
 
 				if( $rowi == 0 ) {
 					$this->assertEquals($childNode->tagName, 'th');
