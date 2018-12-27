@@ -18,6 +18,9 @@ class SimpleCalendar {
 	 */
 	public $wday_names = false;
 
+	/**
+	 * @var \DateTimeInterface
+	 */
 	private $now;
 	private $dailyHtml = [];
 	private $offset = 0;
@@ -27,6 +30,7 @@ class SimpleCalendar {
 	 *
 	 * @see setDate
 	 * @param string|null $date_string
+	 * @throws \Exception
 	 */
 	public function __construct( $date_string = null ) {
 		$this->setDate($date_string);
@@ -35,13 +39,17 @@ class SimpleCalendar {
 	/**
 	 * Sets the date for the calendar
 	 *
-	 * @param string|null $date_string Date string parsed by strtotime for the calendar date. If null set to current timestamp.
+	 * @param \DateTimeInterface|string|null $date DateTimeInterface or Date string parsed by strtotime for the calendar
+	 *                                             date. If null set to current timestamp.
+	 * @throws \Exception
 	 */
-	public function setDate( $date_string = null ) {
-		if( $date_string ) {
-			$this->now = getdate(strtotime($date_string));
+	public function setDate( $date = null ) {
+		if( $date instanceof \DateTimeInterface ) {
+			$this->now = $date;
+		} elseif( is_string($date) ) {
+			$this->now = new \DateTimeImmutable($date);
 		} else {
-			$this->now = getdate();
+			$this->now = new \DateTimeImmutable();
 		}
 	}
 
@@ -97,6 +105,8 @@ class SimpleCalendar {
 	 * @return string HTML of the Calendar
 	 */
 	public function show( $echo = true ) {
+		$now = getdate($this->now->getTimestamp());
+
 		if( $this->wday_names ) {
 			$wdays = $this->wday_names;
 		} else {
@@ -108,8 +118,8 @@ class SimpleCalendar {
 		}
 
 		$this->rotate($wdays, $this->offset);
-		$wday    = date('N', mktime(0, 0, 1, $this->now['mon'], 1, $this->now['year'])) - $this->offset;
-		$no_days = cal_days_in_month(CAL_GREGORIAN, $this->now['mon'], $this->now['year']);
+		$wday    = date('N', mktime(0, 0, 1, $now['mon'], 1, $now['year'])) - $this->offset;
+		$no_days = cal_days_in_month(CAL_GREGORIAN, $now['mon'], $now['year']);
 
 		$out = '<table cellpadding="0" cellspacing="0" class="SimpleCalendar"><thead><tr>';
 
@@ -129,15 +139,15 @@ class SimpleCalendar {
 
 		$count = $wday + 1;
 		for( $i = 1; $i <= $no_days; $i++ ) {
-			$out .= '<td' . ($i == $this->now['mday'] && $this->now['mon'] == date('n') && $this->now['year'] == date('Y') ? ' class="today"' : '') . '>';
+			$out .= '<td' . ($i == $now['mday'] && $now['mon'] == date('n') && $now['year'] == date('Y') ? ' class="today"' : '') . '>';
 
-			$datetime = mktime(0, 0, 1, $this->now['mon'], $i, $this->now['year']);
+			$datetime = mktime(0, 0, 1, $now['mon'], $i, $now['year']);
 
 			$out .= '<time datetime="' . date('Y-m-d', $datetime) . '">' . $i . '</time>';
 
 			$dHtml_arr = false;
-			if( isset($this->dailyHtml[$this->now['year']][$this->now['mon']][$i]) ) {
-				$dHtml_arr = $this->dailyHtml[$this->now['year']][$this->now['mon']][$i];
+			if( isset($this->dailyHtml[$now['year']][$now['mon']][$i]) ) {
+				$dHtml_arr = $this->dailyHtml[$now['year']][$now['mon']][$i];
 			}
 
 			if( is_array($dHtml_arr) ) {
@@ -149,12 +159,12 @@ class SimpleCalendar {
 			$out .= "</td>";
 
 			if( $count > 6 ) {
-				$out .= "</tr>\n" . ($i < $no_days ? '<tr>' : '');
+				$out   .= "</tr>\n" . ($i < $no_days ? '<tr>' : '');
 				$count = 0;
 			}
 			$count++;
 		}
-		$out .= ( $count != 1 ) ? str_repeat('<td class="SCsuffix">&nbsp;</td>', 8 - $count) . '</tr>' : '';
+		$out .= ($count != 1) ? str_repeat('<td class="SCsuffix">&nbsp;</td>', 8 - $count) . '</tr>' : '';
 		$out .= "\n</tbody></table>\n";
 		if( $echo ) {
 			echo $out;
