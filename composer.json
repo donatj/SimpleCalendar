@@ -21,8 +21,8 @@
 		}
 	],
 	"autoload"   : {
-		"psr-0": {
-			"donatj": "lib/"
+		"psr-4": {
+			"donatj\\": "src/"
 		}
 	}
 }

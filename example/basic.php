@@ -1,5 +1,5 @@
 <html>
-<head><link rel="stylesheet" href="../lib/css/SimpleCalendar.css" /></head>
+<head><link rel="stylesheet" href="../src/css/SimpleCalendar.css" /></head>
 <body>
 <?php
 error_reporting(E_ALL ^ E_WARNING);
