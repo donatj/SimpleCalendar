@@ -121,25 +121,37 @@ class SimpleCalendar {
 		$wday    = date('N', mktime(0, 0, 1, $now['mon'], 1, $now['year'])) - $this->offset;
 		$no_days = cal_days_in_month(CAL_GREGORIAN, $now['mon'], $now['year']);
 
-		$out = '<table cellpadding="0" cellspacing="0" class="SimpleCalendar"><thead><tr>';
+		$out = <<<'TAG'
+<table cellpadding="0" cellspacing="0" class="SimpleCalendar"><thead><tr>
+TAG;
 
 		for( $i = 0; $i < 7; $i++ ) {
 			$out .= '<th>' . $wdays[$i] . '</th>';
 		}
 
-		$out .= "</tr></thead>\n<tbody>\n<tr>";
+		$out .= <<<'TAG'
+</tr></thead>
+<tbody>
+<tr>
+TAG;
 
 		$wday = ($wday + 7) % 7;
 
 		if( $wday == 7 ) {
 			$wday = 0;
 		} else {
-			$out .= str_repeat('<td class="SCprefix">&nbsp;</td>', $wday);
+			$out .= str_repeat(<<<'TAG'
+<td class="SCprefix">&nbsp;</td>
+TAG
+				, $wday);
 		}
 
 		$count = $wday + 1;
 		for( $i = 1; $i <= $no_days; $i++ ) {
-			$out .= '<td' . ($i == $now['mday'] && $now['mon'] == date('n') && $now['year'] == date('Y') ? ' class="today"' : '') . '>';
+
+			$isToday = $i == $now['mday'] && $now['mon'] == date('n') && $now['year'] == date('Y');
+
+			$out .= '<td' . ($isToday ? ' class="today"' : '') . '>';
 
 			$datetime = mktime(0, 0, 1, $now['mon'], $i, $now['year']);
 
