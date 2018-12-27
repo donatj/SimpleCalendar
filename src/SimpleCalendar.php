@@ -107,17 +107,9 @@ class SimpleCalendar {
 	public function show( $echo = true ) {
 		$now = getdate($this->now->getTimestamp());
 
-		if( $this->wday_names ) {
-			$wdays = $this->wday_names;
-		} else {
-			$today = (86400 * (date("N")));
-			$wdays = [];
-			for( $i = 0; $i < 7; $i++ ) {
-				$wdays[] = strftime('%a', time() - $today + ($i * 86400));
-			}
-		}
-
+		$wdays = $this->weekdays();
 		$this->rotate($wdays, $this->offset);
+
 		$wday    = date('N', mktime(0, 0, 1, $now['mon'], 1, $now['year'])) - $this->offset;
 		$no_days = cal_days_in_month(CAL_GREGORIAN, $now['mon'], $now['year']);
 
@@ -125,8 +117,8 @@ class SimpleCalendar {
 <table cellpadding="0" cellspacing="0" class="SimpleCalendar"><thead><tr>
 TAG;
 
-		for( $i = 0; $i < 7; $i++ ) {
-			$out .= '<th>' . $wdays[$i] . '</th>';
+		foreach($wdays as $wd) {
+			$out .= "<th>{$wd}</th>";
 		}
 
 		$out .= <<<'TAG'
@@ -197,5 +189,22 @@ TAG
 		for( $i = 0; $i < $steps; $i++ ) {
 			array_push($data, array_shift($data));
 		}
+	}
+
+	/**
+	 * @return array|false
+	 */
+	private function weekdays() {
+		if( $this->wday_names ) {
+			$wdays = $this->wday_names;
+		} else {
+			$today = (86400 * (date("N")));
+			$wdays = [];
+			for( $n = 0; $n < 7; $n++ ) {
+				$wdays[] = strftime('%a', time() - $today + ($n * 86400));
+			}
+		}
+
+		return $wdays;
 	}
 }
