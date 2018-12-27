@@ -6,9 +6,8 @@ namespace donatj;
  * Simple Calendar
  *
  * @author Jesse G. Donat <donatj@gmail.com>
- * @link http://donatstudios.com
+ * @see http://donatstudios.com
  * @license http://opensource.org/licenses/mit-license.php
- *
  */
 class SimpleCalendar {
 
@@ -20,14 +19,14 @@ class SimpleCalendar {
 	public $wday_names = false;
 
 	private $now;
-	private $dailyHtml = array();
+	private $dailyHtml = [];
 	private $offset = 0;
 
 	/**
 	 * Constructor - Calls the setDate function
 	 *
 	 * @see setDate
-	 * @param null|string $date_string
+	 * @param string|null $date_string
 	 */
 	public function __construct( $date_string = null ) {
 		$this->setDate($date_string);
@@ -36,7 +35,7 @@ class SimpleCalendar {
 	/**
 	 * Sets the date for the calendar
 	 *
-	 * @param null|string $date_string Date string parsed by strtotime for the calendar date. If null set to current timestamp.
+	 * @param string|null $date_string Date string parsed by strtotime for the calendar date. If null set to current timestamp.
 	 */
 	public function setDate( $date_string = null ) {
 		if( $date_string ) {
@@ -51,7 +50,7 @@ class SimpleCalendar {
 	 *
 	 * @param string      $html The raw HTML to place on the calendar for this event
 	 * @param string      $start_date_string Date string for when the event starts
-	 * @param null|string $end_date_string Date string for when the event ends. Defaults to start date
+	 * @param string|null $end_date_string Date string for when the event ends. Defaults to start date
 	 */
 	public function addDailyHtml( $html, $start_date_string, $end_date_string = null ) {
 		static $htmlCount = 0;
@@ -76,7 +75,7 @@ class SimpleCalendar {
 	/**
 	 * Clear all daily events for the calendar
 	 */
-	public function clearDailyHtml() { $this->dailyHtml = array(); }
+	public function clearDailyHtml() { $this->dailyHtml = []; }
 
 	/**
 	 * Sets the first day of the week
@@ -102,7 +101,7 @@ class SimpleCalendar {
 			$wdays = $this->wday_names;
 		} else {
 			$today = (86400 * (date("N")));
-			$wdays = array();
+			$wdays = [];
 			for( $i = 0; $i < 7; $i++ ) {
 				$wdays[] = strftime('%a', time() - $today + ($i * 86400));
 			}
@@ -165,7 +164,6 @@ class SimpleCalendar {
 	}
 
 	/**
-	 * @param array $data
 	 * @param int $steps
 	 */
 	private function arrayRotate( array &$data, $steps ) {
