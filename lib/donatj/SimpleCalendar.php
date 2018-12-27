@@ -107,7 +107,7 @@ class SimpleCalendar {
 			}
 		}
 
-		$this->arrayRotate($wdays, $this->offset);
+		$this->rotate($wdays, $this->offset);
 		$wday    = date('N', mktime(0, 0, 1, $this->now['mon'], 1, $this->now['year'])) - $this->offset;
 		$no_days = cal_days_in_month(CAL_GREGORIAN, $this->now['mon'], $this->now['year']);
 
@@ -166,7 +166,7 @@ class SimpleCalendar {
 	/**
 	 * @param int $steps
 	 */
-	private function arrayRotate( array &$data, $steps ) {
+	private function rotate( array &$data, $steps ) {
 		$count = count($data);
 		if( $steps < 0 ) {
 			$steps = $count + $steps;
