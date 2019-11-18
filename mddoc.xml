@@ -15,28 +15,9 @@
 			<section title="Installing">
 				<composer-install/>
 			</section>
-			<section title="Sample Usage">
-				<text>
-					<![CDATA[
-```php
-<?php
-require('SimpleCalendar.php');
-
-$Calendar = new donatj\SimpleCalendar('June 2010');
-$Calendar->show();
-```
-
-or
-
-```php
-<?php
-require('SimpleCalendar.php');
-
-$Calendar = new donatj\SimpleCalendar();
-$Calendar->setDate('June 5 2010');
-$Calendar->show();
-```
-]]></text>
+			<section title="Examples">
+				<source name="example/simple.php" lang="php" />
+				<source name="example/basic.php" lang="php" />
 			</section>
 
 			<section title="Documentation">
