@@ -107,17 +107,17 @@ class SimpleCalendar {
 	public function show( $echo = true ) {
 		$now = getdate($this->now->getTimestamp());
 
-		$wdays = $this->weekdays();
-		$this->rotate($wdays, $this->offset);
+		$wDays = $this->weekdays();
+		$this->rotate($wDays, $this->offset);
 
-		$wday    = date('N', mktime(0, 0, 1, $now['mon'], 1, $now['year'])) - $this->offset;
+		$wDay    = date('N', mktime(0, 0, 1, $now['mon'], 1, $now['year'])) - $this->offset;
 		$no_days = cal_days_in_month(CAL_GREGORIAN, $now['mon'], $now['year']);
 
 		$out = <<<'TAG'
 <table cellpadding="0" cellspacing="0" class="SimpleCalendar"><thead><tr>
 TAG;
 
-		foreach($wdays as $wd) {
+		foreach($wDays as $wd) {
 			$out .= "<th>{$wd}</th>";
 		}
 
@@ -127,18 +127,18 @@ TAG;
 <tr>
 TAG;
 
-		$wday = ($wday + 7) % 7;
+		$wDay = ($wDay + 7) % 7;
 
-		if( $wday == 7 ) {
-			$wday = 0;
+		if( $wDay == 7 ) {
+			$wDay = 0;
 		} else {
 			$out .= str_repeat(<<<'TAG'
 <td class="SCprefix">&nbsp;</td>
 TAG
-				, $wday);
+				, $wDay);
 		}
 
-		$count = $wday + 1;
+		$count = $wDay + 1;
 		for( $i = 1; $i <= $no_days; $i++ ) {
 
 			$isToday = $i == $now['mday'] && $now['mon'] == date('n') && $now['year'] == date('Y');
@@ -160,7 +160,7 @@ TAG
 				}
 			}
 
-			$out .= "</td>";
+			$out .= '</td>';
 
 			if( $count > 6 ) {
 				$out   .= "</tr>\n" . ($i < $no_days ? '<tr>' : '');
@@ -185,9 +185,9 @@ TAG
 		if( $steps < 0 ) {
 			$steps = $count + $steps;
 		}
-		$steps = $steps % $count;
+		$steps %= $count;
 		for( $i = 0; $i < $steps; $i++ ) {
-			array_push($data, array_shift($data));
+			$data[] = array_shift($data);
 		}
 	}
 
@@ -196,15 +196,15 @@ TAG
 	 */
 	private function weekdays() {
 		if( $this->wday_names ) {
-			$wdays = $this->wday_names;
+			$wDays = $this->wday_names;
 		} else {
-			$today = (86400 * (date("N")));
-			$wdays = [];
+			$today = (86400 * (date('N')));
+			$wDays = [];
 			for( $n = 0; $n < 7; $n++ ) {
-				$wdays[] = strftime('%a', time() - $today + ($n * 86400));
+				$wDays[] = strftime('%a', time() - $today + ($n * 86400));
 			}
 		}
 
-		return $wdays;
+		return $wDays;
 	}
 }
