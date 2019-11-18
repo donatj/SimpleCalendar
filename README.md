@@ -89,6 +89,31 @@ date. If null set to current timestamp.
 
 ---
 
+#### Method: SimpleCalendar->setCalendarClasses
+
+```php
+function setCalendarClasses([ array $classes = []])
+```
+
+Sets the class names used in the calendar  
+  
+```php  
+[  
+'calendar'     => 'SimpleCalendar  
+'leading_day'  => 'SCprefix',  
+'trailing_day' => 'SCsuffix',  
+'today'        => 'today',  
+'event'        => 'event',  
+'events'       => 'events',  
+]  
+```
+
+##### Parameters:
+
+- ***array*** `$classes` - Map of element to class names used by the calendar.
+
+---
+
 #### Method: SimpleCalendar->setToday
 
 ```php
@@ -159,7 +184,7 @@ Sets the first day of the week
 #### Method: SimpleCalendar->show
 
 ```php
-function show([ $echo = 'true'])
+function show([ $echo = true])
 ```
 
 Returns/Outputs the Calendar
@@ -189,29 +214,3 @@ Returns the generated Calendar
 ##### Returns:
 
 - ***string***
-
----
-
-#### Method: SimpleCalendar->setCalendarClasses
-
-```php
-function setCalendarClasses([ $classes = null ])
-```
-
-Sets the class names used in the calendar
-
-##### Parameters:
-
-- ***null*** | ***array*** `$classes` - Array with classes used in the calendar
-
-The default classes used in the calendar are
-```php
-$classes = array(
-	'calendar'      => 'SimpleCalendar',
-	'leading_day'   => 'SCprefix',
-	'trailing_day'  => 'SCsuffix',
-	'today'         => 'today',
-	'event'         => 'event',
-	'events'        => 'events',
-);
-```

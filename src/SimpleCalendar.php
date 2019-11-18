@@ -28,7 +28,15 @@ class SimpleCalendar {
 	 */
 	private $today;
 
-	private $classes;
+	private $classes = [
+		'calendar'     => 'SimpleCalendar',
+		'leading_day'  => 'SCprefix',
+		'trailing_day' => 'SCsuffix',
+		'today'        => 'today',
+		'event'        => 'event',
+		'events'       => 'events',
+	];
+
 	private $dailyHtml = [];
 	private $offset = 0;
 
@@ -66,23 +74,27 @@ class SimpleCalendar {
 	/**
 	 * Sets the class names used in the calendar
 	 *
-	 * @param array $classes Array with classnames used by the calendar
+	 * ```php
+	 * [
+	 * 'calendar'     => 'SimpleCalendar
+	 * 'leading_day'  => 'SCprefix',
+	 * 'trailing_day' => 'SCsuffix',
+	 * 'today'        => 'today',
+	 * 'event'        => 'event',
+	 * 'events'       => 'events',
+	 * ]
+	 * ```
+	 *
+	 * @param array $classes Map of element to class names used by the calendar.
 	 */
-	public function setCalendarClasses( $classes = null ) {
-		$defaults = [
-			'calendar'      => 'SimpleCalendar',
-			'leading_day'   => 'SCprefix',
-			'trailing_day'  => 'SCsuffix',
-			'today'         => 'today',
-			'event'         => 'event',
-			'events'        => 'events',
-		];
+	public function setCalendarClasses( array $classes = [] ) {
+		foreach( $classes as $key => $value ) {
+			if( !isset($this->classes[$key]) ) {
+				throw new \InvalidArgumentException("class '{$key}' not supported");
+			}
 
-		if( ! $classes || ! is_array( $classes ) ) {
-			$classes = $defaults;
+			$this->classes[$key] = $value;
 		}
-
-		$this->classes = array_merge( $defaults, $classes );
 	}
 
 	/**
