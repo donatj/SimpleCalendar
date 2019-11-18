@@ -28,6 +28,7 @@ class SimpleCalendar {
 	 */
 	private $today;
 
+	private $classes;
 	private $dailyHtml = [];
 	private $offset = 0;
 
@@ -42,6 +43,7 @@ class SimpleCalendar {
 	public function __construct( $calendarDate = null, $today = null ) {
 		$this->setDate($calendarDate);
 		$this->setToday($today);
+		$this->setCalendarClasses();
 	}
 
 	/**
@@ -59,6 +61,28 @@ class SimpleCalendar {
 		} else {
 			$this->now = new \DateTimeImmutable();
 		}
+	}
+
+	/**
+	 * Sets the class names used in the calendar
+	 *
+	 * @param array $classes Array with classnames used by the calendar
+	 */
+	public function setCalendarClasses( $classes = null ) {
+		$defaults = [
+			'calendar'      => 'SimpleCalendar',
+			'leading_day'   => 'SCprefix',
+			'trailing_day'  => 'SCsuffix',
+			'today'         => 'today',
+			'event'         => 'event',
+			'events'        => 'events',
+		];
+
+		if( ! $classes || ! is_array( $classes ) ) {
+			$classes = $defaults;
+		}
+
+		$this->classes = array_merge( $defaults, $classes );
 	}
 
 	/**
@@ -178,8 +202,8 @@ class SimpleCalendar {
 		$weekDayIndex = date('N', mktime(0, 0, 1, $now['mon'], 1, $now['year'])) - $this->offset;
 		$daysInMonth  = cal_days_in_month(CAL_GREGORIAN, $now['mon'], $now['year']);
 
-		$out = <<<'TAG'
-<table cellpadding="0" cellspacing="0" class="SimpleCalendar"><thead><tr>
+		$out = <<<TAG
+<table cellpadding="0" cellspacing="0" class="{$this->classes['calendar']}"><thead><tr>
 TAG;
 
 		foreach( $daysOfWeek as $dayName ) {
@@ -198,7 +222,7 @@ TAG;
 			$weekDayIndex = 0;
 		} else {
 			$out .= str_repeat(<<<'TAG'
-<td class="SCprefix">&nbsp;</td>
+<td class="{$this->classes['leading_day']}">&nbsp;</td>
 TAG
 				, $weekDayIndex);
 		}
@@ -214,7 +238,7 @@ TAG
 					&& $today['year'] == $date->format('Y');
 			}
 
-			$out .= '<td' . ($isToday ? ' class="today"' : '') . '>';
+			$out .= '<td' . ($isToday ? ' class="' . $this->classes['today'] . '"' : '') . '>';
 
 			$out .= sprintf('<time datetime="%s">%d</time>', $date->format('Y-m-d'), $i);
 
@@ -223,10 +247,12 @@ TAG
 				$dailyHTML = $this->dailyHtml[$now['year']][$now['mon']][$i];
 			}
 
-			if( is_array($dailyHTML) ) {
-				foreach( $dailyHTML as $dHtml ) {
-					$out .= sprintf('<div class="event">%s</div>', $dHtml);
+			if( is_array($dHtml_arr) ) {
+				$out .= '<div class="' . $this->classes['events'] . '">';
+				foreach( $dHtml_arr as $dHtml ) {
+					$out .= sprintf('<div class="%s">%s</div>', $this->classes['event'], $dHtml);
 				}
+				$out .= '</div>';
 			}
 
 			$out .= '</td>';
@@ -239,7 +265,7 @@ TAG
 		}
 
 		if( $count !== 1 ) {
-			$out .= str_repeat('<td class="SCsuffix">&nbsp;</td>', 8 - $count) . '</tr>';
+			$out .= str_repeat('<td class="' . $this->classes['trailing_day'] . '">&nbsp;</td>', 8 - $count) . '</tr>';
 		}
 
 		$out .= "\n</tbody></table>\n";

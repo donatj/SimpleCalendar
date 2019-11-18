@@ -7,6 +7,44 @@ class SimpleCalendarTest extends PHPUnit_Framework_TestCase {
 		$this->assertContains('class="today"', $cal->show(false));
 	}
 
+	public function testCallendarClasses() {
+		$cal = new \donatj\SimpleCalendar();
+		$defaults = [
+			'SimpleCalendar',
+			'SCprefix',
+			'SCsuffix',
+			'today',
+			'event',
+			'events',
+		];
+
+		$cal->addDailyHtml( 'Sample Event', 'today' );
+		$cal_html = $cal->show(false);
+		foreach( $defaults as $class ) {
+			$this->assertContains('class="' . $class . '"', $cal_html);
+		}
+	}
+
+	public function testCustomCallendarClasses() {
+		$cal = new \donatj\SimpleCalendar();
+		$classes = [
+			'calendar'     => 'TestCalendar',
+			'leading_day'  => 'TestPrefix',
+			'trailing_day' => 'TestSuffix',
+			'today'        => 'TestToday',
+			'event'        => 'TestEvent',
+			'events'       => 'TestEvents',
+		];
+
+		$cal->setCalendarClasses( $classes );
+		$cal->addDailyHtml( 'Sample Event', 'today' );
+		$cal_html = $cal->show(false);
+
+		foreach( $classes as $class ) {
+			$this->assertContains('class="' . $class . '"', $cal_html);
+		}
+	}
+
 	public function testCurrentMonth_yearRegression() {
 		$cal = new \donatj\SimpleCalendar(sprintf('%d-%d-%d', (date('Y') - 1), date('n'), date('d')));
 		$this->assertNotContains('class="today"', $cal->show(false));
