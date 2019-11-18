@@ -41,8 +41,8 @@ class SimpleCalendar {
 	private $offset = 0;
 
 	/**
-	 * @param \DateTimeInterface|string|null       $calendarDate
-	 * @param \DateTimeInterface|false|string|null $today
+	 * @param \DateTimeInterface|int|string|null       $calendarDate
+	 * @param \DateTimeInterface|false|int|string|null $today
 	 * @throws \Exception on failing to parse given dates
 	 *
 	 * @see setDate
@@ -57,8 +57,8 @@ class SimpleCalendar {
 	/**
 	 * Sets the date for the calendar.
 	 *
-	 * @param \DateTimeInterface|string|null $date DateTimeInterface or Date string parsed by strtotime for the calendar
-	 *                                             date. If null set to current timestamp.
+	 * @param \DateTimeInterface|int|string|null $date DateTimeInterface or Date string parsed by strtotime for the
+	 *     calendar date. If null set to current timestamp.
 	 * @throws \Exception
 	 */
 	public function setDate( $date = null ) {
@@ -66,7 +66,7 @@ class SimpleCalendar {
 	}
 
 	/**
-	 * @param $date
+	 * @param \DateTimeInterface|int|string|null $date
 	 * @throws \Exception
 	 * @return \DateTimeInterface|null
 	 */
@@ -118,14 +118,12 @@ class SimpleCalendar {
 	 * @throws \Exception
 	 */
 	public function setToday( $today = null ) {
-		if( $today instanceof \DateTimeInterface ) {
-			$this->today = $today;
-		} elseif( is_string($today) ) {
-			$this->today = new \DateTimeImmutable($today);
+		if( $today === false ) {
+			$this->today = null;
 		} elseif( $today === null ) {
 			$this->today = new \DateTimeImmutable();
-		} elseif( $today === false ) {
-			$this->today = null;
+		} else {
+			$this->today = $this->parseDate($today);
 		}
 	}
 

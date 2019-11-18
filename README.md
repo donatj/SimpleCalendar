@@ -69,8 +69,8 @@ function __construct([ $calendarDate = null [, $today = null]])
 
 ##### Parameters:
 
-- ***\DateTimeInterface*** | ***string*** | ***null*** `$calendarDate`
-- ***\DateTimeInterface*** | ***bool*** | ***string*** | ***null*** `$today`
+- ***\DateTimeInterface*** | ***int*** | ***string*** | ***null*** `$calendarDate`
+- ***\DateTimeInterface*** | ***bool*** | ***int*** | ***string*** | ***null*** `$today`
 
 ---
 
@@ -84,8 +84,8 @@ Sets the date for the calendar.
 
 ##### Parameters:
 
-- ***\DateTimeInterface*** | ***string*** | ***null*** `$date` - DateTimeInterface or Date string parsed by strtotime for the calendar
-date. If null set to current timestamp.
+- ***\DateTimeInterface*** | ***int*** | ***string*** | ***null*** `$date` - DateTimeInterface or Date string parsed by strtotime for the
+calendar date. If null set to current timestamp.
 
 ---
 
@@ -144,7 +144,7 @@ function setWeekDayNames([ array $weekDayNames = null])
 #### Method: SimpleCalendar->addDailyHtml
 
 ```php
-function addDailyHtml($html, $start_date_string [, $end_date_string = null])
+function addDailyHtml($html, $startDate [, $endDate = null])
 ```
 
 Add a daily event to the calendar
@@ -152,8 +152,8 @@ Add a daily event to the calendar
 ##### Parameters:
 
 - ***string*** `$html` - The raw HTML to place on the calendar for this event
-- ***string*** `$start_date_string` - Date string for when the event starts
-- ***string*** | ***null*** `$end_date_string` - Date string for when the event ends. Defaults to start date
+- ***\DateTimeInterface*** | ***int*** | ***string*** `$startDate` - Date string for when the event starts
+- ***\DateTimeInterface*** | ***int*** | ***string*** | ***null*** `$endDate` - Date string for when the event ends. Defaults to start date
 
 ---
 
