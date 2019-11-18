@@ -1,16 +1,15 @@
-<html>
-<head><link rel="stylesheet" href="../src/css/SimpleCalendar.css" /></head>
-<body>
 <?php
-error_reporting(E_ALL ^ E_WARNING);
-require_once('../lib/donatj/SimpleCalendar.php');
+require '../vendor/autoload.php';
+
+echo '<link rel="stylesheet" href="../src/css/SimpleCalendar.css" />';
 
 $calendar = new donatj\SimpleCalendar();
 
 $calendar->setStartOfWeek('Sunday');
+$calendar->addDailyHtml('Sample Event', 'today', 'tomorrow');
 
-$calendar->addDailyHtml( 'Sample Event', 'today', 'tomorrow' );
-$calendar->show(true);
-?>
-</body>
-</html>
+$calendar->setWeekDayNames([ 'Sun', 'Mon', 'Tu', 'W', 'Th', 'F', 'Sa' ]);
+
+$calendar->setStartOfWeek('Sunday');
+
+echo $calendar->render();
