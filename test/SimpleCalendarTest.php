@@ -9,6 +9,14 @@ class SimpleCalendarTest extends PHPUnit_Framework_TestCase {
 		$this->assertContains('class="today"', $cal->show(false));
 	}
 
+	/**
+	 * @expectedException \InvalidArgumentException
+	 */
+	public function testBadDailyHtmlDates(){
+		$cal = new SimpleCalendar('June 2010', 'June 5 2010');
+		$cal->addDailyHtml('foo', 'tomorrow', 'yesterday');
+	}
+
 	public function testClasses() {
 		$cal = new SimpleCalendar('June 2010', 'June 5 2010');
 		$defaults = [
