@@ -43,7 +43,6 @@ class SimpleCalendar {
 	/**
 	 * @param \DateTimeInterface|int|string|null       $calendarDate
 	 * @param \DateTimeInterface|false|int|string|null $today
-	 * @throws \Exception on failing to parse given dates
 	 *
 	 * @see setDate
 	 * @see setToday
@@ -59,7 +58,6 @@ class SimpleCalendar {
 	 *
 	 * @param \DateTimeInterface|int|string|null $date DateTimeInterface or Date string parsed by strtotime for the
 	 *     calendar date. If null set to current timestamp.
-	 * @throws \Exception
 	 */
 	public function setDate( $date = null ) {
 		$this->now = $this->parseDate($date) ?: new \DateTimeImmutable();
@@ -67,7 +65,6 @@ class SimpleCalendar {
 
 	/**
 	 * @param \DateTimeInterface|int|string|null $date
-	 * @throws \Exception
 	 * @return \DateTimeInterface|null
 	 */
 	private function parseDate( $date = null ) {
@@ -115,7 +112,6 @@ class SimpleCalendar {
 	 *
 	 * @param \DateTimeInterface|false|string|null $today `null` will default to today, `false` will disable the
 	 *     rendering of Today.
-	 * @throws \Exception
 	 */
 	public function setToday( $today = null ) {
 		if( $today === false ) {
@@ -206,7 +202,6 @@ class SimpleCalendar {
 	 * Returns/Outputs the Calendar
 	 *
 	 * @param bool $echo Whether to echo resulting calendar
-	 * @throws \Exception
 	 * @return string HTML of the Calendar
 	 * @deprecated Use `render()` method instead.
 	 */
