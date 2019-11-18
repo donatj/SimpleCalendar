@@ -99,12 +99,12 @@ Sets the class names used in the calendar
   
 ```php  
 [  
-'calendar'     => 'SimpleCalendar  
-'leading_day'  => 'SCprefix',  
-'trailing_day' => 'SCsuffix',  
-'today'        => 'today',  
-'event'        => 'event',  
-'events'       => 'events',  
+   'calendar'     => 'SimpleCalendar',  
+   'leading_day'  => 'SCprefix',  
+   'trailing_day' => 'SCsuffix',  
+   'today'        => 'today',  
+   'event'        => 'event',  
+   'events'       => 'events',  
 ]  
 ```
 

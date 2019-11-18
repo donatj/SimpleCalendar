@@ -76,12 +76,12 @@ class SimpleCalendar {
 	 *
 	 * ```php
 	 * [
-	 * 'calendar'     => 'SimpleCalendar
-	 * 'leading_day'  => 'SCprefix',
-	 * 'trailing_day' => 'SCsuffix',
-	 * 'today'        => 'today',
-	 * 'event'        => 'event',
-	 * 'events'       => 'events',
+	 *    'calendar'     => 'SimpleCalendar',
+	 *    'leading_day'  => 'SCprefix',
+	 *    'trailing_day' => 'SCsuffix',
+	 *    'today'        => 'today',
+	 *    'event'        => 'event',
+	 *    'events'       => 'events',
 	 * ]
 	 * ```
 	 *
@@ -183,8 +183,8 @@ class SimpleCalendar {
 	 * Returns/Outputs the Calendar
 	 *
 	 * @param bool $echo Whether to echo resulting calendar
-	 * @throws \Exception
 	 * @return string HTML of the Calendar
+	 * @throws \Exception
 	 * @deprecated Use `render()` method instead.
 	 */
 	public function show( $echo = true ) {
