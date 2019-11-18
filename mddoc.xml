@@ -1,6 +1,6 @@
 <mddoc>
 
-	<docpage target="README.md" autoloader="psr0" autoloader-root="src">
+	<docpage target="README.md" autoloader="psr4" autoloader-root-namespace="donatj" autoloader-root="src">
 
 		<section title="Simple Calendar">
 			<badge-poser type="version"/>
@@ -40,7 +40,7 @@ $Calendar->show();
 			</section>
 
 			<section title="Documentation">
-				<recursivedirectory name="lib"/>
+				<recursivedirectory name="src"/>
 			</section>
 		</section>
 	</docpage>
