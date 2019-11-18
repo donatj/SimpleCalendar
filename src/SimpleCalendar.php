@@ -247,9 +247,9 @@ TAG
 				$dailyHTML = $this->dailyHtml[$now['year']][$now['mon']][$i];
 			}
 
-			if( is_array($dHtml_arr) ) {
+			if( is_array($dailyHTML) ) {
 				$out .= '<div class="' . $this->classes['events'] . '">';
-				foreach( $dHtml_arr as $dHtml ) {
+				foreach( $dailyHTML as $dHtml ) {
 					$out .= sprintf('<div class="%s">%s</div>', $this->classes['event'], $dHtml);
 				}
 				$out .= '</div>';
