@@ -70,7 +70,7 @@ function __construct([ $calendarDate = null [, $today = null]])
 ##### Parameters:
 
 - ***\DateTimeInterface*** | ***string*** | ***null*** `$calendarDate`
-- ***\DateTimeInterface*** | ***string*** | ***bool*** | ***null*** `$today`
+- ***\DateTimeInterface*** | ***bool*** | ***string*** | ***null*** `$today`
 
 ---
 
@@ -124,7 +124,7 @@ Sets "today"'s date. Defaults to today.
 
 ##### Parameters:
 
-- ***\DateTimeInterface*** | ***string*** | ***null*** | ***bool*** `$today` - `null` will default to today, `false` will disable the
+- ***\DateTimeInterface*** | ***bool*** | ***string*** | ***null*** `$today` - `null` will default to today, `false` will disable the
 rendering of Today.
 
 ---

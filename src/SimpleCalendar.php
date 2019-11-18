@@ -42,7 +42,7 @@ class SimpleCalendar {
 
 	/**
 	 * @param \DateTimeInterface|string|null       $calendarDate
-	 * @param \DateTimeInterface|string|false|null $today
+	 * @param \DateTimeInterface|false|string|null $today
 	 * @throws \Exception on failing to parse given dates
 	 *
 	 * @see setDate
@@ -100,7 +100,7 @@ class SimpleCalendar {
 	/**
 	 * Sets "today"'s date. Defaults to today.
 	 *
-	 * @param \DateTimeInterface|string|null|false $today `null` will default to today, `false` will disable the
+	 * @param \DateTimeInterface|false|string|null $today `null` will default to today, `false` will disable the
 	 *     rendering of Today.
 	 * @throws \Exception
 	 */
@@ -183,8 +183,8 @@ class SimpleCalendar {
 	 * Returns/Outputs the Calendar
 	 *
 	 * @param bool $echo Whether to echo resulting calendar
-	 * @return string HTML of the Calendar
 	 * @throws \Exception
+	 * @return string HTML of the Calendar
 	 * @deprecated Use `render()` method instead.
 	 */
 	public function show( $echo = true ) {
