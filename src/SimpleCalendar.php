@@ -14,26 +14,34 @@ class SimpleCalendar {
 	/**
 	 * Array of Week Day Names
 	 *
-	 * @var array|false
+	 * @var array|null
 	 */
-	public $wday_names = false;
+	public $wday_names = null;
 
 	/**
 	 * @var \DateTimeInterface
 	 */
 	private $now;
+
+	/**
+	 * @var \DateTimeInterface|null
+	 */
+	private $today;
+
 	private $dailyHtml = [];
 	private $offset = 0;
 
 	/**
-	 * Constructor - Calls the setDate function
+	 * @param \DateTimeInterface|string|null $calendarDate
+	 * @param \DateTimeInterface|string|false|null $today
+	 * @throws \Exception on failing to parse given dates
 	 *
 	 * @see setDate
-	 * @param string|null $date_string
-	 * @throws \Exception
+	 * @see setToday
 	 */
-	public function __construct( $date_string = null ) {
-		$this->setDate($date_string);
+	public function __construct( $calendarDate = null, $today = null ) {
+		$this->setDate($calendarDate);
+		$this->setToday($today);
 	}
 
 	/**
@@ -54,6 +62,22 @@ class SimpleCalendar {
 	}
 
 	/**
+	 * @param \DateTimeInterface|string|null|false $today
+	 * @throws \Exception
+	 */
+	public function setToday( $today = null ) {
+		if( $today instanceof \DateTimeInterface ) {
+			$this->today = $today;
+		} elseif( is_string($today) ) {
+			$this->now = new \DateTimeImmutable($today);
+		} elseif( $today === null ) {
+			$this->today = new \DateTimeImmutable();
+		} elseif( $today === false ) {
+			$this->today = null;
+		}
+	}
+
+	/**
 	 * Add a daily event to the calendar
 	 *
 	 * @param string      $html The raw HTML to place on the calendar for this event
@@ -63,10 +87,10 @@ class SimpleCalendar {
 	public function addDailyHtml( $html, $start_date_string, $end_date_string = null ) {
 		static $htmlCount = 0;
 		$start_date = strtotime($start_date_string);
+		$end_date = $start_date;
+
 		if( $end_date_string ) {
 			$end_date = strtotime($end_date_string);
-		} else {
-			$end_date = $start_date;
 		}
 
 		$working_date = $start_date;
@@ -106,6 +130,10 @@ class SimpleCalendar {
 	 */
 	public function show( $echo = true ) {
 		$now = getdate($this->now->getTimestamp());
+		$today = ['mday' => -1, 'mon' => -1, 'year' => -1];
+		if($this->today !== null) {
+			$today = getdate($this->today->getTimestamp());
+		}
 
 		$wDays = $this->weekdays();
 		$this->rotate($wDays, $this->offset);
@@ -140,14 +168,18 @@ TAG
 
 		$count = $wDay + 1;
 		for( $i = 1; $i <= $no_days; $i++ ) {
+			$date = (new \DateTimeImmutable())->setDate($now['year'], $now['mon'], $i);
 
-			$isToday = $i == $now['mday'] && $now['mon'] == date('n') && $now['year'] == date('Y');
+			$isToday = false;
+			if($this->today !== null) {
+				$isToday = $i == $today['mday']
+					&& $today['mon'] == $date->format('n')
+					&& $today['year'] == $date->format('Y');
+			}
 
 			$out .= '<td' . ($isToday ? ' class="today"' : '') . '>';
 
-			$datetime = mktime(0, 0, 1, $now['mon'], $i, $now['year']);
-
-			$out .= '<time datetime="' . date('Y-m-d', $datetime) . '">' . $i . '</time>';
+			$out .= sprintf('<time datetime="%s">%d</time>', $date->format('Y-m-d'), $i);
 
 			$dHtml_arr = false;
 			if( isset($this->dailyHtml[$now['year']][$now['mon']][$i]) ) {
@@ -156,7 +188,7 @@ TAG
 
 			if( is_array($dHtml_arr) ) {
 				foreach( $dHtml_arr as $dHtml ) {
-					$out .= '<div class="event">' . $dHtml . '</div>';
+					$out .= sprintf('<div class="event">%s</div>', $dHtml);
 				}
 			}
 
@@ -192,7 +224,7 @@ TAG
 	}
 
 	/**
-	 * @return array|false
+	 * @return array|null
 	 */
 	private function weekdays() {
 		if( $this->wday_names ) {
@@ -207,4 +239,12 @@ TAG
 
 		return $wDays;
 	}
+
+	/**
+	 * @param array|null $weekDayNames
+	 */
+	public function setWeekDayNames( $weekDayNames ) {
+		$this->wday_names = $weekDayNames;
+	}
+
 }
