@@ -14,7 +14,7 @@ class SimpleCalendar {
 	/**
 	 * Array of Week Day Names
 	 *
-	 * @var array|null
+	 * @var string[]|null
 	 */
 	private $weekDayNames;
 
@@ -62,13 +62,26 @@ class SimpleCalendar {
 	 * @throws \Exception
 	 */
 	public function setDate( $date = null ) {
+		$this->now = $this->parseDate($date) ?: new \DateTimeImmutable();
+	}
+
+	/**
+	 * @param $date
+	 * @throws \Exception
+	 * @return \DateTimeInterface|null
+	 */
+	private function parseDate( $date = null ) {
 		if( $date instanceof \DateTimeInterface ) {
-			$this->now = $date;
-		} elseif( is_string($date) ) {
-			$this->now = new \DateTimeImmutable($date);
-		} else {
-			$this->now = new \DateTimeImmutable();
+			return $date;
 		}
+		if( is_int($date) ) {
+			return (new \DateTimeImmutable())->setTimestamp($date);
+		}
+		if( is_string($date) ) {
+			return new \DateTimeImmutable($date);
+		}
+
+		return null;
 	}
 
 	/**
@@ -130,26 +143,38 @@ class SimpleCalendar {
 	/**
 	 * Add a daily event to the calendar
 	 *
-	 * @param string      $html The raw HTML to place on the calendar for this event
-	 * @param string      $start_date_string Date string for when the event starts
-	 * @param string|null $end_date_string Date string for when the event ends. Defaults to start date
+	 * @param string                             $html The raw HTML to place on the calendar for this event
+	 * @param \DateTimeInterface|int|string      $startDate Date string for when the event starts
+	 * @param \DateTimeInterface|int|string|null $endDate Date string for when the event ends. Defaults to start date
 	 */
-	public function addDailyHtml( $html, $start_date_string, $end_date_string = null ) {
+	public function addDailyHtml( $html, $startDate, $endDate = null ) {
 		static $htmlCount = 0;
-		$start_date = strtotime($start_date_string);
-		$end_date   = $start_date;
 
-		if( $end_date_string ) {
-			$end_date = strtotime($end_date_string);
+		$start = $this->parseDate($startDate);
+		if( !$start ) {
+			throw new \InvalidArgumentException('invalid start time');
 		}
 
-		$working_date = $start_date;
+		$end = $start;
+		if( $endDate ) {
+			$end = $this->parseDate($endDate);
+		}
+		if( !$end ) {
+			throw new \InvalidArgumentException('invalid end time');
+		}
+
+		if( $end->getTimestamp() < $start->getTimestamp() ) {
+			throw new \InvalidArgumentException('end must come after start');
+		}
+
+		$working = (new \DateTimeImmutable())->setTimestamp($start->getTimestamp());
 		do {
-			$tDate        = getdate($working_date);
-			$working_date += 86400;
+			$tDate = getdate($working->getTimestamp());
 
 			$this->dailyHtml[$tDate['year']][$tDate['mon']][$tDate['mday']][$htmlCount] = $html;
-		} while( $working_date < $end_date + 1 );
+
+			$working = $working->add(new \DateInterval('P1D'));
+		} while( $working->getTimestamp() < $end->getTimestamp() + 1 );
 
 		$htmlCount++;
 	}
@@ -183,8 +208,8 @@ class SimpleCalendar {
 	 * Returns/Outputs the Calendar
 	 *
 	 * @param bool $echo Whether to echo resulting calendar
-	 * @return string HTML of the Calendar
 	 * @throws \Exception
+	 * @return string HTML of the Calendar
 	 * @deprecated Use `render()` method instead.
 	 */
 	public function show( $echo = true ) {
@@ -300,10 +325,10 @@ TAG
 	}
 
 	/**
-	 * @return array|null
+	 * @return string[]
 	 */
 	private function weekdays() {
-		if( $this->weekDayNames ) {
+		if( $this->weekDayNames !== null ) {
 			$wDays = $this->weekDayNames;
 		} else {
 			$today = (86400 * (date('N')));
