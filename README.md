@@ -11,7 +11,7 @@ A very simple, easy to use PHP calendar rendering class.
 
 ## Requirements
 
-- **php**: >=5.3.0
+- **php**: >=5.5.0
 - **ext-calendar**: *
 
 ## Installing
@@ -22,26 +22,37 @@ Install the latest version with:
 composer require 'donatj/simplecalendar'
 ```
 
-## Sample Usage
+## Examples
 
-					
 ```php
 <?php
-require('SimpleCalendar.php');
 
-$Calendar = new donatj\SimpleCalendar('June 2010');
-$Calendar->show();
+require '../vendor/autoload.php';
+
+echo '<link rel="stylesheet" href="../src/css/SimpleCalendar.css" />';
+
+$calendar = new donatj\SimpleCalendar('June 2010');
+
+echo $calendar->render();
+
 ```
 
-or
-
 ```php
 <?php
-require('SimpleCalendar.php');
+require '../vendor/autoload.php';
 
-$Calendar = new donatj\SimpleCalendar();
-$Calendar->setDate('June 5 2010');
-$Calendar->show();
+echo '<link rel="stylesheet" href="../src/css/SimpleCalendar.css" />';
+
+$calendar = new donatj\SimpleCalendar();
+
+$calendar->setStartOfWeek('Sunday');
+$calendar->addDailyHtml('Sample Event', 'today', 'tomorrow');
+
+$calendar->setWeekDayNames([ 'Sun', 'Mon', 'Tu', 'W', 'Th', 'F', 'Sa' ]);
+$calendar->setStartOfWeek('Monday');
+
+echo $calendar->render();
+
 ```
 
 ## Documentation
@@ -50,44 +61,58 @@ $Calendar->show();
 
 Simple Calendar
 
-```php
-<?php
-namespace donatj;
-
-class SimpleCalendar {
-	/**
-	 * Array of Week Day Names
-	 * @var array|false
-	 */
-	public $wday_names = false;
-}
-```
-
 #### Method: SimpleCalendar->__construct
 
 ```php
-function __construct([ $date_string = null])
+function __construct([ $calendarDate = null [, $today = null]])
 ```
-
-Constructor - Calls the setDate function
 
 ##### Parameters:
 
-- ***null*** | ***string*** `$date_string`
+- ***\DateTimeInterface*** | ***string*** | ***null*** `$calendarDate`
+- ***\DateTimeInterface*** | ***string*** | ***bool*** | ***null*** `$today`
 
 ---
 
 #### Method: SimpleCalendar->setDate
 
 ```php
-function setDate([ $date_string = null])
+function setDate([ $date = null])
 ```
 
-Sets the date for the calendar
+Sets the date for the calendar.
 
 ##### Parameters:
 
-- ***null*** | ***string*** `$date_string` - Date string parsed by strtotime for the calendar date. If null set to current timestamp.
+- ***\DateTimeInterface*** | ***string*** | ***null*** `$date` - DateTimeInterface or Date string parsed by strtotime for the calendar
+date. If null set to current timestamp.
+
+---
+
+#### Method: SimpleCalendar->setToday
+
+```php
+function setToday([ $today = null])
+```
+
+Sets "today"'s date. Defaults to today.
+
+##### Parameters:
+
+- ***\DateTimeInterface*** | ***string*** | ***null*** | ***bool*** `$today` - `null` will default to today, `false` will disable the
+rendering of Today.
+
+---
+
+#### Method: SimpleCalendar->setWeekDayNames
+
+```php
+function setWeekDayNames([ array $weekDayNames = null])
+```
+
+##### Parameters:
+
+- ***string[]*** | ***null*** `$weekDayNames`
 
 ---
 
@@ -103,7 +128,7 @@ Add a daily event to the calendar
 
 - ***string*** `$html` - The raw HTML to place on the calendar for this event
 - ***string*** `$start_date_string` - Date string for when the event starts
-- ***null*** | ***string*** `$end_date_string` - Date string for when the event ends. Defaults to start date
+- ***string*** | ***null*** `$end_date_string` - Date string for when the event ends. Defaults to start date
 
 ---
 
@@ -127,17 +152,21 @@ Sets the first day of the week
 
 ##### Parameters:
 
-- ***int*** | ***string*** `$offset` - Day to start on, ex: "Monday" or 0-6 where 0 is Sunday
+- ***int*** | ***string*** `$offset` - Day the week starts on. ex: "Monday" or 0-6 where 0 is Sunday
 
 ---
 
 #### Method: SimpleCalendar->show
 
 ```php
-function show([ $echo = true])
+function show([ $echo = 'true'])
 ```
 
 Returns/Outputs the Calendar
+
+##### DEPRECATED
+
+Use `render()` method instead.
 
 ##### Parameters:
 
@@ -146,3 +175,17 @@ Returns/Outputs the Calendar
 ##### Returns:
 
 - ***string*** - HTML of the Calendar
+
+---
+
+#### Method: SimpleCalendar->render
+
+```php
+function render()
+```
+
+Returns the generated Calendar
+
+##### Returns:
+
+- ***string***
