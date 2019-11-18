@@ -9,7 +9,6 @@ $calendar->setStartOfWeek('Sunday');
 $calendar->addDailyHtml('Sample Event', 'today', 'tomorrow');
 
 $calendar->setWeekDayNames([ 'Sun', 'Mon', 'Tu', 'W', 'Th', 'F', 'Sa' ]);
-
-$calendar->setStartOfWeek('Sunday');
+$calendar->setStartOfWeek('Monday');
 
 echo $calendar->render();
