@@ -16,7 +16,7 @@ class SimpleCalendar {
 	 *
 	 * @var array|null
 	 */
-	public $wday_names = null;
+	private $weekDayNames = null;
 
 	/**
 	 * @var \DateTimeInterface
@@ -32,7 +32,7 @@ class SimpleCalendar {
 	private $offset = 0;
 
 	/**
-	 * @param \DateTimeInterface|string|null $calendarDate
+	 * @param \DateTimeInterface|string|null       $calendarDate
 	 * @param \DateTimeInterface|string|false|null $today
 	 * @throws \Exception on failing to parse given dates
 	 *
@@ -45,7 +45,7 @@ class SimpleCalendar {
 	}
 
 	/**
-	 * Sets the date for the calendar
+	 * Sets the date for the calendar.
 	 *
 	 * @param \DateTimeInterface|string|null $date DateTimeInterface or Date string parsed by strtotime for the calendar
 	 *                                             date. If null set to current timestamp.
@@ -62,7 +62,10 @@ class SimpleCalendar {
 	}
 
 	/**
-	 * @param \DateTimeInterface|string|null|false $today
+	 * Sets "today"'s date. Defaults to today.
+	 *
+	 * @param \DateTimeInterface|string|null|false $today `null` will default to today, `false` will disable the
+	 *     rendering of Today.
 	 * @throws \Exception
 	 */
 	public function setToday( $today = null ) {
@@ -78,6 +81,17 @@ class SimpleCalendar {
 	}
 
 	/**
+	 * @param string[]|null $weekDayNames
+	 */
+	public function setWeekDayNames( array $weekDayNames = null ) {
+		if( is_array($weekDayNames) && count($weekDayNames) !== 7 ) {
+			throw new \InvalidArgumentException('week array must have exactly 7 values');
+		}
+
+		$this->weekDayNames = $weekDayNames ? array_values($weekDayNames) : null;
+	}
+
+	/**
 	 * Add a daily event to the calendar
 	 *
 	 * @param string      $html The raw HTML to place on the calendar for this event
@@ -87,7 +101,7 @@ class SimpleCalendar {
 	public function addDailyHtml( $html, $start_date_string, $end_date_string = null ) {
 		static $htmlCount = 0;
 		$start_date = strtotime($start_date_string);
-		$end_date = $start_date;
+		$end_date   = $start_date;
 
 		if( $end_date_string ) {
 			$end_date = strtotime($end_date_string);
@@ -112,13 +126,20 @@ class SimpleCalendar {
 	/**
 	 * Sets the first day of the week
 	 *
-	 * @param int|string $offset Day to start on, ex: "Monday" or 0-6 where 0 is Sunday
+	 * @param int|string $offset Day the week starts on. ex: "Monday" or 0-6 where 0 is Sunday
 	 */
 	public function setStartOfWeek( $offset ) {
 		if( is_int($offset) ) {
 			$this->offset = $offset % 7;
+		} elseif( $this->weekDayNames !== null && ($weekOffset = array_search($offset, $this->weekDayNames, true)) !== false ) {
+			$this->offset = $weekOffset;
 		} else {
-			$this->offset = date('N', strtotime($offset)) % 7;
+			$weekTime = strtotime($offset);
+			if( $weekTime === 0 ) {
+				throw new \InvalidArgumentException('invalid offset');
+			}
+
+			$this->offset = date('N', $weekTime) % 7;
 		}
 	}
 
@@ -127,26 +148,42 @@ class SimpleCalendar {
 	 *
 	 * @param bool $echo Whether to echo resulting calendar
 	 * @return string HTML of the Calendar
+	 * @throws \Exception
+	 * @deprecated Use `render()` method instead.
 	 */
 	public function show( $echo = true ) {
-		$now = getdate($this->now->getTimestamp());
-		$today = ['mday' => -1, 'mon' => -1, 'year' => -1];
-		if($this->today !== null) {
+		$out = $this->render();
+		if( $echo ) {
+			echo $out;
+		}
+
+		return $out;
+	}
+
+	/**
+	 * Returns the generated Calendar
+	 *
+	 * @return string
+	 */
+	public function render() {
+		$now   = getdate($this->now->getTimestamp());
+		$today = [ 'mday' => -1, 'mon' => -1, 'year' => -1 ];
+		if( $this->today !== null ) {
 			$today = getdate($this->today->getTimestamp());
 		}
 
-		$wDays = $this->weekdays();
-		$this->rotate($wDays, $this->offset);
+		$daysOfWeek = $this->weekdays();
+		$this->rotate($daysOfWeek, $this->offset);
 
-		$wDay    = date('N', mktime(0, 0, 1, $now['mon'], 1, $now['year'])) - $this->offset;
-		$no_days = cal_days_in_month(CAL_GREGORIAN, $now['mon'], $now['year']);
+		$weekDayIndex = date('N', mktime(0, 0, 1, $now['mon'], 1, $now['year'])) - $this->offset;
+		$daysInMonth  = cal_days_in_month(CAL_GREGORIAN, $now['mon'], $now['year']);
 
 		$out = <<<'TAG'
 <table cellpadding="0" cellspacing="0" class="SimpleCalendar"><thead><tr>
 TAG;
 
-		foreach($wDays as $wd) {
-			$out .= "<th>{$wd}</th>";
+		foreach( $daysOfWeek as $dayName ) {
+			$out .= "<th>{$dayName}</th>";
 		}
 
 		$out .= <<<'TAG'
@@ -155,23 +192,23 @@ TAG;
 <tr>
 TAG;
 
-		$wDay = ($wDay + 7) % 7;
+		$weekDayIndex = ($weekDayIndex + 7) % 7;
 
-		if( $wDay == 7 ) {
-			$wDay = 0;
+		if( $weekDayIndex === 7 ) {
+			$weekDayIndex = 0;
 		} else {
 			$out .= str_repeat(<<<'TAG'
 <td class="SCprefix">&nbsp;</td>
 TAG
-				, $wDay);
+				, $weekDayIndex);
 		}
 
-		$count = $wDay + 1;
-		for( $i = 1; $i <= $no_days; $i++ ) {
+		$count = $weekDayIndex + 1;
+		for( $i = 1; $i <= $daysInMonth; $i++ ) {
 			$date = (new \DateTimeImmutable())->setDate($now['year'], $now['mon'], $i);
 
 			$isToday = false;
-			if($this->today !== null) {
+			if( $this->today !== null ) {
 				$isToday = $i == $today['mday']
 					&& $today['mon'] == $date->format('n')
 					&& $today['year'] == $date->format('Y');
@@ -181,13 +218,13 @@ TAG
 
 			$out .= sprintf('<time datetime="%s">%d</time>', $date->format('Y-m-d'), $i);
 
-			$dHtml_arr = false;
+			$dailyHTML = null;
 			if( isset($this->dailyHtml[$now['year']][$now['mon']][$i]) ) {
-				$dHtml_arr = $this->dailyHtml[$now['year']][$now['mon']][$i];
+				$dailyHTML = $this->dailyHtml[$now['year']][$now['mon']][$i];
 			}
 
-			if( is_array($dHtml_arr) ) {
-				foreach( $dHtml_arr as $dHtml ) {
+			if( is_array($dailyHTML) ) {
+				foreach( $dailyHTML as $dHtml ) {
 					$out .= sprintf('<div class="event">%s</div>', $dHtml);
 				}
 			}
@@ -195,16 +232,17 @@ TAG
 			$out .= '</td>';
 
 			if( $count > 6 ) {
-				$out   .= "</tr>\n" . ($i < $no_days ? '<tr>' : '');
+				$out   .= "</tr>\n" . ($i < $daysInMonth ? '<tr>' : '');
 				$count = 0;
 			}
 			$count++;
 		}
-		$out .= ($count != 1) ? str_repeat('<td class="SCsuffix">&nbsp;</td>', 8 - $count) . '</tr>' : '';
-		$out .= "\n</tbody></table>\n";
-		if( $echo ) {
-			echo $out;
+
+		if( $count !== 1 ) {
+			$out .= str_repeat('<td class="SCsuffix">&nbsp;</td>', 8 - $count) . '</tr>';
 		}
+
+		$out .= "\n</tbody></table>\n";
 
 		return $out;
 	}
@@ -227,8 +265,8 @@ TAG
 	 * @return array|null
 	 */
 	private function weekdays() {
-		if( $this->wday_names ) {
-			$wDays = $this->wday_names;
+		if( $this->weekDayNames ) {
+			$wDays = $this->weekDayNames;
 		} else {
 			$today = (86400 * (date('N')));
 			$wDays = [];
@@ -238,13 +276,6 @@ TAG
 		}
 
 		return $wDays;
-	}
-
-	/**
-	 * @param array|null $weekDayNames
-	 */
-	public function setWeekDayNames( $weekDayNames ) {
-		$this->wday_names = $weekDayNames;
 	}
 
 }
