@@ -1,6 +1,6 @@
 <mddoc>
 
-	<docpage target="README.md" autoloader="psr0" autoloader-root="src">
+	<docpage target="README.md" autoloader="psr4" autoloader-root-namespace="donatj" autoloader-root="src">
 
 		<section title="Simple Calendar">
 			<badge-poser type="version"/>
@@ -15,32 +15,13 @@
 			<section title="Installing">
 				<composer-install/>
 			</section>
-			<section title="Sample Usage">
-				<text>
-					<![CDATA[
-```php
-<?php
-require('SimpleCalendar.php');
-
-$Calendar = new donatj\SimpleCalendar('June 2010');
-$Calendar->show();
-```
-
-or
-
-```php
-<?php
-require('SimpleCalendar.php');
-
-$Calendar = new donatj\SimpleCalendar();
-$Calendar->setDate('June 5 2010');
-$Calendar->show();
-```
-]]></text>
+			<section title="Examples">
+				<source name="example/simple.php" lang="php" />
+				<source name="example/basic.php" lang="php" />
 			</section>
 
 			<section title="Documentation">
-				<recursivedirectory name="lib"/>
+				<recursivedirectory name="src"/>
 			</section>
 		</section>
 	</docpage>
