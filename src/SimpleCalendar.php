@@ -16,7 +16,7 @@ class SimpleCalendar {
 	 *
 	 * @var array|null
 	 */
-	private $weekDayNames = null;
+	private $weekDayNames;
 
 	/**
 	 * @var \DateTimeInterface
@@ -96,7 +96,7 @@ class SimpleCalendar {
 		if( $today instanceof \DateTimeInterface ) {
 			$this->today = $today;
 		} elseif( is_string($today) ) {
-			$this->now = new \DateTimeImmutable($today);
+			$this->today = new \DateTimeImmutable($today);
 		} elseif( $today === null ) {
 			$this->today = new \DateTimeImmutable();
 		} elseif( $today === false ) {
@@ -221,7 +221,7 @@ TAG;
 		if( $weekDayIndex === 7 ) {
 			$weekDayIndex = 0;
 		} else {
-			$out .= str_repeat(<<<'TAG'
+			$out .= str_repeat(<<<TAG
 <td class="{$this->classes['leading_day']}">&nbsp;</td>
 TAG
 				, $weekDayIndex);

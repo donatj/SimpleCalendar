@@ -7,8 +7,8 @@ class SimpleCalendarTest extends PHPUnit_Framework_TestCase {
 		$this->assertContains('class="today"', $cal->show(false));
 	}
 
-	public function testCallendarClasses() {
-		$cal = new \donatj\SimpleCalendar();
+	public function testClasses() {
+		$cal = new \donatj\SimpleCalendar('June 2010', 'June 5 2010');
 		$defaults = [
 			'SimpleCalendar',
 			'SCprefix',
@@ -18,15 +18,15 @@ class SimpleCalendarTest extends PHPUnit_Framework_TestCase {
 			'events',
 		];
 
-		$cal->addDailyHtml( 'Sample Event', 'today' );
-		$cal_html = $cal->show(false);
+		$cal->addDailyHtml( 'Sample Event', 'June 15 2010' );
+		$cal_html = $cal->render();
 		foreach( $defaults as $class ) {
 			$this->assertContains('class="' . $class . '"', $cal_html);
 		}
 	}
 
-	public function testCustomCallendarClasses() {
-		$cal = new \donatj\SimpleCalendar();
+	public function testCustomClasses() {
+		$cal = new \donatj\SimpleCalendar('June 2010', 'June 5 2010');
 		$classes = [
 			'calendar'     => 'TestCalendar',
 			'leading_day'  => 'TestPrefix',
@@ -37,8 +37,8 @@ class SimpleCalendarTest extends PHPUnit_Framework_TestCase {
 		];
 
 		$cal->setCalendarClasses( $classes );
-		$cal->addDailyHtml( 'Sample Event', 'today' );
-		$cal_html = $cal->show(false);
+		$cal->addDailyHtml( 'Sample Event', 'June 15 2010' );
+		$cal_html = $cal->render();
 
 		foreach( $classes as $class ) {
 			$this->assertContains('class="' . $class . '"', $cal_html);
