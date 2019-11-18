@@ -1,14 +1,16 @@
 <?php
 
+use donatj\SimpleCalendar;
+
 class SimpleCalendarTest extends PHPUnit_Framework_TestCase {
 
 	public function testCurrentMonth() {
-		$cal = new \donatj\SimpleCalendar();
+		$cal = new SimpleCalendar();
 		$this->assertContains('class="today"', $cal->show(false));
 	}
 
 	public function testClasses() {
-		$cal = new \donatj\SimpleCalendar('June 2010', 'June 5 2010');
+		$cal = new SimpleCalendar('June 2010', 'June 5 2010');
 		$defaults = [
 			'SimpleCalendar',
 			'SCprefix',
@@ -26,7 +28,7 @@ class SimpleCalendarTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testCustomClasses() {
-		$cal = new \donatj\SimpleCalendar('June 2010', 'June 5 2010');
+		$cal = new SimpleCalendar('June 2010', 'June 5 2010');
 		$classes = [
 			'calendar'     => 'TestCalendar',
 			'leading_day'  => 'TestPrefix',
@@ -46,12 +48,12 @@ class SimpleCalendarTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testCurrentMonth_yearRegression() {
-		$cal = new \donatj\SimpleCalendar(sprintf('%d-%d-%d', (date('Y') - 1), date('n'), date('d')));
+		$cal = new SimpleCalendar(sprintf('%d-%d-%d', (date('Y') - 1), date('n'), date('d')));
 		$this->assertNotContains('class="today"', $cal->show(false));
 	}
 
 	public function testTagOpenCloseMismatch_regression() {
-		$cal = new \donatj\SimpleCalendar();
+		$cal = new SimpleCalendar();
 		$cal->setStartOfWeek(4);
 		$cal->setDate('September 2016');
 		$html = $cal->show(false);
@@ -61,7 +63,7 @@ class SimpleCalendarTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testTagOpenCloseMismatch_regression2() {
-		$cal = new \donatj\SimpleCalendar();
+		$cal = new SimpleCalendar();
 		$cal->setDate('January 2017');
 		$html = $cal->show(false);
 
@@ -70,7 +72,7 @@ class SimpleCalendarTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testGenericGeneration() {
-		$cal = new \donatj\SimpleCalendar("June 5 2016");
+		$cal = new SimpleCalendar("June 5 2016");
 
 		$tableArray = $this->parseCalendarHtml($cal);
 
@@ -140,7 +142,7 @@ class SimpleCalendarTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testGenericGeneration_mTs() {
-		$cal = new \donatj\SimpleCalendar("June 5 2016");
+		$cal = new SimpleCalendar("June 5 2016");
 		$cal->setStartOfWeek(5);
 
 		$tableArray = $this->parseCalendarHtml($cal);
@@ -208,7 +210,7 @@ class SimpleCalendarTest extends PHPUnit_Framework_TestCase {
 	/**
 	 * @return array
 	 */
-	private function parseCalendarHtml( \donatj\SimpleCalendar $cal ) {
+	private function parseCalendarHtml( SimpleCalendar $cal ) {
 		$x = new DOMDocument();
 		@$x->loadHTML($cal->show(false));
 
