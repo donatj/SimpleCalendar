@@ -269,7 +269,18 @@ TAG
 					&& $today['year'] == $date->format('Y');
 			}
 
-			$out .= '<td' . ($isToday ? ' class="' . $this->classes['today'] . '"' : '') . '>';
+			if($isToday){
+				$out .= '<td class="' . $this->classes['today'] . '">';
+			} elseif( // check for days from the past
+				$date->format('Y') < $today['year']
+				|| $date->format('Y') == $today['year'] && $date->format('n') < $today['mon']
+				|| $date->format('Y') == $today['year'] && $date->format('n') == $today['mon'] && $i < $today['mday'] 
+				
+			){
+				$out .= '<td class="' . $this->classes['disable'] . '">';
+			} else {
+				$out .= '<td>';
+			}
 
 			$out .= sprintf('<time datetime="%s">%d</time>', $date->format('Y-m-d'), $i);
 
