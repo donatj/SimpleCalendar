@@ -16,29 +16,30 @@ class SimpleCalendar {
 	 *
 	 * @var string[]|null
 	 */
-	private $weekDayNames;
+	protected $weekDayNames;
 
 	/**
 	 * @var \DateTimeInterface
 	 */
-	private $now;
+	protected $now;
 
 	/**
 	 * @var \DateTimeInterface|null
 	 */
-	private $today;
+	protected $today;
 
-	private $classes = [
+	protected $classes = [
 		'calendar'     => 'SimpleCalendar',
 		'leading_day'  => 'SCprefix',
 		'trailing_day' => 'SCsuffix',
 		'today'        => 'today',
 		'event'        => 'event',
 		'events'       => 'events',
+		'disable'      => 'disable',
 	];
 
-	private $dailyHtml = [];
-	private $offset = 0;
+	protected $dailyHtml = [];
+	protected $offset = 0;
 
 	/**
 	 * @param \DateTimeInterface|int|string|null       $calendarDate
@@ -67,7 +68,7 @@ class SimpleCalendar {
 	 * @param \DateTimeInterface|int|string|null $date
 	 * @return \DateTimeInterface|null
 	 */
-	private function parseDate( $date = null ) {
+	protected function parseDate( $date = null ) {
 		if( $date instanceof \DateTimeInterface ) {
 			return $date;
 		}
@@ -306,7 +307,7 @@ TAG
 	/**
 	 * @param int $steps
 	 */
-	private function rotate( array &$data, $steps ) {
+	protected function rotate( array &$data, $steps ) {
 		$count = count($data);
 		if( $steps < 0 ) {
 			$steps = $count + $steps;
@@ -320,7 +321,7 @@ TAG
 	/**
 	 * @return string[]
 	 */
-	private function weekdays() {
+	protected function weekdays() {
 		if( $this->weekDayNames !== null ) {
 			$wDays = $this->weekDayNames;
 		} else {
