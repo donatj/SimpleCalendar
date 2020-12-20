@@ -1,7 +1,7 @@
 {
-	"name"       : "donatj/simplecalendar",
+	"name"       : "krzysiaczek/simplecalendar",
 	"type"       : "library",
-	"description": "A light, easy to use calendar rendering library",
+	"description": "An extension of light, easy to use calendar rendering library written by Jesse G. Donat",
 	"keywords"   : ["calendar"],
 	"homepage"   : "http://donatstudios.com/SimpleCalendar",
 	"license"    : "MIT",
@@ -18,8 +18,19 @@
 			"email"   : "donatj@gmail.com",
 			"homepage": "http://donatstudios.com",
 			"role"    : "Developer"
+		},
+		{
+			"name"    : "Krzysiaczek",
+			"email"   : "krzysiaczek@icloud.com",
+			"role"    : "Developer"
 		}
 	],
+	"repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/Krzysiaczek/SimpleCalendar.git"
+        }
+    ],
 	"autoload"   : {
 		"psr-4": {
 			"donatj\\": "src/"
