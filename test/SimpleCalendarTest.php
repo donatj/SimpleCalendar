@@ -2,17 +2,16 @@
 
 use donatj\SimpleCalendar;
 
-class SimpleCalendarTest extends PHPUnit_Framework_TestCase {
+class SimpleCalendarTest extends \PHPUnit\Framework\TestCase {
 
 	public function testCurrentMonth() {
 		$cal = new SimpleCalendar();
-		$this->assertContains('class="today"', $cal->show(false));
+		$this->assertStringContainsString('class="today"', $cal->show(false));
 	}
 
-	/**
-	 * @expectedException \InvalidArgumentException
-	 */
+
 	public function testBadDailyHtmlDates(){
+		$this->expectException(InvalidArgumentException::class);
 		$cal = new SimpleCalendar('June 2010', 'June 5 2010');
 		$cal->addDailyHtml('foo', 'tomorrow', 'yesterday');
 	}
@@ -31,7 +30,7 @@ class SimpleCalendarTest extends PHPUnit_Framework_TestCase {
 		$cal->addDailyHtml( 'Sample Event', 'June 15 2010' );
 		$cal_html = $cal->render();
 		foreach( $defaults as $class ) {
-			$this->assertContains('class="' . $class . '"', $cal_html);
+			$this->assertStringContainsString('class="' . $class . '"', $cal_html);
 		}
 	}
 
@@ -51,13 +50,13 @@ class SimpleCalendarTest extends PHPUnit_Framework_TestCase {
 		$cal_html = $cal->render();
 
 		foreach( $classes as $class ) {
-			$this->assertContains('class="' . $class . '"', $cal_html);
+			$this->assertStringContainsString('class="' . $class . '"', $cal_html);
 		}
 	}
 
 	public function testCurrentMonth_yearRegression() {
 		$cal = new SimpleCalendar(sprintf('%d-%d-%d', (date('Y') - 1), date('n'), date('d')));
-		$this->assertNotContains('class="today"', $cal->show(false));
+		$this->assertStringNotContainsString('class="today"', $cal->show(false));
 	}
 
 	public function testTagOpenCloseMismatch_regression() {
@@ -99,48 +98,48 @@ class SimpleCalendarTest extends PHPUnit_Framework_TestCase {
 				[ 'class' => 'SCprefix', 'text' => ' ', ],
 				[ 'class' => 'SCprefix', 'text' => ' ', ],
 				[ 'class' => 'SCprefix', 'text' => ' ', ],
-				[ 'class' => '', 'text' => '1', 'date' => '2016-06-01', ],
-				[ 'class' => '', 'text' => '2', 'date' => '2016-06-02', ],
-				[ 'class' => '', 'text' => '3', 'date' => '2016-06-03', ],
-				[ 'class' => '', 'text' => '4', 'date' => '2016-06-04', ],
+				[ 'class' => 'disable', 'text' => '1', 'date' => '2016-06-01', ],
+				[ 'class' => 'disable', 'text' => '2', 'date' => '2016-06-02', ],
+				[ 'class' => 'disable', 'text' => '3', 'date' => '2016-06-03', ],
+				[ 'class' => 'disable', 'text' => '4', 'date' => '2016-06-04', ],
 			],
 
 			[
-				[ 'class' => '', 'text' => '5', 'date' => '2016-06-05', ],
-				[ 'class' => '', 'text' => '6', 'date' => '2016-06-06', ],
-				[ 'class' => '', 'text' => '7', 'date' => '2016-06-07', ],
-				[ 'class' => '', 'text' => '8', 'date' => '2016-06-08', ],
-				[ 'class' => '', 'text' => '9', 'date' => '2016-06-09', ],
-				[ 'class' => '', 'text' => '10', 'date' => '2016-06-10', ],
-				[ 'class' => '', 'text' => '11', 'date' => '2016-06-11', ],
+				[ 'class' => 'disable', 'text' => '5', 'date' => '2016-06-05', ],
+				[ 'class' => 'disable', 'text' => '6', 'date' => '2016-06-06', ],
+				[ 'class' => 'disable', 'text' => '7', 'date' => '2016-06-07', ],
+				[ 'class' => 'disable', 'text' => '8', 'date' => '2016-06-08', ],
+				[ 'class' => 'disable', 'text' => '9', 'date' => '2016-06-09', ],
+				[ 'class' => 'disable', 'text' => '10', 'date' => '2016-06-10', ],
+				[ 'class' => 'disable', 'text' => '11', 'date' => '2016-06-11', ],
 			],
 
 			[
-				[ 'class' => '', 'text' => '12', 'date' => '2016-06-12', ],
-				[ 'class' => '', 'text' => '13', 'date' => '2016-06-13', ],
-				[ 'class' => '', 'text' => '14', 'date' => '2016-06-14', ],
-				[ 'class' => '', 'text' => '15', 'date' => '2016-06-15', ],
-				[ 'class' => '', 'text' => '16', 'date' => '2016-06-16', ],
-				[ 'class' => '', 'text' => '17', 'date' => '2016-06-17', ],
-				[ 'class' => '', 'text' => '18', 'date' => '2016-06-18', ],
+				[ 'class' => 'disable', 'text' => '12', 'date' => '2016-06-12', ],
+				[ 'class' => 'disable', 'text' => '13', 'date' => '2016-06-13', ],
+				[ 'class' => 'disable', 'text' => '14', 'date' => '2016-06-14', ],
+				[ 'class' => 'disable', 'text' => '15', 'date' => '2016-06-15', ],
+				[ 'class' => 'disable', 'text' => '16', 'date' => '2016-06-16', ],
+				[ 'class' => 'disable', 'text' => '17', 'date' => '2016-06-17', ],
+				[ 'class' => 'disable', 'text' => '18', 'date' => '2016-06-18', ],
 			],
 
 			[
-				[ 'class' => '', 'text' => '19', 'date' => '2016-06-19', ],
-				[ 'class' => '', 'text' => '20', 'date' => '2016-06-20', ],
-				[ 'class' => '', 'text' => '21', 'date' => '2016-06-21', ],
-				[ 'class' => '', 'text' => '22', 'date' => '2016-06-22', ],
-				[ 'class' => '', 'text' => '23', 'date' => '2016-06-23', ],
-				[ 'class' => '', 'text' => '24', 'date' => '2016-06-24', ],
-				[ 'class' => '', 'text' => '25', 'date' => '2016-06-25', ],
+				[ 'class' => 'disable', 'text' => '19', 'date' => '2016-06-19', ],
+				[ 'class' => 'disable', 'text' => '20', 'date' => '2016-06-20', ],
+				[ 'class' => 'disable', 'text' => '21', 'date' => '2016-06-21', ],
+				[ 'class' => 'disable', 'text' => '22', 'date' => '2016-06-22', ],
+				[ 'class' => 'disable', 'text' => '23', 'date' => '2016-06-23', ],
+				[ 'class' => 'disable', 'text' => '24', 'date' => '2016-06-24', ],
+				[ 'class' => 'disable', 'text' => '25', 'date' => '2016-06-25', ],
 			],
 
 			[
-				[ 'class' => '', 'text' => '26', 'date' => '2016-06-26', ],
-				[ 'class' => '', 'text' => '27', 'date' => '2016-06-27', ],
-				[ 'class' => '', 'text' => '28', 'date' => '2016-06-28', ],
-				[ 'class' => '', 'text' => '29', 'date' => '2016-06-29', ],
-				[ 'class' => '', 'text' => '30', 'date' => '2016-06-30', ],
+				[ 'class' => 'disable', 'text' => '26', 'date' => '2016-06-26', ],
+				[ 'class' => 'disable', 'text' => '27', 'date' => '2016-06-27', ],
+				[ 'class' => 'disable', 'text' => '28', 'date' => '2016-06-28', ],
+				[ 'class' => 'disable', 'text' => '29', 'date' => '2016-06-29', ],
+				[ 'class' => 'disable', 'text' => '30', 'date' => '2016-06-30', ],
 				[ 'class' => 'SCsuffix', 'text' => ' ', ],
 				[ 'class' => 'SCsuffix', 'text' => ' ', ],
 			],
@@ -171,44 +170,44 @@ class SimpleCalendarTest extends PHPUnit_Framework_TestCase {
 				[ 'class' => 'SCprefix', 'text' => ' ', ],
 				[ 'class' => 'SCprefix', 'text' => ' ', ],
 				[ 'class' => 'SCprefix', 'text' => ' ', ],
-				[ 'class' => '', 'text' => '1', 'date' => '2016-06-01', ],
-				[ 'class' => '', 'text' => '2', 'date' => '2016-06-02', ],
+				[ 'class' => 'disable', 'text' => '1', 'date' => '2016-06-01', ],
+				[ 'class' => 'disable', 'text' => '2', 'date' => '2016-06-02', ],
 			],
 			[
-				[ 'class' => '', 'text' => '3', 'date' => '2016-06-03', ],
-				[ 'class' => '', 'text' => '4', 'date' => '2016-06-04', ],
-				[ 'class' => '', 'text' => '5', 'date' => '2016-06-05', ],
-				[ 'class' => '', 'text' => '6', 'date' => '2016-06-06', ],
-				[ 'class' => '', 'text' => '7', 'date' => '2016-06-07', ],
-				[ 'class' => '', 'text' => '8', 'date' => '2016-06-08', ],
-				[ 'class' => '', 'text' => '9', 'date' => '2016-06-09', ],
+				[ 'class' => 'disable', 'text' => '3', 'date' => '2016-06-03', ],
+				[ 'class' => 'disable', 'text' => '4', 'date' => '2016-06-04', ],
+				[ 'class' => 'disable', 'text' => '5', 'date' => '2016-06-05', ],
+				[ 'class' => 'disable', 'text' => '6', 'date' => '2016-06-06', ],
+				[ 'class' => 'disable', 'text' => '7', 'date' => '2016-06-07', ],
+				[ 'class' => 'disable', 'text' => '8', 'date' => '2016-06-08', ],
+				[ 'class' => 'disable', 'text' => '9', 'date' => '2016-06-09', ],
 			],
 			[
-				[ 'class' => '', 'text' => '10', 'date' => '2016-06-10', ],
-				[ 'class' => '', 'text' => '11', 'date' => '2016-06-11', ],
-				[ 'class' => '', 'text' => '12', 'date' => '2016-06-12', ],
-				[ 'class' => '', 'text' => '13', 'date' => '2016-06-13', ],
-				[ 'class' => '', 'text' => '14', 'date' => '2016-06-14', ],
-				[ 'class' => '', 'text' => '15', 'date' => '2016-06-15', ],
-				[ 'class' => '', 'text' => '16', 'date' => '2016-06-16', ],
+				[ 'class' => 'disable', 'text' => '10', 'date' => '2016-06-10', ],
+				[ 'class' => 'disable', 'text' => '11', 'date' => '2016-06-11', ],
+				[ 'class' => 'disable', 'text' => '12', 'date' => '2016-06-12', ],
+				[ 'class' => 'disable', 'text' => '13', 'date' => '2016-06-13', ],
+				[ 'class' => 'disable', 'text' => '14', 'date' => '2016-06-14', ],
+				[ 'class' => 'disable', 'text' => '15', 'date' => '2016-06-15', ],
+				[ 'class' => 'disable', 'text' => '16', 'date' => '2016-06-16', ],
 			],
 			[
-				[ 'class' => '', 'text' => '17', 'date' => '2016-06-17', ],
-				[ 'class' => '', 'text' => '18', 'date' => '2016-06-18', ],
-				[ 'class' => '', 'text' => '19', 'date' => '2016-06-19', ],
-				[ 'class' => '', 'text' => '20', 'date' => '2016-06-20', ],
-				[ 'class' => '', 'text' => '21', 'date' => '2016-06-21', ],
-				[ 'class' => '', 'text' => '22', 'date' => '2016-06-22', ],
-				[ 'class' => '', 'text' => '23', 'date' => '2016-06-23', ],
+				[ 'class' => 'disable', 'text' => '17', 'date' => '2016-06-17', ],
+				[ 'class' => 'disable', 'text' => '18', 'date' => '2016-06-18', ],
+				[ 'class' => 'disable', 'text' => '19', 'date' => '2016-06-19', ],
+				[ 'class' => 'disable', 'text' => '20', 'date' => '2016-06-20', ],
+				[ 'class' => 'disable', 'text' => '21', 'date' => '2016-06-21', ],
+				[ 'class' => 'disable', 'text' => '22', 'date' => '2016-06-22', ],
+				[ 'class' => 'disable', 'text' => '23', 'date' => '2016-06-23', ],
 			],
 			[
-				[ 'class' => '', 'text' => '24', 'date' => '2016-06-24', ],
-				[ 'class' => '', 'text' => '25', 'date' => '2016-06-25', ],
-				[ 'class' => '', 'text' => '26', 'date' => '2016-06-26', ],
-				[ 'class' => '', 'text' => '27', 'date' => '2016-06-27', ],
-				[ 'class' => '', 'text' => '28', 'date' => '2016-06-28', ],
-				[ 'class' => '', 'text' => '29', 'date' => '2016-06-29', ],
-				[ 'class' => '', 'text' => '30', 'date' => '2016-06-30', ],
+				[ 'class' => 'disable', 'text' => '24', 'date' => '2016-06-24', ],
+				[ 'class' => 'disable', 'text' => '25', 'date' => '2016-06-25', ],
+				[ 'class' => 'disable', 'text' => '26', 'date' => '2016-06-26', ],
+				[ 'class' => 'disable', 'text' => '27', 'date' => '2016-06-27', ],
+				[ 'class' => 'disable', 'text' => '28', 'date' => '2016-06-28', ],
+				[ 'class' => 'disable', 'text' => '29', 'date' => '2016-06-29', ],
+				[ 'class' => 'disable', 'text' => '30', 'date' => '2016-06-30', ],
 			],
 		];
 

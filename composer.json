@@ -10,7 +10,7 @@
 		"ext-calendar": "*"
 	},
 	"require-dev": {
-		"phpunit/phpunit": "4.*"
+		"phpunit/phpunit": "^9"
 	},
 	"authors"    : [
 		{
