@@ -12,10 +12,15 @@ class SimpleCalendarTest extends TestCase {
 	}
 
 	public function testBadDailyHtmlDates(){
-		$this->expectException('\InvalidArgumentException');
+		try {
+			$cal = new SimpleCalendar('June 2010', 'June 5 2010');
+			$cal->addDailyHtml('foo', 'tomorrow', 'yesterday');
+		} catch(InvalidArgumentException $ex) {
+			self::assertTrue(true);
+			return;
+		}
 
-		$cal = new SimpleCalendar('June 2010', 'June 5 2010');
-		$cal->addDailyHtml('foo', 'tomorrow', 'yesterday');
+		self::fail('expected InvalidArgumentException');
 	}
 
 	public function testClasses() {
