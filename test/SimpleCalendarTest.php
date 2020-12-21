@@ -1,18 +1,19 @@
 <?php
 
 use donatj\SimpleCalendar;
+use PHPUnit\Framework\TestCase;
 
-class SimpleCalendarTest extends PHPUnit_Framework_TestCase {
+class SimpleCalendarTest extends TestCase {
 
 	public function testCurrentMonth() {
 		$cal = new SimpleCalendar();
-		$this->assertContains('class="today"', $cal->show(false));
+
+		self::assertNotFalse(strpos($cal->show(false), 'class="today"'));
 	}
 
-	/**
-	 * @expectedException \InvalidArgumentException
-	 */
 	public function testBadDailyHtmlDates(){
+		$this->expectException('\InvalidArgumentException');
+
 		$cal = new SimpleCalendar('June 2010', 'June 5 2010');
 		$cal->addDailyHtml('foo', 'tomorrow', 'yesterday');
 	}
@@ -31,7 +32,7 @@ class SimpleCalendarTest extends PHPUnit_Framework_TestCase {
 		$cal->addDailyHtml( 'Sample Event', 'June 15 2010' );
 		$cal_html = $cal->render();
 		foreach( $defaults as $class ) {
-			$this->assertContains('class="' . $class . '"', $cal_html);
+			self::assertNotFalse(strpos($cal_html, 'class="' . $class . '"'));
 		}
 	}
 
@@ -51,13 +52,13 @@ class SimpleCalendarTest extends PHPUnit_Framework_TestCase {
 		$cal_html = $cal->render();
 
 		foreach( $classes as $class ) {
-			$this->assertContains('class="' . $class . '"', $cal_html);
+			self::assertNotFalse(strpos($cal_html, 'class="' . $class . '"'));
 		}
 	}
 
 	public function testCurrentMonth_yearRegression() {
 		$cal = new SimpleCalendar(sprintf('%d-%d-%d', (date('Y') - 1), date('n'), date('d')));
-		$this->assertNotContains('class="today"', $cal->show(false));
+		self::assertFalse(strpos($cal->show(false), 'class="today"'));
 	}
 
 	public function testTagOpenCloseMismatch_regression() {
