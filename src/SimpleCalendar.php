@@ -36,6 +36,9 @@ class SimpleCalendar {
 		'event'        => 'event',
 		'events'       => 'events',
 		'disable'      => 'disable',
+		'top'          => 'top',
+		'previous'     => 'previous',
+		'next'         => 'next',
 	];
 
 	protected $dailyHtml = [];
@@ -220,7 +223,7 @@ class SimpleCalendar {
 	 *
 	 * @return string
 	 */
-	public function render() {
+	public function render( $top = false) {
 		$now   = getdate($this->now->getTimestamp());
 		$today = [ 'mday' => -1, 'mon' => -1, 'year' => -1 ];
 		if( $this->today !== null ) {
@@ -233,8 +236,28 @@ class SimpleCalendar {
 		$weekDayIndex = date('N', mktime(0, 0, 1, $now['mon'], 1, $now['year'])) - $this->offset;
 		$daysInMonth  = cal_days_in_month(CAL_GREGORIAN, $now['mon'], $now['year']);
 
+		if($top){
+			$prev = date('M-Y', strtotime('-1 month', strtotime($now['year'].'-'.$now['mon'])));
+			$next = date('M-Y', strtotime('+1 month', strtotime($now['year'].'-'.$now['mon'])));
+			$current = date('F Y', $this->now->getTimestamp());
+
+			$topRow = <<<TAG
+<tr class="{$this->classes['top']}">
+	<th>
+		<a class="{$this->classes['previous']}" href="#" data-target-month="$prev">&lt;</a>
+	</th>
+	<th colspan="5">$current</th>
+	<th>
+		<a class="{$this->classes['next']}" href="#" date-target-month="$next">&gt;</a>
+	</th>
+</tr>
+TAG;
+		} else {
+			$topRow = '';
+		}
+
 		$out = <<<TAG
-<table cellpadding="0" cellspacing="0" class="{$this->classes['calendar']}"><thead><tr>
+<table cellpadding="0" cellspacing="0" class="{$this->classes['calendar']}"><thead>{$topRow}<tr>
 TAG;
 
 		foreach( $daysOfWeek as $dayName ) {
