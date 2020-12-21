@@ -241,10 +241,18 @@ class SimpleCalendar {
 			$next = date('M-Y', strtotime('+1 month', strtotime($now['year'].'-'.$now['mon'])));
 			$current = date('F Y', $this->now->getTimestamp());
 
+			$prevMonth = getdate(strtotime('-1 month', strtotime($now['year'].'-'.$now['mon'])));
+			
+			if($prevMonth['year'] < $today['year'] || $prevMonth['year'] == $today['year'] && $prevMonth['mon'] < $today['mon']) {
+				$linkToPast = ' '.$this->classes['disable'];
+			} else {
+				$linkToPast = '';
+			}
+
 			$topRow = <<<TAG
 <tr class="{$this->classes['top']}">
 	<th>
-		<a class="{$this->classes['previous']}" href="#" data-target-month="$prev">&lt;</a>
+		<a class="{$this->classes['previous']}$linkToPast" href="#" data-target-month="$prev">&lt;</a>
 	</th>
 	<th colspan="5">$current</th>
 	<th>
