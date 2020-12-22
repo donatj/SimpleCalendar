@@ -223,7 +223,7 @@ class SimpleCalendar {
 	 *
 	 * @return string
 	 */
-	public function render( $top = false) {
+	public function render( bool $top = false) {
 		$now   = getdate($this->now->getTimestamp());
 		$today = [ 'mday' => -1, 'mon' => -1, 'year' => -1 ];
 		if( $this->today !== null ) {
@@ -256,7 +256,7 @@ class SimpleCalendar {
 	</th>
 	<th colspan="5">$current</th>
 	<th>
-		<a class="{$this->classes['next']}" href="#" date-target-month="$next">&gt;</a>
+		<a class="{$this->classes['next']}" href="#" data-target-month="$next">&gt;</a>
 	</th>
 </tr>
 TAG;
