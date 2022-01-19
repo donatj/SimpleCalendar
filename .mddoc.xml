@@ -5,9 +5,8 @@
 		<section title="Simple Calendar">
 			<badge-poser type="version"/>
 			<badge-poser type="license"/>
-			<badge-scrutinizer name="donatj/SimpleCalendar" type="quality"/>
-			<badge-scrutinizer name="donatj/SimpleCalendar" type="coverage"/>
 			<badge-travis name="donatj/SimpleCalendar"/>
+
 			<text>A very simple, easy to use PHP calendar rendering class.</text>
 			<section title="Requirements">
 				<composer-requires/>

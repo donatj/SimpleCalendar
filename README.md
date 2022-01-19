@@ -2,8 +2,6 @@
 
 [![Latest Stable Version](https://poser.pugx.org/donatj/simplecalendar/version)](https://packagist.org/packages/donatj/simplecalendar)
 [![License](https://poser.pugx.org/donatj/simplecalendar/license)](https://packagist.org/packages/donatj/simplecalendar)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/donatj/SimpleCalendar/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/donatj/SimpleCalendar)
-[![Code Coverage](https://scrutinizer-ci.com/g/donatj/SimpleCalendar/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/donatj/SimpleCalendar)
 [![Build Status](https://travis-ci.org/donatj/SimpleCalendar.svg?branch=master)](https://travis-ci.org/donatj/SimpleCalendar)
 
 
@@ -70,7 +68,7 @@ function __construct([ $calendarDate = null [, $today = null]])
 ##### Parameters:
 
 - ***\DateTimeInterface*** | ***int*** | ***string*** | ***null*** `$calendarDate`
-- ***\DateTimeInterface*** | ***bool*** | ***int*** | ***string*** | ***null*** `$today`
+- ***\DateTimeInterface*** | ***false*** | ***int*** | ***string*** | ***null*** `$today`
 
 ---
 
@@ -124,7 +122,7 @@ Sets "today"'s date. Defaults to today.
 
 ##### Parameters:
 
-- ***\DateTimeInterface*** | ***bool*** | ***string*** | ***null*** `$today` - `null` will default to today, `false` will disable the
+- ***\DateTimeInterface*** | ***false*** | ***string*** | ***null*** `$today` - `null` will default to today, `false` will disable the
 rendering of Today.
 
 ---
