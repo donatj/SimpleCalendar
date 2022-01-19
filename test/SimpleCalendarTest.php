@@ -249,14 +249,14 @@ class SimpleCalendarTest extends TestCase {
 				];
 
 				if( $rowi == 0 ) {
-					$this->assertEquals($childNode->tagName, 'th');
+					$this->assertSame('th', $childNode->tagName);
 				} else {
-					$this->assertEquals($childNode->tagName, 'td');
+					$this->assertSame('td', $childNode->tagName);
 
 					$time = $childNode->getElementsByTagName('time');
 
-					if( $class == 'SCprefix' || $class == 'SCsuffix' ) {
-						$this->assertEquals(0, $time->length);
+					if( $class === 'SCprefix' || $class === 'SCsuffix' ) {
+						$this->assertSame(0, $time->length);
 					} else {
 						$this->assertGreaterThan(0, $time->length);
 						$rowItem['date'] = $time->item(0)->getAttribute('datetime');
