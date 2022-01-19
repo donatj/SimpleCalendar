@@ -50,7 +50,6 @@ class SimpleCalendar {
 	public function __construct( $calendarDate = null, $today = null ) {
 		$this->setDate($calendarDate);
 		$this->setToday($today);
-		$this->setCalendarClasses();
 	}
 
 	/**
@@ -97,7 +96,7 @@ class SimpleCalendar {
 	 *
 	 * @param array $classes Map of element to class names used by the calendar.
 	 */
-	public function setCalendarClasses( array $classes = [] ) {
+	public function setCalendarClasses( array $classes ) {
 		foreach( $classes as $key => $value ) {
 			if( !isset($this->classes[$key]) ) {
 				throw new \InvalidArgumentException("class '{$key}' not supported");
