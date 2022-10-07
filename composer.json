@@ -1,13 +1,14 @@
 {
-	"name"       : "donatj/simplecalendar",
+	"name"       : "marcandreappel/simple-calendar",
 	"type"       : "library",
 	"description": "A light, easy to use calendar rendering library",
 	"keywords"   : ["calendar"],
-	"homepage"   : "http://donatstudios.com/SimpleCalendar",
+	"homepage"   : "https://github.com/marcandreappel/simple-calendar",
 	"license"    : "MIT",
 	"require"    : {
-		"php"         : ">=5.5.0",
-		"ext-calendar": "*"
+		"php"         : "^8.0|^8.1",
+		"ext-calendar": "*",
+		"nesbot/carbon": "^2.62"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "*",
@@ -15,15 +16,21 @@
 	},
 	"authors"    : [
 		{
+			"name"    : "Marc-André Appel",
+			"email"   : "marc-andre@appel.fun",
+			"homepage": "https://github.com/marcandreappel",
+			"role"    : "Maintainer"
+		},
+		{
 			"name"    : "Jesse G. Donat",
 			"email"   : "donatj@gmail.com",
 			"homepage": "http://donatstudios.com",
-			"role"    : "Developer"
+			"role"    : "Author"
 		}
 	],
 	"autoload"   : {
 		"psr-4": {
-			"donatj\\": "src/"
+			"MarcAndreAppel\\SimpleCalendar\\": "src/"
 		}
 	}
 }

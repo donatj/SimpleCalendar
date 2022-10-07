@@ -1,4 +1,4 @@
-# Simple Calendar
+# Simple PHP Calendar
 
 [![Latest Stable Version](https://poser.pugx.org/donatj/simplecalendar/version)](https://packagist.org/packages/donatj/simplecalendar)
 [![License](https://poser.pugx.org/donatj/simplecalendar/license)](https://packagist.org/packages/donatj/simplecalendar)
@@ -17,19 +17,16 @@ A very simple, easy to use PHP calendar rendering class.
 Install the latest version with:
 
 ```bash
-composer require 'donatj/simplecalendar'
+composer require 'marcandreappel/simple-calendar'
 ```
 
 ## Examples
 
 ```php
 <?php
-
 require '../vendor/autoload.php';
 
-echo '<link rel="stylesheet" href="../src/css/SimpleCalendar.css" />';
-
-$calendar = new donatj\SimpleCalendar('June 2010');
+$calendar = new MarcAndreAppel\SimpleCalendar\SimpleCalendar('June 2023');
 
 echo $calendar->render();
 
@@ -39,18 +36,14 @@ echo $calendar->render();
 <?php
 require '../vendor/autoload.php';
 
-echo '<link rel="stylesheet" href="../src/css/SimpleCalendar.css" />';
+$calendar = new MarcAndreAppel\SimpleCalendar\SimpleCalendar();
 
-$calendar = new donatj\SimpleCalendar();
+$calendar->addEvent('Sample Event', 'today', 'tomorrow');
 
-$calendar->setStartOfWeek('Sunday');
-$calendar->addDailyHtml('Sample Event', 'today', 'tomorrow');
-
-$calendar->setWeekDayNames([ 'Sun', 'Mon', 'Tu', 'W', 'Th', 'F', 'Sa' ]);
-$calendar->setStartOfWeek('Monday');
+$calendar->setWeekdays(['Sun', 'Mon', 'Tu', 'W', 'Th', 'F', 'Sa']);
+$calendar->setWeekOffset('mon');
 
 echo $calendar->render();
-
 ```
 
 ## Documentation
