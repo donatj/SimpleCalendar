@@ -7,11 +7,10 @@
 	"license"    : "MIT",
 	"require"    : {
 		"php"         : "^8.0|^8.1",
-		"ext-calendar": "*",
-		"nesbot/carbon": "^2.62"
+		"nesbot/carbon": "^2.0"
 	},
 	"require-dev": {
-		"phpunit/phpunit": "*",
+		"phpunit/phpunit": "^9.5",
 		"ext-dom": "*"
 	},
 	"authors"    : [
@@ -32,5 +31,8 @@
 		"psr-4": {
 			"MarcAndreAppel\\SimpleCalendar\\": "src/"
 		}
-	}
+	},
+  "scripts" : {
+    "test": "vendor/bin/phpunit"
+  }
 }

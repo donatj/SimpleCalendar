@@ -1,6 +1,7 @@
 The MIT License
 ===============
 
+Copyright (c) 2022 Marc-André Appel
 Copyright (c) 2013 Jesse G. Donat
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
