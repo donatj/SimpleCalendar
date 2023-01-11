@@ -90,7 +90,7 @@ calendar date. If null set to current timestamp.
 #### Method: SimpleCalendar->setCalendarClasses
 
 ```php
-function setCalendarClasses([ array $classes = []])
+function setCalendarClasses(array $classes)
 ```
 
 Sets the class names used in the calendar  
