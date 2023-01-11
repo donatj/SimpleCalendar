@@ -321,13 +321,13 @@ TAG
 	 */
 	private function weekdays() {
 		if( $this->weekDayNames !== null ) {
-			$wDays = $this->weekDayNames;
-		} else {
-			$today = (86400 * (date('N')));
-			$wDays = [];
-			for( $n = 0; $n < 7; $n++ ) {
-				$wDays[] = strftime('%a', time() - $today + ($n * 86400));
-			}
+			return $this->weekDayNames;
+		}
+
+		$today = (86400 * (date('N')));
+		$wDays = [];
+		for( $n = 0; $n < 7; $n++ ) {
+			$wDays[] = date('D', time() - $today + ($n * 86400));
 		}
 
 		return $wDays;
