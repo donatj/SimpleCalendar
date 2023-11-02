@@ -240,7 +240,7 @@ class SimpleCalendarTest extends TestCase {
 			$rowArray = [];
 			foreach( $tr->childNodes as $childNode ) {
 				/**
-				 * @var $childNode \DOMElement
+				 * @var \DOMElement $childNode
 				 */
 				$class   = $childNode->getAttribute("class");
 				$rowItem = [
