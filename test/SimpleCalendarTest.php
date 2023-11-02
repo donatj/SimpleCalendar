@@ -6,9 +6,9 @@ use PHPUnit\Framework\TestCase;
 class SimpleCalendarTest extends TestCase {
 
 	public function testCurrentMonth() : void {
-		$cal = new SimpleCalendar();
+		$cal = new SimpleCalendar;
 
-		self::assertNotFalse(strpos($cal->show(false), 'class="today"'));
+		$this->assertNotFalse(strpos($cal->show(false), 'class="today"'));
 	}
 
 	public function testBadDailyHtmlDates() : void {
@@ -16,12 +16,12 @@ class SimpleCalendarTest extends TestCase {
 			$cal = new SimpleCalendar('June 2010', 'June 5 2010');
 			$cal->addDailyHtml('foo', 'tomorrow', 'yesterday');
 		} catch( InvalidArgumentException $ex ) {
-			self::assertTrue(true);
+			$this->assertTrue(true);
 
 			return;
 		}
 
-		self::fail('expected InvalidArgumentException');
+		$this->fail('expected InvalidArgumentException');
 	}
 
 	public function testClasses() : void {
@@ -38,7 +38,7 @@ class SimpleCalendarTest extends TestCase {
 		$cal->addDailyHtml('Sample Event', 'June 15 2010');
 		$cal_html = $cal->render();
 		foreach( $defaults as $class ) {
-			self::assertNotFalse(strpos($cal_html, 'class="' . $class . '"'));
+			$this->assertNotFalse(strpos($cal_html, 'class="' . $class . '"'));
 		}
 	}
 
@@ -58,17 +58,17 @@ class SimpleCalendarTest extends TestCase {
 		$cal_html = $cal->render();
 
 		foreach( $classes as $class ) {
-			self::assertNotFalse(strpos($cal_html, 'class="' . $class . '"'));
+			$this->assertNotFalse(strpos($cal_html, 'class="' . $class . '"'));
 		}
 	}
 
 	public function testCurrentMonth_yearRegression() : void {
 		$cal = new SimpleCalendar(sprintf('%d-%d-%d', (date('Y') - 1), date('n'), date('d')));
-		self::assertFalse(strpos($cal->show(false), 'class="today"'));
+		$this->assertFalse(strpos($cal->show(false), 'class="today"'));
 	}
 
 	public function testTagOpenCloseMismatch_regression() : void {
-		$cal = new SimpleCalendar();
+		$cal = new SimpleCalendar;
 		$cal->setStartOfWeek(4);
 		$cal->setDate('September 2016');
 		$html = $cal->show(false);
@@ -78,7 +78,7 @@ class SimpleCalendarTest extends TestCase {
 	}
 
 	public function testTagOpenCloseMismatch_regression2() : void {
-		$cal = new SimpleCalendar();
+		$cal = new SimpleCalendar;
 		$cal->setDate('January 2017');
 		$html = $cal->show(false);
 
@@ -226,7 +226,7 @@ class SimpleCalendarTest extends TestCase {
 	 * @return array<int, array<int, array<string, string>>>
 	 */
 	private function parseCalendarHtml( SimpleCalendar $cal ) : array {
-		$x = new DOMDocument();
+		$x = new DOMDocument;
 		@$x->loadHTML($cal->show(false));
 
 		$trs        = $x->getElementsByTagName('tr');
@@ -234,7 +234,7 @@ class SimpleCalendarTest extends TestCase {
 		$rowi       = 0;
 		foreach( $trs as $tr ) {
 			/**
-			 * @var $tr \DOMElement
+			 * @var \DOMElement $tr
 			 */
 			$this->assertEquals(7, $tr->childNodes->length);
 

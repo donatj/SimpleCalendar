@@ -18,19 +18,13 @@ class SimpleCalendar {
 	 */
 	private $weekDayNames;
 
-	/**
-	 * @var \DateTimeInterface
-	 */
+	/** @var \DateTimeInterface */
 	private $now;
 
-	/**
-	 * @var \DateTimeInterface|null
-	 */
+	/** @var \DateTimeInterface|null */
 	private $today;
 
-	/**
-	 * @var array<string,string>
-	 */
+	/** @var array<string,string> */
 	private $classes = [
 		'calendar'     => 'SimpleCalendar',
 		'leading_day'  => 'SCprefix',
@@ -40,9 +34,7 @@ class SimpleCalendar {
 		'events'       => 'events',
 	];
 
-	/**
-	 * @var array<int, array<int, array<int, array<int, string>>>>
-	 */
+	/** @var array<int, array<int, array<int, array<int, string>>>> */
 	private $dailyHtml = [];
 	/** @var int */
 	private $offset = 0;
@@ -63,23 +55,24 @@ class SimpleCalendar {
 	 * Sets the date for the calendar.
 	 *
 	 * @param \DateTimeInterface|int|string|null $date DateTimeInterface or Date string parsed by strtotime for the
-	 *     calendar date. If null set to current timestamp.
+	 *                                                 calendar date. If null set to current timestamp.
 	 */
 	public function setDate( $date = null ) : void {
-		$this->now = $this->parseDate($date) ?: new \DateTimeImmutable();
+		$this->now = $this->parseDate($date) ?: new \DateTimeImmutable;
 	}
 
 	/**
 	 * @param \DateTimeInterface|int|string|null $date
-	 * @return \DateTimeInterface|null
 	 */
 	private function parseDate( $date = null ) : ?\DateTimeInterface {
 		if( $date instanceof \DateTimeInterface ) {
 			return $date;
 		}
+
 		if( is_int($date) ) {
-			return (new \DateTimeImmutable())->setTimestamp($date);
+			return (new \DateTimeImmutable)->setTimestamp($date);
 		}
+
 		if( is_string($date) ) {
 			return new \DateTimeImmutable($date);
 		}
@@ -116,14 +109,14 @@ class SimpleCalendar {
 	/**
 	 * Sets "today"'s date. Defaults to today.
 	 *
-	 * @param \DateTimeInterface|int|false|string|null $today `null` will default to today, `false` will disable the
-	 *     rendering of Today.
+	 * @param \DateTimeInterface|false|int|string|null $today `null` will default to today, `false` will disable the
+	 *                                                        rendering of Today.
 	 */
 	public function setToday( $today = null ) : void {
 		if( $today === false ) {
 			$this->today = null;
 		} elseif( $today === null ) {
-			$this->today = new \DateTimeImmutable();
+			$this->today = new \DateTimeImmutable;
 		} else {
 			$this->today = $this->parseDate($today);
 		}
@@ -132,7 +125,7 @@ class SimpleCalendar {
 	/**
 	 * @param string[]|null $weekDayNames
 	 */
-	public function setWeekDayNames( array $weekDayNames = null ) : void {
+	public function setWeekDayNames( ?array $weekDayNames = null ) : void {
 		if( is_array($weekDayNames) && count($weekDayNames) !== 7 ) {
 			throw new \InvalidArgumentException('week array must have exactly 7 values');
 		}
@@ -143,9 +136,9 @@ class SimpleCalendar {
 	/**
 	 * Add a daily event to the calendar
 	 *
-	 * @param string                             $html The raw HTML to place on the calendar for this event
+	 * @param string                             $html      The raw HTML to place on the calendar for this event
 	 * @param \DateTimeInterface|int|string      $startDate Date string for when the event starts
-	 * @param \DateTimeInterface|int|string|null $endDate Date string for when the event ends. Defaults to start date
+	 * @param \DateTimeInterface|int|string|null $endDate   Date string for when the event ends. Defaults to start date
 	 */
 	public function addDailyHtml( $html, $startDate, $endDate = null ) : void {
 		/** @var int $htmlCount */
@@ -160,6 +153,7 @@ class SimpleCalendar {
 		if( $endDate ) {
 			$end = $this->parseDate($endDate);
 		}
+
 		if( !$end ) {
 			throw new \InvalidArgumentException('invalid end time');
 		}
@@ -168,7 +162,8 @@ class SimpleCalendar {
 			throw new \InvalidArgumentException('end must come after start');
 		}
 
-		$working = (new \DateTimeImmutable())->setTimestamp($start->getTimestamp());
+		$working = (new \DateTimeImmutable)->setTimestamp($start->getTimestamp());
+
 		do {
 			$tDate = getdate($working->getTimestamp());
 
@@ -183,7 +178,8 @@ class SimpleCalendar {
 	/**
 	 * Clear all daily events for the calendar
 	 */
-	public function clearDailyHtml() : void { $this->dailyHtml = []; }
+	public function clearDailyHtml() : void {
+ $this->dailyHtml = []; }
 
 	/**
 	 * Sets the first day of the week
@@ -269,7 +265,7 @@ TAG
 
 		$count = $weekDayIndex + 1;
 		for( $i = 1; $i <= $daysInMonth; $i++ ) {
-			$date = (new \DateTimeImmutable())->setDate($now['year'], $now['mon'], $i);
+			$date = (new \DateTimeImmutable)->setDate($now['year'], $now['mon'], $i);
 
 			$isToday = false;
 			if( $this->today !== null ) {
@@ -292,6 +288,7 @@ TAG
 				foreach( $dailyHTML as $dHtml ) {
 					$out .= sprintf('<div class="%s">%s</div>', $this->classes['event'], $dHtml);
 				}
+
 				$out .= '</div>';
 			}
 
@@ -301,6 +298,7 @@ TAG
 				$out   .= "</tr>\n" . ($i < $daysInMonth ? '<tr>' : '');
 				$count = 0;
 			}
+
 			$count++;
 		}
 
@@ -315,13 +313,13 @@ TAG
 
 	/**
 	 * @param array<int, mixed> $data
-	 * @param int               $steps
 	 */
 	private function rotate( array &$data, int $steps ) : void {
 		$count = count($data);
 		if( $steps < 0 ) {
 			$steps = $count + $steps;
 		}
+
 		$steps %= $count;
 		for( $i = 0; $i < $steps; $i++ ) {
 			$data[] = array_shift($data);
