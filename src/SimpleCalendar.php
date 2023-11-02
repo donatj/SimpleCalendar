@@ -28,6 +28,9 @@ class SimpleCalendar {
 	 */
 	private $today;
 
+	/**
+	 * @var array<string,string>
+	 */
 	private $classes = [
 		'calendar'     => 'SimpleCalendar',
 		'leading_day'  => 'SCprefix',
@@ -37,7 +40,11 @@ class SimpleCalendar {
 		'events'       => 'events',
 	];
 
+	/**
+	 * @var array<int, array<int, array<int, array<int, string>>>>
+	 */
 	private $dailyHtml = [];
+	/** @var int */
 	private $offset = 0;
 
 	/**
@@ -58,7 +65,7 @@ class SimpleCalendar {
 	 * @param \DateTimeInterface|int|string|null $date DateTimeInterface or Date string parsed by strtotime for the
 	 *     calendar date. If null set to current timestamp.
 	 */
-	public function setDate( $date = null ) {
+	public function setDate( $date = null ) : void {
 		$this->now = $this->parseDate($date) ?: new \DateTimeImmutable();
 	}
 
@@ -66,7 +73,7 @@ class SimpleCalendar {
 	 * @param \DateTimeInterface|int|string|null $date
 	 * @return \DateTimeInterface|null
 	 */
-	private function parseDate( $date = null ) {
+	private function parseDate( $date = null ) : ?\DateTimeInterface {
 		if( $date instanceof \DateTimeInterface ) {
 			return $date;
 		}
@@ -94,9 +101,9 @@ class SimpleCalendar {
 	 * ]
 	 * ```
 	 *
-	 * @param array $classes Map of element to class names used by the calendar.
+	 * @param array<string, string> $classes Map of element to class names used by the calendar.
 	 */
-	public function setCalendarClasses( array $classes ) {
+	public function setCalendarClasses( array $classes ) : void {
 		foreach( $classes as $key => $value ) {
 			if( !isset($this->classes[$key]) ) {
 				throw new \InvalidArgumentException("class '{$key}' not supported");
@@ -109,10 +116,10 @@ class SimpleCalendar {
 	/**
 	 * Sets "today"'s date. Defaults to today.
 	 *
-	 * @param \DateTimeInterface|false|string|null $today `null` will default to today, `false` will disable the
+	 * @param \DateTimeInterface|int|false|string|null $today `null` will default to today, `false` will disable the
 	 *     rendering of Today.
 	 */
-	public function setToday( $today = null ) {
+	public function setToday( $today = null ) : void {
 		if( $today === false ) {
 			$this->today = null;
 		} elseif( $today === null ) {
@@ -125,7 +132,7 @@ class SimpleCalendar {
 	/**
 	 * @param string[]|null $weekDayNames
 	 */
-	public function setWeekDayNames( array $weekDayNames = null ) {
+	public function setWeekDayNames( array $weekDayNames = null ) : void {
 		if( is_array($weekDayNames) && count($weekDayNames) !== 7 ) {
 			throw new \InvalidArgumentException('week array must have exactly 7 values');
 		}
@@ -140,7 +147,8 @@ class SimpleCalendar {
 	 * @param \DateTimeInterface|int|string      $startDate Date string for when the event starts
 	 * @param \DateTimeInterface|int|string|null $endDate Date string for when the event ends. Defaults to start date
 	 */
-	public function addDailyHtml( $html, $startDate, $endDate = null ) {
+	public function addDailyHtml( $html, $startDate, $endDate = null ) : void {
+		/** @var int $htmlCount */
 		static $htmlCount = 0;
 
 		$start = $this->parseDate($startDate);
@@ -175,25 +183,29 @@ class SimpleCalendar {
 	/**
 	 * Clear all daily events for the calendar
 	 */
-	public function clearDailyHtml() { $this->dailyHtml = []; }
+	public function clearDailyHtml() : void { $this->dailyHtml = []; }
 
 	/**
 	 * Sets the first day of the week
 	 *
 	 * @param int|string $offset Day the week starts on. ex: "Monday" or 0-6 where 0 is Sunday
 	 */
-	public function setStartOfWeek( $offset ) {
+	public function setStartOfWeek( $offset ) : void {
 		if( is_int($offset) ) {
 			$this->offset = $offset % 7;
 		} elseif( $this->weekDayNames !== null && ($weekOffset = array_search($offset, $this->weekDayNames, true)) !== false ) {
+			assert(is_int($weekOffset));
 			$this->offset = $weekOffset;
 		} else {
 			$weekTime = strtotime($offset);
-			if( $weekTime === 0 ) {
+			if( $weekTime === 0 || $weekTime === false ) {
 				throw new \InvalidArgumentException('invalid offset');
 			}
 
-			$this->offset = date('N', $weekTime) % 7;
+			$date = date('N', $weekTime);
+			assert($date !== false);
+
+			$this->offset = intval($date) % 7;
 		}
 	}
 
@@ -228,7 +240,10 @@ class SimpleCalendar {
 		$daysOfWeek = $this->weekdays();
 		$this->rotate($daysOfWeek, $this->offset);
 
-		$weekDayIndex = date('N', mktime(0, 0, 1, $now['mon'], 1, $now['year'])) - $this->offset;
+		$time = mktime(0, 0, 1, $now['mon'], 1, $now['year']);
+		assert($time !== false);
+
+		$weekDayIndex = date('N', $time) - $this->offset;
 		$daysInMonth  = cal_days_in_month(CAL_GREGORIAN, $now['mon'], $now['year']);
 
 		$out = <<<TAG
@@ -299,9 +314,10 @@ TAG
 	}
 
 	/**
-	 * @param int $steps
+	 * @param array<int, mixed> $data
+	 * @param int               $steps
 	 */
-	private function rotate( array &$data, $steps ) {
+	private function rotate( array &$data, int $steps ) : void {
 		$count = count($data);
 		if( $steps < 0 ) {
 			$steps = $count + $steps;

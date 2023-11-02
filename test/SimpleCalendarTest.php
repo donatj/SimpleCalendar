@@ -5,26 +5,27 @@ use PHPUnit\Framework\TestCase;
 
 class SimpleCalendarTest extends TestCase {
 
-	public function testCurrentMonth() {
+	public function testCurrentMonth() : void {
 		$cal = new SimpleCalendar();
 
 		self::assertNotFalse(strpos($cal->show(false), 'class="today"'));
 	}
 
-	public function testBadDailyHtmlDates(){
+	public function testBadDailyHtmlDates() : void {
 		try {
 			$cal = new SimpleCalendar('June 2010', 'June 5 2010');
 			$cal->addDailyHtml('foo', 'tomorrow', 'yesterday');
-		} catch(InvalidArgumentException $ex) {
+		} catch( InvalidArgumentException $ex ) {
 			self::assertTrue(true);
+
 			return;
 		}
 
 		self::fail('expected InvalidArgumentException');
 	}
 
-	public function testClasses() {
-		$cal = new SimpleCalendar('June 2010', 'June 5 2010');
+	public function testClasses() : void {
+		$cal      = new SimpleCalendar('June 2010', 'June 5 2010');
 		$defaults = [
 			'SimpleCalendar',
 			'SCprefix',
@@ -34,15 +35,15 @@ class SimpleCalendarTest extends TestCase {
 			'events',
 		];
 
-		$cal->addDailyHtml( 'Sample Event', 'June 15 2010' );
+		$cal->addDailyHtml('Sample Event', 'June 15 2010');
 		$cal_html = $cal->render();
 		foreach( $defaults as $class ) {
 			self::assertNotFalse(strpos($cal_html, 'class="' . $class . '"'));
 		}
 	}
 
-	public function testCustomClasses() {
-		$cal = new SimpleCalendar('June 2010', 'June 5 2010');
+	public function testCustomClasses() : void {
+		$cal     = new SimpleCalendar('June 2010', 'June 5 2010');
 		$classes = [
 			'calendar'     => 'TestCalendar',
 			'leading_day'  => 'TestPrefix',
@@ -52,8 +53,8 @@ class SimpleCalendarTest extends TestCase {
 			'events'       => 'TestEvents',
 		];
 
-		$cal->setCalendarClasses( $classes );
-		$cal->addDailyHtml( 'Sample Event', 'June 15 2010' );
+		$cal->setCalendarClasses($classes);
+		$cal->addDailyHtml('Sample Event', 'June 15 2010');
 		$cal_html = $cal->render();
 
 		foreach( $classes as $class ) {
@@ -61,12 +62,12 @@ class SimpleCalendarTest extends TestCase {
 		}
 	}
 
-	public function testCurrentMonth_yearRegression() {
+	public function testCurrentMonth_yearRegression() : void {
 		$cal = new SimpleCalendar(sprintf('%d-%d-%d', (date('Y') - 1), date('n'), date('d')));
 		self::assertFalse(strpos($cal->show(false), 'class="today"'));
 	}
 
-	public function testTagOpenCloseMismatch_regression() {
+	public function testTagOpenCloseMismatch_regression() : void {
 		$cal = new SimpleCalendar();
 		$cal->setStartOfWeek(4);
 		$cal->setDate('September 2016');
@@ -76,7 +77,7 @@ class SimpleCalendarTest extends TestCase {
 		$this->assertSame(substr_count($html, '<td'), substr_count($html, '</td'));
 	}
 
-	public function testTagOpenCloseMismatch_regression2() {
+	public function testTagOpenCloseMismatch_regression2() : void {
 		$cal = new SimpleCalendar();
 		$cal->setDate('January 2017');
 		$html = $cal->show(false);
@@ -85,7 +86,7 @@ class SimpleCalendarTest extends TestCase {
 		$this->assertSame(substr_count($html, '<td'), substr_count($html, '</td'));
 	}
 
-	public function testGenericGeneration() {
+	public function testGenericGeneration() : void {
 		$cal = new SimpleCalendar("June 5 2016");
 
 		$tableArray = $this->parseCalendarHtml($cal);
@@ -155,7 +156,7 @@ class SimpleCalendarTest extends TestCase {
 		$this->assertSame($expected, $tableArray);
 	}
 
-	public function testGenericGeneration_mTs() {
+	public function testGenericGeneration_mTs() : void {
 		$cal = new SimpleCalendar("June 5 2016");
 		$cal->setStartOfWeek(5);
 
@@ -222,9 +223,9 @@ class SimpleCalendarTest extends TestCase {
 	}
 
 	/**
-	 * @return array
+	 * @return array<int, array<int, array<string, string>>>
 	 */
-	private function parseCalendarHtml( SimpleCalendar $cal ) {
+	private function parseCalendarHtml( SimpleCalendar $cal ) : array {
 		$x = new DOMDocument();
 		@$x->loadHTML($cal->show(false));
 
@@ -259,7 +260,9 @@ class SimpleCalendarTest extends TestCase {
 						$this->assertSame(0, $time->length);
 					} else {
 						$this->assertGreaterThan(0, $time->length);
-						$rowItem['date'] = $time->item(0)->getAttribute('datetime');
+						$item = $time->item(0);
+						assert($item instanceof DOMElement);
+						$rowItem['date'] = $item->getAttribute('datetime');
 					}
 				}
 
