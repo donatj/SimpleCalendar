@@ -6,18 +6,20 @@
 	"homepage"   : "https://donatstudios.com/SimpleCalendar",
 	"license"    : "MIT",
 	"require"    : {
-		"php"         : ">=7.2",
+		"php": ">=7.2",
 		"ext-calendar": "*"
 	},
 	"require-dev": {
-		"phpunit/phpunit": "*",
-		"ext-dom": "*"
+		"ext-dom": "*",
+		"donatj/drop": "^1.1",
+		"phpstan/phpstan": "^1.10",
+		"phpunit/phpunit": "*"
 	},
 	"authors"    : [
 		{
 			"name"    : "Jesse G. Donat",
 			"email"   : "donatj@gmail.com",
-			"homepage": "http://donatstudios.com",
+			"homepage": "https://donatstudios.com",
 			"role"    : "Developer"
 		}
 	],
@@ -25,5 +27,8 @@
 		"psr-4": {
 			"donatj\\": "src/"
 		}
+	},
+	"config": {
+		"sort-packages": true
 	}
 }
