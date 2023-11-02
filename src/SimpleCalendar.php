@@ -56,6 +56,7 @@ class SimpleCalendar {
 	 *
 	 * @param \DateTimeInterface|int|string|null $date DateTimeInterface or Date string parsed by strtotime for the
 	 *                                                 calendar date. If null set to current timestamp.
+	 * @throws \Exception
 	 */
 	public function setDate( $date = null ) : void {
 		$this->now = $this->parseDate($date) ?: new \DateTimeImmutable;
@@ -63,6 +64,7 @@ class SimpleCalendar {
 
 	/**
 	 * @param \DateTimeInterface|int|string|null $date
+	 * @throws \Exception
 	 */
 	private function parseDate( $date = null ) : ?\DateTimeInterface {
 		if( $date instanceof \DateTimeInterface ) {
@@ -111,6 +113,7 @@ class SimpleCalendar {
 	 *
 	 * @param \DateTimeInterface|false|int|string|null $today `null` will default to today, `false` will disable the
 	 *                                                        rendering of Today.
+	 * @throws \Exception
 	 */
 	public function setToday( $today = null ) : void {
 		if( $today === false ) {
@@ -139,8 +142,9 @@ class SimpleCalendar {
 	 * @param string                             $html      The raw HTML to place on the calendar for this event
 	 * @param \DateTimeInterface|int|string      $startDate Date string for when the event starts
 	 * @param \DateTimeInterface|int|string|null $endDate   Date string for when the event ends. Defaults to start date
+	 * @throws \Exception
 	 */
-	public function addDailyHtml( $html, $startDate, $endDate = null ) : void {
+	public function addDailyHtml( string $html, $startDate, $endDate = null ) : void {
 		/** @var int $htmlCount */
 		static $htmlCount = 0;
 
@@ -179,7 +183,8 @@ class SimpleCalendar {
 	 * Clear all daily events for the calendar
 	 */
 	public function clearDailyHtml() : void {
- $this->dailyHtml = []; }
+		$this->dailyHtml = [];
+	}
 
 	/**
 	 * Sets the first day of the week
@@ -212,7 +217,7 @@ class SimpleCalendar {
 	 * @return string HTML of the Calendar
 	 * @deprecated Use `render()` method instead.
 	 */
-	public function show( $echo = true ) {
+	public function show( bool $echo = true ) : string {
 		$out = $this->render();
 		if( $echo ) {
 			echo $out;
@@ -223,10 +228,8 @@ class SimpleCalendar {
 
 	/**
 	 * Returns the generated Calendar
-	 *
-	 * @return string
 	 */
-	public function render() {
+	public function render() : string {
 		$now   = getdate($this->now->getTimestamp());
 		$today = [ 'mday' => -1, 'mon' => -1, 'year' => -1 ];
 		if( $this->today !== null ) {
@@ -329,7 +332,7 @@ TAG
 	/**
 	 * @return string[]
 	 */
-	private function weekdays() {
+	private function weekdays() : array {
 		if( $this->weekDayNames !== null ) {
 			return $this->weekDayNames;
 		}
