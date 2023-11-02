@@ -6,7 +6,7 @@ namespace donatj;
  * Simple Calendar
  *
  * @author Jesse G. Donat <donatj@gmail.com>
- * @see http://donatstudios.com
+ * @see https://donatstudios.com
  * @license http://opensource.org/licenses/mit-license.php
  */
 class SimpleCalendar {
