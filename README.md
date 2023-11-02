@@ -9,7 +9,7 @@ A very simple, easy to use PHP calendar rendering class.
 
 ## Requirements
 
-- **php**: >=5.5.0
+- **php**: >=7.2
 - **ext-calendar**: *
 
 ## Installing
@@ -41,7 +41,7 @@ require '../vendor/autoload.php';
 
 echo '<link rel="stylesheet" href="../src/css/SimpleCalendar.css" />';
 
-$calendar = new donatj\SimpleCalendar();
+$calendar = new donatj\SimpleCalendar;
 
 $calendar->setStartOfWeek('Sunday');
 $calendar->addDailyHtml('Sample Event', 'today', 'tomorrow');
@@ -75,7 +75,7 @@ function __construct([ $calendarDate = null [, $today = null]])
 #### Method: SimpleCalendar->setDate
 
 ```php
-function setDate([ $date = null])
+function setDate([ $date = null]) : void
 ```
 
 Sets the date for the calendar.
@@ -85,12 +85,14 @@ Sets the date for the calendar.
 - ***\DateTimeInterface*** | ***int*** | ***string*** | ***null*** `$date` - DateTimeInterface or Date string parsed by strtotime for the
 calendar date. If null set to current timestamp.
 
+**Throws**: `\Exception`
+
 ---
 
 #### Method: SimpleCalendar->setCalendarClasses
 
 ```php
-function setCalendarClasses(array $classes)
+function setCalendarClasses(array $classes) : void
 ```
 
 Sets the class names used in the calendar  
@@ -108,29 +110,31 @@ Sets the class names used in the calendar
 
 ##### Parameters:
 
-- ***array*** `$classes` - Map of element to class names used by the calendar.
+- ***array<string,string>*** `$classes` - Map of element to class names used by the calendar.
 
 ---
 
 #### Method: SimpleCalendar->setToday
 
 ```php
-function setToday([ $today = null])
+function setToday([ $today = null]) : void
 ```
 
 Sets "today"'s date. Defaults to today.
 
 ##### Parameters:
 
-- ***\DateTimeInterface*** | ***false*** | ***string*** | ***null*** `$today` - `null` will default to today, `false` will disable the
+- ***\DateTimeInterface*** | ***false*** | ***int*** | ***string*** | ***null*** `$today` - `null` will default to today, `false` will disable the
 rendering of Today.
+
+**Throws**: `\Exception`
 
 ---
 
 #### Method: SimpleCalendar->setWeekDayNames
 
 ```php
-function setWeekDayNames([ array $weekDayNames = null])
+function setWeekDayNames([ ?array $weekDayNames = null]) : void
 ```
 
 ##### Parameters:
@@ -142,7 +146,7 @@ function setWeekDayNames([ array $weekDayNames = null])
 #### Method: SimpleCalendar->addDailyHtml
 
 ```php
-function addDailyHtml($html, $startDate [, $endDate = null])
+function addDailyHtml(string $html, $startDate [, $endDate = null]) : void
 ```
 
 Add a daily event to the calendar
@@ -153,12 +157,14 @@ Add a daily event to the calendar
 - ***\DateTimeInterface*** | ***int*** | ***string*** `$startDate` - Date string for when the event starts
 - ***\DateTimeInterface*** | ***int*** | ***string*** | ***null*** `$endDate` - Date string for when the event ends. Defaults to start date
 
+**Throws**: `\Exception`
+
 ---
 
 #### Method: SimpleCalendar->clearDailyHtml
 
 ```php
-function clearDailyHtml()
+function clearDailyHtml() : void
 ```
 
 Clear all daily events for the calendar
@@ -168,7 +174,7 @@ Clear all daily events for the calendar
 #### Method: SimpleCalendar->setStartOfWeek
 
 ```php
-function setStartOfWeek($offset)
+function setStartOfWeek($offset) : void
 ```
 
 Sets the first day of the week
@@ -182,7 +188,7 @@ Sets the first day of the week
 #### Method: SimpleCalendar->show
 
 ```php
-function show([ $echo = true])
+function show([ bool $echo = true]) : string
 ```
 
 Returns/Outputs the Calendar
@@ -204,11 +210,7 @@ Use `render()` method instead.
 #### Method: SimpleCalendar->render
 
 ```php
-function render()
+function render() : string
 ```
 
 Returns the generated Calendar
-
-##### Returns:
-
-- ***string***
