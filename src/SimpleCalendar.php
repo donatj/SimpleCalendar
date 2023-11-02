@@ -247,14 +247,10 @@ TAG;
 
 		$weekDayIndex = ($weekDayIndex + 7) % 7;
 
-		if( $weekDayIndex === 7 ) {
-			$weekDayIndex = 0;
-		} else {
-			$out .= str_repeat(<<<TAG
+		$out .= str_repeat(<<<TAG
 <td class="{$this->classes['leading_day']}">&nbsp;</td>
 TAG
-				, $weekDayIndex);
-		}
+			, $weekDayIndex);
 
 		$count = $weekDayIndex + 1;
 		for( $i = 1; $i <= $daysInMonth; $i++ ) {
