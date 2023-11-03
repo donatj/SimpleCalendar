@@ -11,9 +11,9 @@
 	},
 	"require-dev": {
 		"ext-dom": "*",
-		"corpus/coding-standard": "^0.8.0",
+		"corpus/coding-standard": "^0.6.0",
 		"donatj/drop": "^1.1",
-		"friendsofphp/php-cs-fixer": "^3.37",
+		"friendsofphp/php-cs-fixer": "^3.3",
 		"phpstan/phpstan": "^1.10",
 		"phpunit/phpunit": "*",
 		"squizlabs/php_codesniffer": "^3.7"
