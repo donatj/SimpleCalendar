@@ -1,6 +1,7 @@
 <mddoc>
 
-	<docpage target="README.md" autoloader="psr4" autoloader-root-namespace="donatj" autoloader-root="src">
+	<docpage target="README.md">
+		<autoloader type="psr4" namespace="donatj" root="src"/>
 
 		<section title="Simple Calendar">
 			<badge-poser type="version"/>
