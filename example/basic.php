@@ -3,7 +3,7 @@ require '../vendor/autoload.php';
 
 echo '<link rel="stylesheet" href="../src/css/SimpleCalendar.css" />';
 
-$calendar = new donatj\SimpleCalendar();
+$calendar = new donatj\SimpleCalendar;
 
 $calendar->setStartOfWeek('Sunday');
 $calendar->addDailyHtml('Sample Event', 'today', 'tomorrow');
