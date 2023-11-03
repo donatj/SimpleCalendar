@@ -6,7 +6,7 @@
 		<section title="Simple Calendar">
 			<badge-poser type="version"/>
 			<badge-poser type="license"/>
-			<badge-travis name="donatj/SimpleCalendar"/>
+			<badge-github-action name="donatj/SimpleCalendar" workflow-file="ci.yml"/>
 
 			<text>A very simple, easy to use PHP calendar rendering class.</text>
 			<section title="Requirements">
