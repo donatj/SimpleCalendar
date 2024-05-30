@@ -16,16 +16,16 @@ class SimpleCalendar {
 	 *
 	 * @var string[]|null
 	 */
-	private $weekDayNames;
+	protected $weekDayNames;
 
 	/** @var \DateTimeInterface */
-	private $now;
+	protected $now;
 
 	/** @var \DateTimeInterface|null */
-	private $today;
+	protected $today;
 
 	/** @var array<string,string> */
-	private $classes = [
+	protected $classes = [
 		'calendar'     => 'SimpleCalendar',
 		'leading_day'  => 'SCprefix',
 		'trailing_day' => 'SCsuffix',
@@ -35,9 +35,9 @@ class SimpleCalendar {
 	];
 
 	/** @var array<int, array<int, array<int, array<int, string>>>> */
-	private $dailyHtml = [];
+	protected $dailyHtml = [];
 	/** @var int */
-	private $offset = 0;
+	protected $offset = 0;
 
 	/**
 	 * @param \DateTimeInterface|int|string|null       $calendarDate
@@ -66,7 +66,7 @@ class SimpleCalendar {
 	 * @param \DateTimeInterface|int|string|null $date
 	 * @throws \Exception
 	 */
-	private function parseDate( $date = null ) : ?\DateTimeInterface {
+	protected function parseDate( $date = null ) : ?\DateTimeInterface {
 		if( $date instanceof \DateTimeInterface ) {
 			return $date;
 		}
@@ -317,7 +317,7 @@ TAG
 	/**
 	 * @param array<int, mixed> $data
 	 */
-	private function rotate( array &$data, int $steps ) : void {
+	protected function rotate( array &$data, int $steps ) : void {
 		$count = count($data);
 		if( $steps < 0 ) {
 			$steps = $count + $steps;
@@ -332,7 +332,7 @@ TAG
 	/**
 	 * @return string[]
 	 */
-	private function weekdays() : array {
+	protected function weekdays() : array {
 		if( $this->weekDayNames !== null ) {
 			return $this->weekDayNames;
 		}
