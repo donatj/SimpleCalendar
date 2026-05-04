@@ -203,10 +203,7 @@ class SimpleCalendar {
 				throw new \InvalidArgumentException('invalid offset');
 			}
 
-			$date = date('N', $weekTime);
-			assert($date !== false);
-
-			$this->offset = intval($date) % 7;
+			$this->offset = intval(date('N', $weekTime)) % 7;
 		}
 	}
 
@@ -315,7 +312,8 @@ TAG
 	}
 
 	/**
-	 * @param array<int, mixed> $data
+	 * @template T
+	 * @param array<int, T> $data
 	 */
 	private function rotate( array &$data, int $steps ) : void {
 		$count = count($data);
