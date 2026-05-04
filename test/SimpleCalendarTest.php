@@ -16,7 +16,7 @@ class SimpleCalendarTest extends TestCase {
 			$cal = new SimpleCalendar('June 2010', 'June 5 2010');
 			$cal->addDailyHtml('foo', 'tomorrow', 'yesterday');
 		} catch( InvalidArgumentException $ex ) {
-			$this->assertTrue(true);
+			$this->addToAssertionCount(1);
 
 			return;
 		}
