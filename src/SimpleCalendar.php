@@ -314,17 +314,24 @@ TAG
 	/**
 	 * @template T
 	 * @param array<int, T> $data
+	 * @param-out array<int, T> $data
 	 */
 	private function rotate( array &$data, int $steps ) : void {
 		$count = count($data);
+		if( $count === 0 ) {
+			return;
+		}
+
 		if( $steps < 0 ) {
 			$steps = $count + $steps;
 		}
 
 		$steps %= $count;
-		for( $i = 0; $i < $steps; $i++ ) {
-			$data[] = array_shift($data);
+		if( $steps === 0 ) {
+			return;
 		}
+
+		$data = array_merge(array_slice($data, $steps), array_slice($data, 0, $steps));
 	}
 
 	/**
