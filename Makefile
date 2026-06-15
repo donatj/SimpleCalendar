@@ -3,6 +3,7 @@ SRC_FILES = $(shell find example src -type f -name '*.php')
 .PHONY: test
 test: cs
 	vendor/bin/phpunit
+	vendor/bin/php-cs-fixer fix --dry-run --diff
 	vendor/bin/phpstan analyse --memory-limit 2g
 
 .PHONY: cs
