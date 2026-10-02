@@ -12,6 +12,7 @@ $finder = PhpCsFixer\Finder::create()
 $config = Config::php7x4();
 
 return $config
+	->setUnsupportedPhpVersionAllowed(true)
 	->setRules(
 		array_merge(
 			[ '@PHPUnit9x1Migration:risky' => true ],
