@@ -3,6 +3,7 @@
 [![Latest Stable Version](https://poser.pugx.org/donatj/simplecalendar/version)](https://packagist.org/packages/donatj/simplecalendar)
 [![License](https://poser.pugx.org/donatj/simplecalendar/license)](https://packagist.org/packages/donatj/simplecalendar)
 [![ci.yml](https://github.com/donatj/SimpleCalendar/actions/workflows/ci.yml/badge.svg)](https://github.com/donatj/SimpleCalendar/actions/workflows/ci.yml)
+[![Coverage Status](https://coveralls.io/repos/github/donatj/SimpleCalendar/badge.svg)](https://coveralls.io/github/donatj/SimpleCalendar)
 
 
 A very simple, easy to use PHP calendar rendering class.
@@ -62,10 +63,10 @@ Simple Calendar
 #### Method: SimpleCalendar->__construct
 
 ```php
-function __construct([ $calendarDate = null [, $today = null]])
+function __construct($calendarDate = null, $today = null)
 ```
 
-##### Parameters:
+##### Parameters
 
 - ***\DateTimeInterface*** | ***int*** | ***string*** | ***null*** `$calendarDate`
 - ***\DateTimeInterface*** | ***false*** | ***int*** | ***string*** | ***null*** `$today`
@@ -75,12 +76,12 @@ function __construct([ $calendarDate = null [, $today = null]])
 #### Method: SimpleCalendar->setDate
 
 ```php
-function setDate([ $date = null]) : void
+function setDate($date = null): void
 ```
 
 Sets the date for the calendar.
 
-##### Parameters:
+##### Parameters
 
 - ***\DateTimeInterface*** | ***int*** | ***string*** | ***null*** `$date` - DateTimeInterface or Date string parsed by strtotime for the
 calendar date. If null set to current timestamp.
@@ -92,7 +93,7 @@ calendar date. If null set to current timestamp.
 #### Method: SimpleCalendar->setCalendarClasses
 
 ```php
-function setCalendarClasses(array $classes) : void
+function setCalendarClasses(array $classes): void
 ```
 
 Sets the class names used in the calendar  
@@ -108,7 +109,7 @@ Sets the class names used in the calendar
 ]  
 ```
 
-##### Parameters:
+##### Parameters
 
 - ***array<string,string>*** `$classes` - Map of element to class names used by the calendar.
 
@@ -117,12 +118,12 @@ Sets the class names used in the calendar
 #### Method: SimpleCalendar->setToday
 
 ```php
-function setToday([ $today = null]) : void
+function setToday($today = null): void
 ```
 
 Sets "today"'s date. Defaults to today.
 
-##### Parameters:
+##### Parameters
 
 - ***\DateTimeInterface*** | ***false*** | ***int*** | ***string*** | ***null*** `$today` - `null` will default to today, `false` will disable the
 rendering of Today.
@@ -134,10 +135,10 @@ rendering of Today.
 #### Method: SimpleCalendar->setWeekDayNames
 
 ```php
-function setWeekDayNames([ ?array $weekDayNames = null]) : void
+function setWeekDayNames(?array $weekDayNames = null): void
 ```
 
-##### Parameters:
+##### Parameters
 
 - ***string[]*** | ***null*** `$weekDayNames`
 
@@ -146,12 +147,12 @@ function setWeekDayNames([ ?array $weekDayNames = null]) : void
 #### Method: SimpleCalendar->addDailyHtml
 
 ```php
-function addDailyHtml(string $html, $startDate [, $endDate = null]) : void
+function addDailyHtml(string $html, $startDate, $endDate = null): void
 ```
 
 Add a daily event to the calendar
 
-##### Parameters:
+##### Parameters
 
 - ***string*** `$html` - The raw HTML to place on the calendar for this event
 - ***\DateTimeInterface*** | ***int*** | ***string*** `$startDate` - Date string for when the event starts
@@ -164,7 +165,7 @@ Add a daily event to the calendar
 #### Method: SimpleCalendar->clearDailyHtml
 
 ```php
-function clearDailyHtml() : void
+function clearDailyHtml(): void
 ```
 
 Clear all daily events for the calendar
@@ -174,12 +175,12 @@ Clear all daily events for the calendar
 #### Method: SimpleCalendar->setStartOfWeek
 
 ```php
-function setStartOfWeek($offset) : void
+function setStartOfWeek($offset): void
 ```
 
 Sets the first day of the week
 
-##### Parameters:
+##### Parameters
 
 - ***int*** | ***string*** `$offset` - Day the week starts on. ex: "Monday" or 0-6 where 0 is Sunday
 
@@ -188,7 +189,7 @@ Sets the first day of the week
 #### Method: SimpleCalendar->show
 
 ```php
-function show([ bool $echo = true]) : string
+function show(bool $echo = true): string
 ```
 
 Returns/Outputs the Calendar
@@ -197,11 +198,11 @@ Returns/Outputs the Calendar
 
 Use `render()` method instead.
 
-##### Parameters:
+##### Parameters
 
 - ***bool*** `$echo` - Whether to echo resulting calendar
 
-##### Returns:
+##### Return Value
 
 - ***string*** - HTML of the Calendar
 
@@ -210,7 +211,7 @@ Use `render()` method instead.
 #### Method: SimpleCalendar->render
 
 ```php
-function render() : string
+function render(): string
 ```
 
 Returns the generated Calendar
