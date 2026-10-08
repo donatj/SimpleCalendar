@@ -1,8 +1,7 @@
 <mddoc>
+	<autoloader type="composer"/>
 
 	<docpage target="README.md">
-		<autoloader type="psr4" namespace="donatj" root="src"/>
-
 		<section title="Simple Calendar">
 			<badge-poser type="version"/>
 			<badge-poser type="license"/>
