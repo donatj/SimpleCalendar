@@ -14,18 +14,16 @@ class SimpleCalendar {
 	/**
 	 * Array of Week Day Names
 	 *
-	 * @var string[]|null
+	 * @var array{0: string, 1: string, 2: string, 3: string, 4: string, 5: string, 6: string}|null
 	 */
-	private $weekDayNames;
+	private ?array $weekDayNames = null;
 
-	/** @var \DateTimeInterface */
-	private $now;
+	private \DateTimeInterface $now;
 
-	/** @var \DateTimeInterface|null */
-	private $today;
+	private ?\DateTimeInterface $today = null;
 
-	/** @var array<string,string> */
-	private $classes = [
+	/** @var array{calendar: string, leading_day: string, trailing_day: string, today: string, event: string, events: string} */
+	private array $classes = [
 		'calendar'     => 'SimpleCalendar',
 		'leading_day'  => 'SCprefix',
 		'trailing_day' => 'SCsuffix',
@@ -35,9 +33,8 @@ class SimpleCalendar {
 	];
 
 	/** @var array<int, array<int, array<int, array<int, string>>>> */
-	private $dailyHtml = [];
-	/** @var int */
-	private $offset = 0;
+	private array $dailyHtml = [];
+	private int $offset = 0;
 
 	/**
 	 * @param \DateTimeInterface|int|string|null       $calendarDate
@@ -96,7 +93,7 @@ class SimpleCalendar {
 	 * ]
 	 * ```
 	 *
-	 * @param array<string, string> $classes Map of element to class names used by the calendar.
+	 * @param array{calendar?: string, leading_day?: string, trailing_day?: string, today?: string, event?: string, events?: string} $classes Map of element to class names used by the calendar.
 	 */
 	public function setCalendarClasses( array $classes ) : void {
 		foreach( $classes as $key => $value ) {
@@ -126,14 +123,21 @@ class SimpleCalendar {
 	}
 
 	/**
-	 * @param string[]|null $weekDayNames
+	 * @param array{0: string, 1: string, 2: string, 3: string, 4: string, 5: string, 6: string}|null $weekDayNames
 	 */
 	public function setWeekDayNames( ?array $weekDayNames = null ) : void {
-		if( is_array($weekDayNames) && count($weekDayNames) !== 7 ) {
+		if( $weekDayNames === null ) {
+			$this->weekDayNames = null;
+
+			return;
+		}
+
+		if( count($weekDayNames) !== 7 ) {
 			throw new \InvalidArgumentException('week array must have exactly 7 values');
 		}
 
-		$this->weekDayNames = $weekDayNames ? array_values($weekDayNames) : null;
+		$weekDayNames = array_values($weekDayNames);
+		$this->weekDayNames = $weekDayNames;
 	}
 
 	/**
@@ -203,10 +207,7 @@ class SimpleCalendar {
 				throw new \InvalidArgumentException('invalid offset');
 			}
 
-			$date = date('N', $weekTime);
-			assert($date !== false);
-
-			$this->offset = intval($date) % 7;
+			$this->offset = intval(date('N', $weekTime)) % 7;
 		}
 	}
 
@@ -315,22 +316,30 @@ TAG
 	}
 
 	/**
-	 * @param array<int, mixed> $data
+	 * @template T
+	 * @param array<int, T> $data
+	 * @param-out array<int, T> $data
 	 */
 	private function rotate( array &$data, int $steps ) : void {
 		$count = count($data);
+		if( $count === 0 ) {
+			return;
+		}
+
 		if( $steps < 0 ) {
 			$steps = $count + $steps;
 		}
 
 		$steps %= $count;
-		for( $i = 0; $i < $steps; $i++ ) {
-			$data[] = array_shift($data);
+		if( $steps === 0 ) {
+			return;
 		}
+
+		$data = array_merge(array_slice($data, $steps), array_slice($data, 0, $steps));
 	}
 
 	/**
-	 * @return string[]
+	 * @return array{0: string, 1: string, 2: string, 3: string, 4: string, 5: string, 6: string}
 	 */
 	private function weekdays() : array {
 		if( $this->weekDayNames !== null ) {
@@ -341,6 +350,10 @@ TAG
 		$wDays = [];
 		for( $n = 0; $n < 7; $n++ ) {
 			$wDays[] = date('D', time() - $today + ($n * 86400));
+		}
+
+		if( count($wDays) !== 7 ) {
+			throw new \LogicException('week array must have exactly 7 values');
 		}
 
 		return $wDays;

@@ -111,7 +111,7 @@ Sets the class names used in the calendar
 
 ##### Parameters
 
-- ***array<string,string>*** `$classes` - Map of element to class names used by the calendar.
+- ***array{calendar?: string,leading_day?: string,trailing_day?: string,today?: string,event?: string,events?: string}*** `$classes` - Map of element to class names used by the calendar.
 
 ---
 
@@ -140,7 +140,7 @@ function setWeekDayNames(?array $weekDayNames = null): void
 
 ##### Parameters
 
-- ***string[]*** | ***null*** `$weekDayNames`
+- ***array{0: string,1: string,2: string,3: string,4: string,5: string,6: string}*** | ***null*** `$weekDayNames`
 
 ---
 
