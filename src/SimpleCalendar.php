@@ -24,7 +24,7 @@ class SimpleCalendar {
 	/** @var \DateTimeInterface|null */
 	private $today;
 
-	/** @var array<string,string> */
+	/** @var array{calendar: string, leading_day: string, trailing_day: string, today: string, event: string, events: string} */
 	private $classes = [
 		'calendar'     => 'SimpleCalendar',
 		'leading_day'  => 'SCprefix',
@@ -96,7 +96,7 @@ class SimpleCalendar {
 	 * ]
 	 * ```
 	 *
-	 * @param array<string, string> $classes Map of element to class names used by the calendar.
+	 * @param array{calendar?: string, leading_day?: string, trailing_day?: string, today?: string, event?: string, events?: string} $classes Map of element to class names used by the calendar.
 	 */
 	public function setCalendarClasses( array $classes ) : void {
 		foreach( $classes as $key => $value ) {

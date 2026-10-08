@@ -111,7 +111,7 @@ Sets the class names used in the calendar
 
 ##### Parameters
 
-- ***array<string,string>*** `$classes` - Map of element to class names used by the calendar.
+- ***array{calendar?: string,leading_day?: string,trailing_day?: string,today?: string,event?: string,events?: string}*** `$classes` - Map of element to class names used by the calendar.
 
 ---
 
