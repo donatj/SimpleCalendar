@@ -10,7 +10,7 @@ A very simple, easy to use PHP calendar rendering class.
 
 ## Requirements
 
-- **php**: >=7.2
+- **php**: >=7.4
 - **ext-calendar**: *
 
 ## Installing
