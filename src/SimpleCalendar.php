@@ -14,7 +14,7 @@ class SimpleCalendar {
 	/**
 	 * Array of Week Day Names
 	 *
-	 * @var string[]|null
+	 * @var array{0: string, 1: string, 2: string, 3: string, 4: string, 5: string, 6: string}|null
 	 */
 	private ?array $weekDayNames = null;
 
@@ -123,14 +123,29 @@ class SimpleCalendar {
 	}
 
 	/**
-	 * @param string[]|null $weekDayNames
+	 * @param array{0: string, 1: string, 2: string, 3: string, 4: string, 5: string, 6: string}|null $weekDayNames
 	 */
 	public function setWeekDayNames( ?array $weekDayNames = null ) : void {
-		if( is_array($weekDayNames) && count($weekDayNames) !== 7 ) {
+		if( $weekDayNames === null ) {
+			$this->weekDayNames = null;
+
+			return;
+		}
+
+		if( count($weekDayNames) !== 7 ) {
 			throw new \InvalidArgumentException('week array must have exactly 7 values');
 		}
 
-		$this->weekDayNames = $weekDayNames ? array_values($weekDayNames) : null;
+		$weekDayNames = array_values($weekDayNames);
+		$this->weekDayNames = [
+			$weekDayNames[0],
+			$weekDayNames[1],
+			$weekDayNames[2],
+			$weekDayNames[3],
+			$weekDayNames[4],
+			$weekDayNames[5],
+			$weekDayNames[6],
+		];
 	}
 
 	/**
