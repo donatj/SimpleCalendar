@@ -16,16 +16,14 @@ class SimpleCalendar {
 	 *
 	 * @var string[]|null
 	 */
-	private $weekDayNames;
+	private ?array $weekDayNames = null;
 
-	/** @var \DateTimeInterface */
-	private $now;
+	private \DateTimeInterface $now;
 
-	/** @var \DateTimeInterface|null */
-	private $today;
+	private ?\DateTimeInterface $today = null;
 
 	/** @var array{calendar: string, leading_day: string, trailing_day: string, today: string, event: string, events: string} */
-	private $classes = [
+	private array $classes = [
 		'calendar'     => 'SimpleCalendar',
 		'leading_day'  => 'SCprefix',
 		'trailing_day' => 'SCsuffix',
@@ -35,9 +33,8 @@ class SimpleCalendar {
 	];
 
 	/** @var array<int, array<int, array<int, array<int, string>>>> */
-	private $dailyHtml = [];
-	/** @var int */
-	private $offset = 0;
+	private array $dailyHtml = [];
+	private int $offset = 0;
 
 	/**
 	 * @param \DateTimeInterface|int|string|null       $calendarDate
