@@ -11,17 +11,178 @@ class SimpleCalendarTest extends TestCase {
 		$this->assertNotFalse(strpos($cal->show(false), 'class="today"'));
 	}
 
-	public function testBadDailyHtmlDates() : void {
-		try {
-			$cal = new SimpleCalendar('June 2010', 'June 5 2010');
-			$cal->addDailyHtml('foo', 'tomorrow', 'yesterday');
-		} catch( InvalidArgumentException $ex ) {
-			$this->addToAssertionCount(1);
+	/**
+	 * @dataProvider calendarDateProvider
+	 * @param \DateTimeInterface|int|string $calendarDate
+	 */
+	public function testCalendarDateInputs( $calendarDate, string $expectedDate ) : void {
+		$cal = new SimpleCalendar($calendarDate, false);
 
-			return;
+		$this->assertStringContainsString('<time datetime="' . $expectedDate . '">5</time>', $cal->render());
+	}
+
+	/**
+	 * @return array<string, array{0: \DateTimeInterface|int|string, 1: string}>
+	 */
+	public static function calendarDateProvider() : array {
+		return [
+			'string'   => [ 'June 5 2010', '2010-06-05', ],
+			'timestamp' => [ (new \DateTimeImmutable('June 5 2010 12:00:00'))->getTimestamp(), '2010-06-05', ],
+			'date time' => [ new \DateTimeImmutable('June 5 2010 12:00:00'), '2010-06-05', ],
+		];
+	}
+
+	/**
+	 * @dataProvider todayProvider
+	 * @param \DateTimeInterface|false|int|string|null $today
+	 */
+	public function testTodayInputs( $today, bool $isToday ) : void {
+		$cal = new SimpleCalendar('June 2010', false);
+		$cal->setToday($today);
+
+		$this->assertSame($isToday, strpos($cal->render(), 'class="today"') !== false);
+	}
+
+	/**
+	 * @return array<string, array{0: \DateTimeInterface|false|int|string|null, 1: bool}>
+	 */
+	public static function todayProvider() : array {
+		return [
+			'disabled'  => [ false, false, ],
+			'default'   => [ null, false, ],
+			'string'    => [ 'June 5 2010', true, ],
+			'timestamp' => [ strtotime('June 5 2010 12:00:00'), true, ],
+			'date time' => [ new \DateTimeImmutable('June 5 2010 12:00:00'), true, ],
+		];
+	}
+
+	/**
+	 * @dataProvider weekDayNamesProvider
+	 * @param array{0: string, 1: string, 2: string, 3: string, 4: string, 5: string, 6: string}|null $weekDayNames
+	 */
+	public function testWeekDayNames( ?array $weekDayNames, string $expectedDay ) : void {
+		$cal = new SimpleCalendar('June 2010', false);
+		$cal->setWeekDayNames($weekDayNames);
+
+		$this->assertSame($expectedDay, $this->parseCalendarHtml($cal)[0][0]['text']);
+	}
+
+	/**
+	 * @return array<string, array{0: array{0: string, 1: string, 2: string, 3: string, 4: string, 5: string, 6: string}|null, 1: string}>
+	 */
+	public static function weekDayNamesProvider() : array {
+		return [
+			'defaults' => [ null, 'Sun', ],
+			'custom'   => [ [ 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', ], 'One', ],
+		];
+	}
+
+	/**
+	 * @dataProvider startOfWeekProvider
+	 * @param array{0: string, 1: string, 2: string, 3: string, 4: string, 5: string, 6: string}|null $weekDayNames
+	 * @param int|string                                                                              $offset
+	 */
+	public function testStartOfWeek( ?array $weekDayNames, $offset, string $expectedDay ) : void {
+		$cal = new SimpleCalendar('June 2010', false);
+		if( $weekDayNames !== null ) {
+			$cal->setWeekDayNames($weekDayNames);
 		}
 
-		$this->fail('expected InvalidArgumentException');
+		$cal->setStartOfWeek($offset);
+
+		$this->assertSame($expectedDay, $this->parseCalendarHtml($cal)[0][0]['text']);
+	}
+
+	/**
+	 * @return array<string, array{0: array{0: string, 1: string, 2: string, 3: string, 4: string, 5: string, 6: string}|null, 1: int|string, 2: string}>
+	 */
+	public static function startOfWeekProvider() : array {
+		return [
+			'sunday'       => [ null, 0, 'Sun', ],
+			'negative day' => [ null, -1, 'Sat', ],
+			'day name'     => [ null, 'Monday', 'Mon', ],
+			'custom name'  => [ [ 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', ], 'Two', 'Two', ],
+		];
+	}
+
+	/**
+	 * @dataProvider invalidStartOfWeekProvider
+	 */
+	public function testRejectsInvalidStartOfWeek( string $offset ) : void {
+		$this->expectException(InvalidArgumentException::class);
+
+		(new SimpleCalendar)->setStartOfWeek($offset);
+	}
+
+	/**
+	 * @return array<string, array{0: string}>
+	 */
+	public static function invalidStartOfWeekProvider() : array {
+		return [
+			'empty string' => [ '', ],
+			'unknown day'  => [ 'not a weekday', ],
+		];
+	}
+
+	/**
+	 * @dataProvider dailyHtmlProvider
+	 */
+	public function testRendersDailyHtml( string $startDate, ?string $endDate, int $expectedCount ) : void {
+		$cal = new SimpleCalendar('June 2010', false);
+		$cal->addDailyHtml('Test Event', $startDate, $endDate);
+
+		$this->assertSame($expectedCount, substr_count($cal->render(), 'Test Event'));
+	}
+
+	/**
+	 * @return array<string, array{0: string, 1: string|null, 2: int}>
+	 */
+	public static function dailyHtmlProvider() : array {
+		return [
+			'single day'  => [ 'June 5 2010', null, 1, ],
+			'multiple days' => [ 'June 5 2010', 'June 7 2010', 3, ],
+		];
+	}
+
+	/**
+	 * @dataProvider invalidDailyHtmlDatesProvider
+	 */
+	public function testRejectsInvalidDailyHtmlDates( string $startDate, string $endDate ) : void {
+		$this->expectException(InvalidArgumentException::class);
+
+		(new SimpleCalendar)->addDailyHtml('Test Event', $startDate, $endDate);
+	}
+
+	/**
+	 * @return array<string, array{0: string, 1: string}>
+	 */
+	public static function invalidDailyHtmlDatesProvider() : array {
+		return [
+			'backwards dates' => [ 'June 5 2010', 'June 4 2010', ],
+			'past end date'   => [ 'tomorrow', 'yesterday', ],
+		];
+	}
+
+	public function testClearDailyHtml() : void {
+		$cal = new SimpleCalendar('June 2010', false);
+		$cal->addDailyHtml('Test Event', 'June 5 2010');
+		$cal->clearDailyHtml();
+
+		$this->assertStringNotContainsString('Test Event', $cal->render());
+	}
+
+	public function testShowEchoesCalendar() : void {
+		$cal = new SimpleCalendar('June 2010', false);
+
+		ob_start();
+		$html = $cal->show();
+		$this->assertSame($html, ob_get_clean());
+	}
+
+	public function testRejectsUnsupportedCalendarClass() : void {
+		$this->expectException(InvalidArgumentException::class);
+
+		(new SimpleCalendar)->setCalendarClasses([ 'unsupported' => 'class', ]);
 	}
 
 	public function testClasses() : void {
