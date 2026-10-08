@@ -6,13 +6,14 @@
 	"homepage"   : "https://donatstudios.com/SimpleCalendar",
 	"license"    : "MIT",
 	"require"    : {
-		"php": ">=7.2",
+		"php": ">=7.4",
 		"ext-calendar": "*"
 	},
 	"require-dev": {
 		"ext-dom": "*",
-		"corpus/coding-standard": "^0.6.0",
+		"corpus/coding-standard": "^0.9.0",
 		"donatj/drop": "^1.1",
+		"donatj/mddoc": "^0.13.0",
 		"friendsofphp/php-cs-fixer": "^3.3",
 		"phpstan/phpstan": "^1.10",
 		"phpunit/phpunit": "~8|~9",

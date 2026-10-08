@@ -1,12 +1,12 @@
 <mddoc>
+	<autoloader type="composer"/>
 
 	<docpage target="README.md">
-		<autoloader type="psr4" namespace="donatj" root="src"/>
-
 		<section title="Simple Calendar">
 			<badge-poser type="version"/>
 			<badge-poser type="license"/>
 			<badge-github-action name="donatj/SimpleCalendar" workflow-file="ci.yml"/>
+			<badge-coveralls name="github/donatj/SimpleCalendar"/>
 
 			<text>A very simple, easy to use PHP calendar rendering class.</text>
 			<section title="Requirements">
