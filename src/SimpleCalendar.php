@@ -137,15 +137,7 @@ class SimpleCalendar {
 		}
 
 		$weekDayNames = array_values($weekDayNames);
-		$this->weekDayNames = [
-			$weekDayNames[0],
-			$weekDayNames[1],
-			$weekDayNames[2],
-			$weekDayNames[3],
-			$weekDayNames[4],
-			$weekDayNames[5],
-			$weekDayNames[6],
-		];
+		$this->weekDayNames = $weekDayNames;
 	}
 
 	/**
@@ -347,7 +339,7 @@ TAG
 	}
 
 	/**
-	 * @return string[]
+	 * @return array{0: string, 1: string, 2: string, 3: string, 4: string, 5: string, 6: string}
 	 */
 	private function weekdays() : array {
 		if( $this->weekDayNames !== null ) {
@@ -358,6 +350,10 @@ TAG
 		$wDays = [];
 		for( $n = 0; $n < 7; $n++ ) {
 			$wDays[] = date('D', time() - $today + ($n * 86400));
+		}
+
+		if( count($wDays) !== 7 ) {
+			throw new \LogicException('week array must have exactly 7 values');
 		}
 
 		return $wDays;
