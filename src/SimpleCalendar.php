@@ -55,7 +55,7 @@ class SimpleCalendar {
 	 *                                                 calendar date. If null set to current timestamp.
 	 * @throws \Exception
 	 */
-	public function setDate( $date = null ) : void {
+	public function setDate( $date = null ): void {
 		$this->now = $this->parseDate($date) ?: new \DateTimeImmutable;
 	}
 
@@ -63,7 +63,7 @@ class SimpleCalendar {
 	 * @param \DateTimeInterface|int|string|null $date
 	 * @throws \Exception
 	 */
-	private function parseDate( $date = null ) : ?\DateTimeInterface {
+	private function parseDate( $date = null ): ?\DateTimeInterface {
 		if( $date instanceof \DateTimeInterface ) {
 			return $date;
 		}
@@ -95,7 +95,7 @@ class SimpleCalendar {
 	 *
 	 * @param array{calendar?: string, leading_day?: string, trailing_day?: string, today?: string, event?: string, events?: string} $classes Map of element to class names used by the calendar.
 	 */
-	public function setCalendarClasses( array $classes ) : void {
+	public function setCalendarClasses( array $classes ): void {
 		foreach( $classes as $key => $value ) {
 			if( !isset($this->classes[$key]) ) {
 				throw new \InvalidArgumentException("class '{$key}' not supported");
@@ -112,7 +112,7 @@ class SimpleCalendar {
 	 *                                                        rendering of Today.
 	 * @throws \Exception
 	 */
-	public function setToday( $today = null ) : void {
+	public function setToday( $today = null ): void {
 		if( $today === false ) {
 			$this->today = null;
 		} elseif( $today === null ) {
@@ -125,7 +125,7 @@ class SimpleCalendar {
 	/**
 	 * @param array{0: string, 1: string, 2: string, 3: string, 4: string, 5: string, 6: string}|null $weekDayNames
 	 */
-	public function setWeekDayNames( ?array $weekDayNames = null ) : void {
+	public function setWeekDayNames( ?array $weekDayNames = null ): void {
 		if( $weekDayNames === null ) {
 			$this->weekDayNames = null;
 
@@ -148,7 +148,7 @@ class SimpleCalendar {
 	 * @param \DateTimeInterface|int|string|null $endDate   Date string for when the event ends. Defaults to start date
 	 * @throws \Exception
 	 */
-	public function addDailyHtml( string $html, $startDate, $endDate = null ) : void {
+	public function addDailyHtml( string $html, $startDate, $endDate = null ): void {
 		/** @var int $htmlCount */
 		static $htmlCount = 0;
 
@@ -186,7 +186,7 @@ class SimpleCalendar {
 	/**
 	 * Clear all daily events for the calendar
 	 */
-	public function clearDailyHtml() : void {
+	public function clearDailyHtml(): void {
 		$this->dailyHtml = [];
 	}
 
@@ -195,7 +195,7 @@ class SimpleCalendar {
 	 *
 	 * @param int|string $offset Day the week starts on. ex: "Monday" or 0-6 where 0 is Sunday
 	 */
-	public function setStartOfWeek( $offset ) : void {
+	public function setStartOfWeek( $offset ): void {
 		if( is_int($offset) ) {
 			$this->offset = $offset % 7;
 		} elseif( $this->weekDayNames !== null && ($weekOffset = array_search($offset, $this->weekDayNames, true)) !== false ) {
@@ -218,7 +218,7 @@ class SimpleCalendar {
 	 * @return string HTML of the Calendar
 	 * @deprecated Use `render()` method instead.
 	 */
-	public function show( bool $echo = true ) : string {
+	public function show( bool $echo = true ): string {
 		$out = $this->render();
 		if( $echo ) {
 			echo $out;
@@ -230,7 +230,7 @@ class SimpleCalendar {
 	/**
 	 * Returns the generated Calendar
 	 */
-	public function render() : string {
+	public function render(): string {
 		$now   = getdate($this->now->getTimestamp());
 		$today = [ 'mday' => -1, 'mon' => -1, 'year' => -1 ];
 		if( $this->today !== null ) {
@@ -247,24 +247,24 @@ class SimpleCalendar {
 		$daysInMonth  = cal_days_in_month(CAL_GREGORIAN, $now['mon'], $now['year']);
 
 		$out = <<<TAG
-<table cellpadding="0" cellspacing="0" class="{$this->classes['calendar']}"><thead><tr>
-TAG;
+			<table cellpadding="0" cellspacing="0" class="{$this->classes['calendar']}"><thead><tr>
+			TAG;
 
 		foreach( $daysOfWeek as $dayName ) {
 			$out .= "<th>{$dayName}</th>";
 		}
 
 		$out .= <<<'TAG'
-</tr></thead>
-<tbody>
-<tr>
-TAG;
+			</tr></thead>
+			<tbody>
+			<tr>
+			TAG;
 
 		$weekDayIndex = ($weekDayIndex + 7) % 7;
 
 		$out .= str_repeat(<<<TAG
-<td class="{$this->classes['leading_day']}">&nbsp;</td>
-TAG
+			<td class="{$this->classes['leading_day']}">&nbsp;</td>
+			TAG
 			, $weekDayIndex);
 
 		$count = $weekDayIndex + 1;
@@ -320,7 +320,7 @@ TAG
 	 * @param array<int, T> $data
 	 * @param-out array<int, T> $data
 	 */
-	private function rotate( array &$data, int $steps ) : void {
+	private function rotate( array &$data, int $steps ): void {
 		$count = count($data);
 		if( $count === 0 ) {
 			return;
@@ -341,7 +341,7 @@ TAG
 	/**
 	 * @return array{0: string, 1: string, 2: string, 3: string, 4: string, 5: string, 6: string}
 	 */
-	private function weekdays() : array {
+	private function weekdays(): array {
 		if( $this->weekDayNames !== null ) {
 			return $this->weekDayNames;
 		}
