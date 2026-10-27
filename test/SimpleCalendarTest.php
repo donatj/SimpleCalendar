@@ -5,7 +5,7 @@ use PHPUnit\Framework\TestCase;
 
 class SimpleCalendarTest extends TestCase {
 
-	public function testCurrentMonth() : void {
+	public function testCurrentMonth(): void {
 		$cal = new SimpleCalendar;
 
 		$this->assertNotFalse(strpos($cal->show(false), 'class="today"'));
@@ -15,7 +15,7 @@ class SimpleCalendarTest extends TestCase {
 	 * @dataProvider calendarDateProvider
 	 * @param \DateTimeInterface|int|string $calendarDate
 	 */
-	public function testCalendarDateInputs( $calendarDate, string $expectedDate ) : void {
+	public function testCalendarDateInputs( $calendarDate, string $expectedDate ): void {
 		$cal = new SimpleCalendar($calendarDate, false);
 
 		$this->assertStringContainsString('<time datetime="' . $expectedDate . '">5</time>', $cal->render());
@@ -24,7 +24,7 @@ class SimpleCalendarTest extends TestCase {
 	/**
 	 * @return array<string, array{0: \DateTimeInterface|int|string, 1: string}>
 	 */
-	public static function calendarDateProvider() : array {
+	public static function calendarDateProvider(): array {
 		return [
 			'string'   => [ 'June 5 2010', '2010-06-05', ],
 			'timestamp' => [ (new \DateTimeImmutable('June 5 2010 12:00:00'))->getTimestamp(), '2010-06-05', ],
@@ -36,7 +36,7 @@ class SimpleCalendarTest extends TestCase {
 	 * @dataProvider todayProvider
 	 * @param \DateTimeInterface|false|int|string|null $today
 	 */
-	public function testTodayInputs( $today, bool $isToday ) : void {
+	public function testTodayInputs( $today, bool $isToday ): void {
 		$cal = new SimpleCalendar('June 2010', false);
 		$cal->setToday($today);
 
@@ -46,7 +46,7 @@ class SimpleCalendarTest extends TestCase {
 	/**
 	 * @return array<string, array{0: \DateTimeInterface|false|int|string|null, 1: bool}>
 	 */
-	public static function todayProvider() : array {
+	public static function todayProvider(): array {
 		return [
 			'disabled'  => [ false, false, ],
 			'default'   => [ null, false, ],
@@ -60,7 +60,7 @@ class SimpleCalendarTest extends TestCase {
 	 * @dataProvider weekDayNamesProvider
 	 * @param array{0: string, 1: string, 2: string, 3: string, 4: string, 5: string, 6: string}|null $weekDayNames
 	 */
-	public function testWeekDayNames( ?array $weekDayNames, string $expectedDay ) : void {
+	public function testWeekDayNames( ?array $weekDayNames, string $expectedDay ): void {
 		$cal = new SimpleCalendar('June 2010', false);
 		$cal->setWeekDayNames($weekDayNames);
 
@@ -70,7 +70,7 @@ class SimpleCalendarTest extends TestCase {
 	/**
 	 * @return array<string, array{0: array{0: string, 1: string, 2: string, 3: string, 4: string, 5: string, 6: string}|null, 1: string}>
 	 */
-	public static function weekDayNamesProvider() : array {
+	public static function weekDayNamesProvider(): array {
 		return [
 			'defaults' => [ null, 'Sun', ],
 			'custom'   => [ [ 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', ], 'One', ],
@@ -82,7 +82,7 @@ class SimpleCalendarTest extends TestCase {
 	 * @param array{0: string, 1: string, 2: string, 3: string, 4: string, 5: string, 6: string}|null $weekDayNames
 	 * @param int|string                                                                              $offset
 	 */
-	public function testStartOfWeek( ?array $weekDayNames, $offset, string $expectedDay ) : void {
+	public function testStartOfWeek( ?array $weekDayNames, $offset, string $expectedDay ): void {
 		$cal = new SimpleCalendar('June 2010', false);
 		if( $weekDayNames !== null ) {
 			$cal->setWeekDayNames($weekDayNames);
@@ -96,7 +96,7 @@ class SimpleCalendarTest extends TestCase {
 	/**
 	 * @return array<string, array{0: array{0: string, 1: string, 2: string, 3: string, 4: string, 5: string, 6: string}|null, 1: int|string, 2: string}>
 	 */
-	public static function startOfWeekProvider() : array {
+	public static function startOfWeekProvider(): array {
 		return [
 			'sunday'       => [ null, 0, 'Sun', ],
 			'negative day' => [ null, -1, 'Sat', ],
@@ -108,7 +108,7 @@ class SimpleCalendarTest extends TestCase {
 	/**
 	 * @dataProvider invalidStartOfWeekProvider
 	 */
-	public function testRejectsInvalidStartOfWeek( string $offset ) : void {
+	public function testRejectsInvalidStartOfWeek( string $offset ): void {
 		$this->expectException(InvalidArgumentException::class);
 
 		(new SimpleCalendar)->setStartOfWeek($offset);
@@ -117,7 +117,7 @@ class SimpleCalendarTest extends TestCase {
 	/**
 	 * @return array<string, array{0: string}>
 	 */
-	public static function invalidStartOfWeekProvider() : array {
+	public static function invalidStartOfWeekProvider(): array {
 		return [
 			'empty string' => [ '', ],
 			'unknown day'  => [ 'not a weekday', ],
@@ -127,7 +127,7 @@ class SimpleCalendarTest extends TestCase {
 	/**
 	 * @dataProvider dailyHtmlProvider
 	 */
-	public function testRendersDailyHtml( string $startDate, ?string $endDate, int $expectedCount ) : void {
+	public function testRendersDailyHtml( string $startDate, ?string $endDate, int $expectedCount ): void {
 		$cal = new SimpleCalendar('June 2010', false);
 		$cal->addDailyHtml('Test Event', $startDate, $endDate);
 
@@ -137,7 +137,7 @@ class SimpleCalendarTest extends TestCase {
 	/**
 	 * @return array<string, array{0: string, 1: string|null, 2: int}>
 	 */
-	public static function dailyHtmlProvider() : array {
+	public static function dailyHtmlProvider(): array {
 		return [
 			'single day'  => [ 'June 5 2010', null, 1, ],
 			'multiple days' => [ 'June 5 2010', 'June 7 2010', 3, ],
@@ -147,7 +147,7 @@ class SimpleCalendarTest extends TestCase {
 	/**
 	 * @dataProvider invalidDailyHtmlDatesProvider
 	 */
-	public function testRejectsInvalidDailyHtmlDates( string $startDate, string $endDate ) : void {
+	public function testRejectsInvalidDailyHtmlDates( string $startDate, string $endDate ): void {
 		$this->expectException(InvalidArgumentException::class);
 
 		(new SimpleCalendar)->addDailyHtml('Test Event', $startDate, $endDate);
@@ -156,14 +156,14 @@ class SimpleCalendarTest extends TestCase {
 	/**
 	 * @return array<string, array{0: string, 1: string}>
 	 */
-	public static function invalidDailyHtmlDatesProvider() : array {
+	public static function invalidDailyHtmlDatesProvider(): array {
 		return [
 			'backwards dates' => [ 'June 5 2010', 'June 4 2010', ],
 			'past end date'   => [ 'tomorrow', 'yesterday', ],
 		];
 	}
 
-	public function testClearDailyHtml() : void {
+	public function testClearDailyHtml(): void {
 		$cal = new SimpleCalendar('June 2010', false);
 		$cal->addDailyHtml('Test Event', 'June 5 2010');
 		$cal->clearDailyHtml();
@@ -171,7 +171,7 @@ class SimpleCalendarTest extends TestCase {
 		$this->assertStringNotContainsString('Test Event', $cal->render());
 	}
 
-	public function testShowEchoesCalendar() : void {
+	public function testShowEchoesCalendar(): void {
 		$cal = new SimpleCalendar('June 2010', false);
 
 		ob_start();
@@ -179,13 +179,13 @@ class SimpleCalendarTest extends TestCase {
 		$this->assertSame($html, ob_get_clean());
 	}
 
-	public function testRejectsUnsupportedCalendarClass() : void {
+	public function testRejectsUnsupportedCalendarClass(): void {
 		$this->expectException(InvalidArgumentException::class);
 
 		(new SimpleCalendar)->setCalendarClasses([ 'unsupported' => 'class', ]);
 	}
 
-	public function testClasses() : void {
+	public function testClasses(): void {
 		$cal      = new SimpleCalendar('June 2010', 'June 5 2010');
 		$defaults = [
 			'SimpleCalendar',
@@ -203,7 +203,7 @@ class SimpleCalendarTest extends TestCase {
 		}
 	}
 
-	public function testCustomClasses() : void {
+	public function testCustomClasses(): void {
 		$cal     = new SimpleCalendar('June 2010', 'June 5 2010');
 		$classes = [
 			'calendar'     => 'TestCalendar',
@@ -223,12 +223,12 @@ class SimpleCalendarTest extends TestCase {
 		}
 	}
 
-	public function testCurrentMonth_yearRegression() : void {
+	public function testCurrentMonth_yearRegression(): void {
 		$cal = new SimpleCalendar(sprintf('%d-%d-%d', (date('Y') - 1), date('n'), date('d')));
 		$this->assertFalse(strpos($cal->show(false), 'class="today"'));
 	}
 
-	public function testTagOpenCloseMismatch_regression() : void {
+	public function testTagOpenCloseMismatch_regression(): void {
 		$cal = new SimpleCalendar;
 		$cal->setStartOfWeek(4);
 		$cal->setDate('September 2016');
@@ -238,7 +238,7 @@ class SimpleCalendarTest extends TestCase {
 		$this->assertSame(substr_count($html, '<td'), substr_count($html, '</td'));
 	}
 
-	public function testTagOpenCloseMismatch_regression2() : void {
+	public function testTagOpenCloseMismatch_regression2(): void {
 		$cal = new SimpleCalendar;
 		$cal->setDate('January 2017');
 		$html = $cal->show(false);
@@ -247,7 +247,7 @@ class SimpleCalendarTest extends TestCase {
 		$this->assertSame(substr_count($html, '<td'), substr_count($html, '</td'));
 	}
 
-	public function testGenericGeneration() : void {
+	public function testGenericGeneration(): void {
 		$cal = new SimpleCalendar("June 5 2016");
 
 		$tableArray = $this->parseCalendarHtml($cal);
@@ -317,7 +317,7 @@ class SimpleCalendarTest extends TestCase {
 		$this->assertSame($expected, $tableArray);
 	}
 
-	public function testGenericGeneration_mTs() : void {
+	public function testGenericGeneration_mTs(): void {
 		$cal = new SimpleCalendar("June 5 2016");
 		$cal->setStartOfWeek(5);
 
@@ -386,7 +386,7 @@ class SimpleCalendarTest extends TestCase {
 	/**
 	 * @return array<int, array<int, array<string, string>>>
 	 */
-	private function parseCalendarHtml( SimpleCalendar $cal ) : array {
+	private function parseCalendarHtml( SimpleCalendar $cal ): array {
 		$x = new DOMDocument;
 		@$x->loadHTML($cal->show(false));
 
