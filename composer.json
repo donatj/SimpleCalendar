@@ -16,7 +16,7 @@
 		"donatj/drop": "^1.1",
 		"donatj/mddoc": "=0.14.1",
 		"friendsofphp/php-cs-fixer": "=3.95.27",
-		"phpstan/phpstan": "^2.3.0",
+		"phpstan/phpstan": "^2.3.2",
 		"phpunit/phpunit": "~9",
 		"squizlabs/php_codesniffer": "^3.7"
 	},
